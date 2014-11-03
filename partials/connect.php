@@ -13,17 +13,9 @@ if($link->connect_errno) {
 
 $test_sql = "SELECT * FROM FM_Person;";
 
-$statement = $link->prepare($test_sql);
+$result = $link->query($test_sql) or die("error =(");
 
-if ($statement === false) {
-	echo "false statement";
-} else {
-	$statement->execute();
-	$statement->bind_result($result);
-	$statement->fetch();
-	echo $result;
-	echo "results printed";
-}
+echo $result;
 
 //prepare statement
 // $stmt = $link->prepare("insert into FM_Person (age) values (?);");
