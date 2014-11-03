@@ -30,7 +30,7 @@ $(document).ready(function() {
 		//button > td > siblings
 		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
-			console.log($($this));
+			console.log($(this));
 	        var html = $(this).html();
 	        var input = $('<input type="text" />');
 	        input.val(html);
