@@ -1,3 +1,4 @@
+<?php
 //connecting safely
 
 $link = mysqli_connect('localhost', 'sli8', 'fmdbMysql', 'sli8');
@@ -29,3 +30,4 @@ if($link->connect_errno) {
 
 mysqli_close($link);
 
+?>
