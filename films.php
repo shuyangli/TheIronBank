@@ -38,7 +38,8 @@
 
 	$result = $link->query($test_sql) or die($link->error.__LINE__);
 
-	echo '<table border="1">';
+	echo '<table class='table table-striped' border="1">';
+
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
 	        foreach($tuple as $colval) {
