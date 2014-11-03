@@ -22,6 +22,7 @@ if ($statement === false) {
 	$statement->bind_result($result);
 	$statement->fetch();
 	echo $result;
+	echo "results printed";
 }
 
 //prepare statement
