@@ -27,7 +27,7 @@ $(document).ready(function() {
 		$(this).hide();
 
 		//turn rows into text boxes
-		$("td[data-imdb_id='" + $($this).attr("data-imdb_id") + "']").each(function () {
+		$("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
 	        var html = $(this).html();
 	        var input = $('<input type="text" />');
 	        input.val(html);
