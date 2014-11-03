@@ -4,7 +4,7 @@ $(document).ready(function() {
 			url: 'delete_film.php',
 
 			data: {
-				IMDB_ID: 
+				IMDB_ID: $(this).attr("data-imdb_id")
 			},
 
 			type: "POST",
@@ -20,5 +20,10 @@ $(document).ready(function() {
 		        console.dir( xhr );
    			}
 		});
+	});
+
+	$(".edit-button").click(function() {
+		$(this).siblings().attr("hidden", "false");
+		$(this).attr("hidden", "true");
 	});
 });
