@@ -1,5 +1,5 @@
 
-<?php include('connect.php') ?>
+<?php include('partials/connect.php') ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include('sidebar.php') ?>
+        <?php include('partials/sidebar.php') ?>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
