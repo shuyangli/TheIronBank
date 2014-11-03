@@ -46,16 +46,30 @@ File.open("gross_data_sample").each do |line|
 
 	# If the film doesn't exist, skip;
 	# otherwise add it
-	if (response_json["Response"]) then
+	if (response_json["Response"] == "True") then
 
 		new_film = {}
-		new_film["IMDB_ID"] = if response_json["imdbID"] then response_json["imdbID"] else "" end
-		new_film["Poster_URL"] = if response_json["Poster"] then response_json["Poster"] else "" end
-		new_film["Description"] = if response_json["Plot"] then response_json["Plot"].strip else "" end
-		new_film["Runtime_Min"] = if response_json["Runtime"] then response_json["Runtime"].chomp " min" else "" end
-		new_film["MPAA_Rating"] = if response_json["Rated"] then response_json["Rated"] else "" end
+		new_film["IMDB_ID"] = if response_json["imdbID"] then response_json["imdbID"] end
+
+		# Sanity check IMDB_ID: if it doesn't exist, we don't allow it
+		if !new_film["IMDB_ID"] then
+			next
+		end
+
+		# Keep getting other data
+		new_film["Poster_URL"] = if response_json["Poster"] then response_json["Poster"] else "\\N" end
+		new_film["Description"] = if response_json["Plot"] then response_json["Plot"].strip else "\\N" end
+		new_film["Runtime_Min"] = if response_json["Runtime"] then response_json["Runtime"].chomp " min" else "\\N" end
+
+		# Sanitize runtime to NULL if it's N/A
+		if new_film["Runtime_Min"] == "N/A" then new_film["Runtime_Min"] = "\\N" end
+
+		# MPAA_Rating is either a valid rating or NULL
+		new_film["MPAA_Rating"] = if response_json["Rated"] then response_json["Rated"] else "\\N" end
+		if new_film["MPAA_Rating"] == "N/A" then new_film["MPAA_Rating"] = "\\N" end
+
 		new_film["Gross"] = line_array[2]
-		new_film["Release_Year"] = if response_json["Year"] then response_json["Year"] else "" end
+		new_film["Release_Year"] = if response_json["Year"] then response_json["Year"] else "\\N" end
 
 		# Parse number of awards
 		if response_json["Awards"] then
@@ -67,10 +81,10 @@ File.open("gross_data_sample").each do |line|
 
 			new_film["Num_Awards"] = parser.total_awards
 		else
-			new_film["Num_Awards"] = 0
+			new_film["Num_Awards"] = "0"
 		end
 
-		new_film["Title"] = response_json["Title"]
+		new_film["Title"] = if response_json["Title"] then response_json["Title"] else "\\N" end
 		new_film["Distributor"] = line_array[1]
 
 		# Print out stuff
