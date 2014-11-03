@@ -35,14 +35,13 @@ class AwardParser
 end
 
 file_content = []
-returned_content = []
 
-NUM_OF_THREADS = 12
+NUM_OF_THREADS = 40
 threads = []
 mutex = Mutex.new
 
 # Read file
-File.open("gross_data_sample").each do |line|
+File.open("gross_data").each do |line|
 	file_content << line
 end
 
@@ -50,7 +49,7 @@ end
 
 NUM_OF_THREADS.times.map {
 
-	Thread.new(file_content, returned_content) { |file_content, returned_content|
+	Thread.new(file_content) { |file_content|
 
 		while line = mutex.synchronize { file_content.pop }
 
@@ -61,7 +60,14 @@ NUM_OF_THREADS.times.map {
 
 			# Request
 			response = Net::HTTP.get_response(uri)
-			response_json = JSON.parse(response.body)
+			response_json_string = response.body
+
+			begin
+				# This gives us a JSON::ParserError with improperly escaped JSON response
+				response_json = JSON.parse(response.body)
+			rescue JSON::ParserError
+				next
+			end
 
 			# If the film doesn't exist, skip;
 			# otherwise add it
@@ -110,7 +116,9 @@ NUM_OF_THREADS.times.map {
 				new_film["Distributor"] = line_array[1]
 
 				# Print out stuff
-				mutex.synchronize { returned_content << "#{new_film["IMDB_ID"]}|#{new_film["Poster_URL"]}|#{new_film["Description"]}|#{new_film["Runtime_Min"]}|#{new_film["MPAA_Rating"]}|#{new_film["Gross"]}|#{new_film["Release_Year"]}|#{new_film["Num_Awards"]}|#{new_film["Title"]}|#{new_film["Distributor"]}" }
+				mutex.synchronize {
+					puts "#{new_film["IMDB_ID"]}|#{new_film["Poster_URL"]}|#{new_film["Description"]}|#{new_film["Runtime_Min"]}|#{new_film["MPAA_Rating"]}|#{new_film["Gross"]}|#{new_film["Release_Year"]}|#{new_film["Num_Awards"]}|#{new_film["Title"]}|#{new_film["Distributor"]}"
+				}
 
 			end
 		end
@@ -118,7 +126,3 @@ NUM_OF_THREADS.times.map {
 	}
 
 }.each(&:join)
-
-returned_content.each do |item|
-	puts item
-end
