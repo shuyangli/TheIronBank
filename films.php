@@ -39,6 +39,7 @@
 	$result = $link->query($test_sql) or die($link->error.__LINE__);
 
 	echo '<table class="table table-striped">';
+	echo '<thead><tr><th>IMDB_ID</th><th>Poster URL</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
