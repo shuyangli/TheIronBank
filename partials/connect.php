@@ -13,7 +13,7 @@ if($link->connect_errno) {
 
 $test_sql = "SELECT * FROM FM_Person;";
 
-$result = $link->query($test_sql) or die("error =(");
+$result = $link->query($test_sql) or die($link->error.__LINE__);
 
 echo $result;
 
