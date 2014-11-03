@@ -44,12 +44,18 @@
 	$result = $link->query($test_sql) or die($link->error.__LINE__);
 
 	echo '<table class="table table-striped">';
-	echo '<thead><tr><th>IMDB_ID</th><th>Poster URL</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
+	echo '<thead><tr><th>IMDB_ID</th><th>Poster Link</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
-	        foreach($tuple as $colval) {
-	                echo '<td data-imdb_id="'.$tuple['IMDB_ID'].'">'.$colval.'</td>';
+	        foreach($tuple as $column => $value) {
+	        		if ($column == "Poster_URL") {
+	        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
+
+	        		} else {
+	        			echo '<td data-imdb_id="'.$tuple['IMDB_ID'].'">'.$value.'</td>';
+	        		}
+
 	        }
 	        //buttons
 	       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
