@@ -16,13 +16,6 @@
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -41,24 +34,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        FMDB
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Search</a>
-                </li>
-                <li>
-                    <a href="#">Bacon Calculator</a>
-                </li>
-                <li>
-                    <a href="#">Predictor</a>
-                </li>
-            </ul>
-        </div>
+        <?php include('sidebar.php') ?>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
