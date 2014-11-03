@@ -58,7 +58,7 @@ $(document).ready(function() {
 	$(".save-button").click(function(event) {
 		event.preventDefault();
 		//button > td > form
-		var string = $(this).parent().parent().serialize;
+		var string = $(this).parent().parent().serialize();
 		console.log(string);
 	});
 
