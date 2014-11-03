@@ -50,7 +50,7 @@
 	                echo '<td>'.$colval.'</td>';
 	        }
 	        //buttons
-	        echo '<td><button class="button delete-button" data-imdb_id="">Delete</button></td>'
+	        echo '<td><button class="button delete-button" data-imdb_id="">Delete</button></td>';
 	        echo '</tr>';
 	}
 	echo '</table>';
