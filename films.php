@@ -27,6 +27,9 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <!-- Films JS-->
+    <script src="js/films.js"></script>
+
 
 </head>
 
