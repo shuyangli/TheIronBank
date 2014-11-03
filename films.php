@@ -53,9 +53,9 @@
 	        }
 	        //buttons
 	       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
-	       	echo '<button class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
-	       	echo '<button class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
-	        echo '<button class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
+	       	echo '<button hidden="true" class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
+	       	echo '<button hidden="true" class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
+	        echo '<button hidden="true" class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
 	        echo '</tr>';
 	}
 	echo '</table>';

@@ -23,6 +23,7 @@ $(document).ready(function() {
 	});
 
 	$(".edit-button").click(function() {
-		$(this).siblings()
+		$(this).siblings().attr("hidden", "false");
+		$(this).attr("hidden", "true");
 	});
 });
