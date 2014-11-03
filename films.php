@@ -48,7 +48,7 @@
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
-	        echo '<form action="update_film.php" method="post">';
+	        echo '<form>';
 	        foreach($tuple as $column => $value) {
 	        		if ($column == "Poster_URL") {
 	        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
