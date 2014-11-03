@@ -26,8 +26,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     
-    <!-- Main JS-->
-    <script src="js/main.js"></script>
+    <!-- Sidebar JS-->
+    <script src="js/sidebar.js"></script>
 
 
 </head>
