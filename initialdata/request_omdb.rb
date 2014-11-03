@@ -74,7 +74,7 @@ File.open("gross_data_sample").each do |line|
 		new_film["Distributor"] = line_array[1]
 
 		# Print out stuff
-		puts "'#{new_film["IMDB_ID"]}'|'#{new_film["Poster_URL"]}'|'#{new_film["Description"]}'|'#{new_film["Runtime_Min"]}'|'#{new_film["MPAA_Rating"]}'|'#{new_film["Gross"]}'|'#{new_film["Release_Year"]}'|'#{new_film["Num_Awards"]}'|'#{new_film["Title"]}'|'#{new_film["Distributor"]}'"
+		puts "#{new_film["IMDB_ID"]}|#{new_film["Poster_URL"]}|#{new_film["Description"]}|#{new_film["Runtime_Min"]}|#{new_film["MPAA_Rating"]}|#{new_film["Gross"]}|#{new_film["Release_Year"]}|#{new_film["Num_Awards"]}|#{new_film["Title"]}|#{new_film["Distributor"]}"
 
 	end
 
