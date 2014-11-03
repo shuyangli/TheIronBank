@@ -48,12 +48,13 @@
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
+	        echo '<form action="update_film.php" method="post"';
 	        foreach($tuple as $column => $value) {
 	        		if ($column == "Poster_URL") {
 	        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
 
 	        		} else {
-	        			echo '<td data-imdb_id="'.$tuple['IMDB_ID'].'">'.$value.'</td>';
+	        			echo '<td data-column_name="'.$column.'">'.$value.'</td>';
 	        		}
 
 	        }
@@ -62,6 +63,7 @@
 	       	echo '<button style="display: none" class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
 	       	echo '<button style="display: none" class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
 	        echo '<button style="display: none" class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
+	        echo '</form>';
 	        echo '</tr>';
 	}
 	echo '</table>';

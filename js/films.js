@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	$(".delete-button").click(function() {
 		$.ajax({
 			url: 'delete_film.php',
@@ -30,9 +31,8 @@ $(document).ready(function() {
 		//button > td > siblings
 		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
-			console.log($(this));
 	        var html = $(this).html();
-	        var input = $('<input type="text" />');
+	        var input = $('<input type="text" name="' + $(this).attr("data-column_name") + '"/>');
 	        input.val(html);
 	        $(this).attr("data-original", html);
 	        $(this).html(input);
@@ -51,6 +51,11 @@ $(document).ready(function() {
 	    });
 	    
 	});
+
+	$(".save-button").click(function() {
+		//button > td > form
+		console.log($(this).parent().parent().serialize);
+	}
 
 
 
