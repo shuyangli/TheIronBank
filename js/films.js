@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 		//turn rows into text boxes
 		//button > td > siblings
-		$(this).parent().siblings(".td").each(function() {
+		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
 			console.log($($this));
 	        var html = $(this).html();
@@ -37,7 +37,6 @@ $(document).ready(function() {
 	        $(this).attr("data-original", html);
 	        $(this).html(input);
 	    });
-
 	});
 
 	$(".cancel-button").click(function() {
@@ -46,7 +45,7 @@ $(document).ready(function() {
 		$(this).siblings(".edit-button").show();
 
 		//turn text boxes back into rows
-		$(this).parent().siblings(".td").each(function() {
+		$(this).parent().siblings("td").each(function() {
 	        var original = $(this).attr("data-original");
 	        $(this).html(original);
 	    });
