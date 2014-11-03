@@ -50,7 +50,7 @@
 	        echo '<tr>';
 	        foreach($tuple as $column => $value) {
 	        		if ($column == "Poster_URL") {
-	        			echo '<td><img src="'.$value.'"></td>';
+	        			echo '<td><a src="'.$value.'"></td>';
 
 	        		} else {
 	        			echo '<td data-imdb_id="'.$tuple['IMDB_ID'].'">'.$value.'</td>';
