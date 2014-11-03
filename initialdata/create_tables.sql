@@ -6,7 +6,7 @@ create table FM_Film (
     Description text,
     Runtime_Min integer,
     MPAA_Rating varchar(10),
-    Gross real,
+    Gross integer,
     Release_Year integer,
     Num_Awards integer,
     Title varchar(80),
