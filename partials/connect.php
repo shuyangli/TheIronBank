@@ -6,12 +6,23 @@ $username = 'sli8';
 $password = 'fmdbMysql';
 $database = 'sli8';
 
-$link = mysqli_connect($host, $username, $password, $database);
+$link = new mysqli($host, $username, $password, $database);
 if($link->connect_errno) {
 	echo "failed connection".$link->connect_errno.":".$link->connect_error;
 }
 
-echo mysql_get_server_info() . "\n"; 
+$test_sql = "SELECT * FROM FM_Person;";
+
+$statement = $link->prepare($test_sql);
+
+if ($statement === false) {
+	echo "false statement";
+} else {
+	$statement->execute();
+	$statement->bind_result($result);
+	$statement->fetch();
+	echo $result;
+}
 
 //prepare statement
 // $stmt = $link->prepare("insert into FM_Person (age) values (?);");
