@@ -1,13 +1,20 @@
 <?php
 //connecting safely
 
-$link = mysqli_connect('localhost', 'sli8', 'fmdbMysql', 'sli8');
+$host = 'localhost';
+$username = 'sli8';
+$password = 'fmdbMysql';
+$database = 'sli8';
+
+$link = mysqli_connect($host, $username, $password, $database);
 if($link->connect_errno) {
 	echo "failed connection".$link->connect_errno.":".$link->connect_error;
 }
 
-// //prepare statement
-// $stmt = $link->prepare("insert into user_age (age) values (?);");
+echo mysql_get_server_info() . "\n"; 
+
+//prepare statement
+// $stmt = $link->prepare("insert into FM_Person (age) values (?);");
 
 // //bind parameters
 // $stmt->bind_param("i", $_GET['age']);
