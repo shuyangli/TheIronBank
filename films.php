@@ -44,10 +44,13 @@
 	echo '<thead><tr><th>IMDB_ID</th><th>Poster URL</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+		var_dump($tuple);
 	        echo '<tr>';
 	        foreach($tuple as $colval) {
 	                echo '<td>'.$colval.'</td>';
 	        }
+	        //buttons
+	        echo '<td><button class="button delete-button" data-imdb_id="">Delete</button></td>'
 	        echo '</tr>';
 	}
 	echo '</table>';
