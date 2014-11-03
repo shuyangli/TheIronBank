@@ -27,13 +27,35 @@ $(document).ready(function() {
 		$(this).hide();
 
 		//turn rows into text boxes
+		//button > td > siblings
+		$(this).parent().siblings(".td").each(function() {
+		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
+	        var html = $(this).html();
+	        var input = $('<input type="text" />');
+	        input.val(html);
+	        $(this).attr("data-original", html);
+	        $(this).html(input);
+	    });
+
+	});
+
+	$(".cancel-button").click(function() {
+		$(this).siblings().hide();
+		$(this).hide();
+		$(this).siblings(".edit-button").show();
+
+		//turn text boxes back into rows
 		$("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
 	        var html = $(this).html();
 	        var input = $('<input type="text" />');
 	        input.val(html);
+	        $(this).attr("data-original", html);
 	        $(this).html(input);
 	    });
+	    
 	});
+
+
 
 
 });
