@@ -1,3 +1,6 @@
+
+<?php include('partials/connect.php') ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +26,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     
-    <!-- Main JS-->
-    <script src="js/main.js"></script>
+    <!-- Sidebar JS-->
+    <script src="js/sidebar.js"></script>
 
 
 </head>
@@ -34,7 +37,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include('sidebar.php') ?>
+        <?php include('partials/sidebar.php') ?>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
