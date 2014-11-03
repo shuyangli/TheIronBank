@@ -13,11 +13,11 @@ if($link->connect_errno) {
 
 echo $link;
 
-$test_sql = "SELECT * FROM FM_Person;";
+// $test_sql = "SELECT * FROM FM_Person;";
 
-$result = $link->query($test_sql) or die($link->error.__LINE__);
+// $result = $link->query($test_sql) or die($link->error.__LINE__);
 
-echo $result;
+// echo $result;
 
 //prepare statement
 // $stmt = $link->prepare("insert into FM_Person (age) values (?);");
