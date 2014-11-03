@@ -23,7 +23,17 @@ $(document).ready(function() {
 	});
 
 	$(".edit-button").click(function() {
-		$(this).siblings().attr("hidden", "false");
-		$(this).attr("hidden", "true");
+		$(this).siblings().show();
+		$(this).hide();
+
+		//turn rows into text boxes
+		$("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
+	        var html = $(this).html();
+	        var input = $('<input type="text" />');
+	        input.val(html);
+	        $(this).html(input);
+	    });
 	});
+
+
 });

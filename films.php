@@ -49,7 +49,7 @@
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
 	        foreach($tuple as $colval) {
-	                echo '<td>'.$colval.'</td>';
+	                echo '<td data-imdb_id="'.$tuple['IMDB_ID'].'">'.$colval.'</td>';
 	        }
 	        //buttons
 	       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
