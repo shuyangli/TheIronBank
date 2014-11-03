@@ -21,4 +21,8 @@ $(document).ready(function() {
    			}
 		});
 	});
+
+	$(".edit-button").click(function() {
+		$(this).siblings()
+	});
 });

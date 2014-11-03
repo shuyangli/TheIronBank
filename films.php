@@ -52,7 +52,10 @@
 	                echo '<td>'.$colval.'</td>';
 	        }
 	        //buttons
-	        echo '<td><button class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
+	       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
+	       	echo '<button class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
+	       	echo '<button class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
+	        echo '<button class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
 	        echo '</tr>';
 	}
 	echo '</table>';
