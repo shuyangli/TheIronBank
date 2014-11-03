@@ -45,12 +45,9 @@ $(document).ready(function() {
 		$(this).siblings(".edit-button").show();
 
 		//turn text boxes back into rows
-		$("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
-	        var html = $(this).html();
-	        var input = $('<input type="text" />');
-	        input.val(html);
-	        $(this).attr("data-original", html);
-	        $(this).html(input);
+		$(this).parent().siblings(".td").each(function() {
+	        var original = $(this).attr("data-original");
+	        $(this).html(original);
 	    });
 	    
 	});
