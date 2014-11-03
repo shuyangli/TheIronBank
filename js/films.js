@@ -59,9 +59,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		//button > td > form
 		console.log($(this).parent().parent().serialize);
-	}
-
-
+	});
 
 
 });
