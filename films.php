@@ -47,8 +47,8 @@
 	echo '<thead><tr><th>IMDB_ID</th><th>Poster Link</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+	       	echo '<form>';
 	        echo '<tr>';
-	        echo '<form>';
 	        foreach($tuple as $column => $value) {
 	        		if ($column == "Poster_URL") {
 	        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
@@ -63,8 +63,9 @@
 	       	echo '<button style="display: none" class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
 	       	echo '<button style="display: none" class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
 	        echo '<button style="display: none" class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
-	        echo '</form>';
 	        echo '</tr>';
+	        echo '</form>';
+
 	}
 	echo '</table>';
 
