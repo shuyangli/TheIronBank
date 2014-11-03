@@ -1,4 +1,7 @@
 <?php
+//error reporting
+error_reporting(E_ALL);
+
 //connecting safely
 
 $host = 'localhost';
@@ -11,7 +14,7 @@ if($link->connect_errno) {
 	echo "failed connection".$link->connect_errno.":".$link->connect_error;
 }
 
-// echo $link;
+echo $link;
 
 // $test_sql = "SELECT * FROM FM_Person;";
 
