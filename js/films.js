@@ -1,5 +1,7 @@
 $(document).ready(function() {
-	$(".delete-button").click(function() {
+
+	$(".delete-button").click(function(event) {
+		event.preventDefault();
 		$.ajax({
 			url: 'delete_film.php',
 
@@ -22,7 +24,8 @@ $(document).ready(function() {
 		});
 	});
 
-	$(".edit-button").click(function() {
+	$(".edit-button").click(function(event) {
+		event.preventDefault();
 		$(this).siblings().show();
 		$(this).hide();
 
@@ -30,16 +33,16 @@ $(document).ready(function() {
 		//button > td > siblings
 		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
-			console.log($(this));
 	        var html = $(this).html();
-	        var input = $('<input type="text" />');
+	        var input = $('<input type="text" name="' + $(this).attr("data-column_name") + '"/>');
 	        input.val(html);
 	        $(this).attr("data-original", html);
 	        $(this).html(input);
 	    });
 	});
 
-	$(".cancel-button").click(function() {
+	$(".cancel-button").click(function(event) {
+		event.preventDefault();
 		$(this).siblings().hide();
 		$(this).hide();
 		$(this).siblings(".edit-button").show();
@@ -52,7 +55,12 @@ $(document).ready(function() {
 	    
 	});
 
-
+	$(".save-button").click(function(event) {
+		event.preventDefault();
+		//button > td > form
+		var string = $(this).parent().parent().serialize();
+		console.log(string);
+	});
 
 
 });
