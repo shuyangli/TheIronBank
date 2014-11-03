@@ -11,9 +11,11 @@ if($link->connect_errno) {
 	echo "failed connection".$link->connect_errno.":".$link->connect_error;
 }
 
-// $test_sql = "SELECT * FROM FM_Person;";
+echo $link;
 
-// $result = $link->query($test_sql) or die($link->error.__LINE__);
+$test_sql = "SELECT * FROM FM_Person;";
+
+$result = $link->query($test_sql) or die($link->error.__LINE__);
 
 echo $result;
 
