@@ -63,9 +63,29 @@ $(document).ready(function() {
 			console.log($(this).val());
 			updateData[$(this).parent().attr("data-column_name")] = $(this).val();
 	    });
+		//add IMDB_ID
+		updateData["IMDB_ID"] = $(this).parent().siblings("td").html();
+
 	    console.log(updateData);
-	    
-		
+	    $.ajax({
+			url: 'update_film.php',
+
+			data: updateData,
+
+			type: "POST",
+
+			success: function() {
+				location.reload(true);
+			},
+
+			error: function( xhr, status, errorThrown ) {
+		        alert( "Sorry, there was a problem!" );
+		        console.log( "Error: " + errorThrown );
+		        console.log( "Status: " + status );
+		        console.dir( xhr );
+   			}
+		});
+	  
 	});
 
 
