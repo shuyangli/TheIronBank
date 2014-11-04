@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
 	$(".delete-button").click(function(event) {
-		event.preventDefault();
 		$.ajax({
 			url: 'delete_film.php',
 
@@ -25,7 +24,6 @@ $(document).ready(function() {
 	});
 
 	$(".edit-button").click(function(event) {
-		event.preventDefault();
 		$(this).siblings().show();
 		$(this).hide();
 
@@ -42,7 +40,6 @@ $(document).ready(function() {
 	});
 
 	$(".cancel-button").click(function(event) {
-		event.preventDefault();
 		$(this).siblings().hide();
 		$(this).hide();
 		$(this).siblings(".edit-button").show();
@@ -56,10 +53,11 @@ $(document).ready(function() {
 	});
 
 	$(".save-button").click(function(event) {
-		event.preventDefault();
-		//button > td > form
-		var string = $(this).parent().parent().serialize();
-		console.log(string);
+		$(this).parent().siblings("td").find("input").each(function() {
+			console.log($(this));
+	    });
+	    
+		
 	});
 
 
