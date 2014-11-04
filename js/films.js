@@ -31,11 +31,14 @@ $(document).ready(function() {
 		//button > td > siblings
 		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
-	        var html = $(this).html();
-	        var input = $('<input type="text" name="' + $(this).attr("data-column_name") + '"/>');
-	        input.val(html);
-	        $(this).attr("data-original", html);
-	        $(this).html(input);
+			//ignore primary key
+			if ($(this).attr("data-column_name") != "IMDB_ID") {
+				var html = $(this).html();
+		        var input = $('<input type="text" name="' + $(this).attr("data-column_name") + '"/>');
+		        input.val(html);
+		        $(this).attr("data-original", html);
+		        $(this).html(input);
+			};
 	    });
 	});
 
@@ -53,9 +56,12 @@ $(document).ready(function() {
 	});
 
 	$(".save-button").click(function(event) {
+
+		var updateData = [];
 		$(this).parent().siblings("td").find("input").each(function() {
-			console.log($(this));
+			updateData[$(this).attr("data-column_name")] = $(this).val();
 	    });
+	    console.log(updateData);
 	    
 		
 	});
