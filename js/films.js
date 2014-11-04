@@ -56,12 +56,12 @@ $(document).ready(function() {
 	});
 
 	$(".save-button").click(function(event) {
-
+		//button > column > row
 		var updateData = [];
 		$(this).parent().siblings("td").find("input").each(function() {
-			console.log($(this).attr("data-column_name"));
+			console.log($(this).parent().attr("data-column_name"));
 			console.log($(this).val());
-			updateData[$(this).attr("data-column_name")] = $(this).val();
+			updateData[$(this).parent().attr("data-column_name")] = $(this).val();
 	    });
 	    console.log(updateData);
 	    
