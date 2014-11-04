@@ -5,6 +5,8 @@ $query = $link->prepare("UPDATE FM_Film SET Description = ?, Distributor = ?, Gr
 
 $query->bind_param("ssisiiis", $_POST['Description'], $_POST['Distributor'], $_POST['Gross'], $_POST['MPAA_Rating'], $_POST['Num_Awards'], $_POST['Release_Year'], $_POST['Runtime_Min'], $_POST['Title'], $_POST['IMDB_ID']);
 
+var_dump($query);
+
 $query->execute();
 
 
