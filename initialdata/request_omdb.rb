@@ -37,7 +37,6 @@ end
 file_content = []
 
 NUM_OF_THREADS = 40
-threads = []
 mutex = Mutex.new
 
 # Read file
