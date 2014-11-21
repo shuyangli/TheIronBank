@@ -14,7 +14,7 @@
                     <a href="#">Search</a>
                 </li>
                 <li>
-                    <a href="#">Bacon Calculator</a>
+                    <a href="bacon.php">Bacon Calculator</a>
                 </li>
                 <li>
                     <a href="#">Predictor</a>
