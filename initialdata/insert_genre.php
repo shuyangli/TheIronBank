@@ -12,7 +12,7 @@ foreach ($genre_data_file as $idx => $val_str) {
 	$genre_name = trim($pair[1]);
 	$imdb_id = trim($pair[0]);
 
-	$stmt = $link -> prepare("INSERT INTO FM_Genre (Genre_Name, IMDB_ID) values (?, ?);");
+	$stmt = $link -> prepare("INSERT INTO FM_Genre (Genre_Name, IMDB_ID) values (?, ?)");
 	$stmt -> bind_param("ss", $genre_name, $imdb_id);
 	$stmt -> execute();
 }
