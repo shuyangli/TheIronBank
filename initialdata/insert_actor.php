@@ -12,16 +12,15 @@ foreach ($genre_data_file as $idx => $val_str) {
 
 	// Check if the actor exists
 	$person_id = 0;
-	$select_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = '?'");
-	$select_stmt->bind_param("s", $actor_name);
-	$select_stmt->bind_result($person_id);
+	$person_fetch_result = $link->query("SELECT Person_ID FROM FM_Person WHERE Person_Name = $actor_name");
 
-	// If the actor exists, we use the stored person id
-	if ($select_stmt->fetch()) {
-		echo ("Actor: $actor_name ($person_id");
+	if ($person_fetch_result) {
+		// If the actor exists, we use the stored person id
+		$arr = $person_fetch_result->fetch_assoc();
+		$person_id = $arr["Person_ID"];
 	} else {
 		// The actor doesn't exist, we need to insert him/her first
-		$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0);");
+		$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)");
 		$insert_actor_stmt->bind_param("s", $actor_name);
 		$insert_actor_stmt->execute();
 
@@ -30,9 +29,13 @@ foreach ($genre_data_file as $idx => $val_str) {
 	}
 
 	// Then insert the relationship into FM_Acted_In
-	$stmt = $link -> prepare("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values (?, ?);");
-	$stmt -> bind_param("ss", $person_id, $imdb_id);
-	$stmt -> execute();
+	$insert_relationship_stmt = $link->prepare("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values (?, ?)");
+	if ($insert_relationship_stmt) {
+		$insert_relationship_stmt->bind_param("ss", $person_id, $imdb_id);
+		$insert_relationship_stmt->execute();
+	} else {
+		echo $link->error;
+	}
 }
 
 ?>
