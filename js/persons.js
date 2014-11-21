@@ -5,7 +5,7 @@ $(document).ready(function() {
 			url: 'delete_person.php',
 
 			data: {
-				IMDB_ID: $(this).attr("data-person_id")
+				Person_ID: $(this).attr("data-person_id")
 			},
 
 			type: "POST",
