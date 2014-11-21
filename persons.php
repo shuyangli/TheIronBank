@@ -27,6 +27,9 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <script src="js/persons.js"></script>
+
+
 
 </head>
 
@@ -48,8 +51,14 @@
 	        foreach($tuple as $colval) {
 	                echo '<td>'.$colval.'</td>';
 	        }
-	        echo '</tr>';
+        //buttons
+        echo '<td><button class="button edit-button" data-person_id="'.$tuple['Person_ID'].'">Edit</button>';
+        echo '<button style="display: none" class="button save-button" data-person_id="'.$tuple['Person_ID'].'">Save</button>';
+        echo '<button style="display: none" class="button cancel-button" data-person_id="'.$tuple['Person_ID'].'">Cancel</button>';
+        echo '<button style="display: none" class="button delete-button" data-person_id="'.$tuple['Person_ID'].'">Delete</button></td>';
+        echo '</tr>';
 	}
+
 	echo '</table>';
 
 	?>

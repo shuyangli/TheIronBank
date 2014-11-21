@@ -39,7 +39,8 @@
 
 	<?php
 
-	$test_sql = "SELECT * FROM FM_Film;";
+	// TODO: Pagination
+	$test_sql = "SELECT * FROM FM_Film LIMIT 100;";
 
 	$result = $link->query($test_sql) or die($link->error.__LINE__);
 	       	
