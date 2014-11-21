@@ -48,8 +48,8 @@
 
 	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 	        echo '<tr>';
-	        foreach($tuple as $colval) {
-	                echo '<td>'.$colval.'</td>';
+	        foreach($tuple as $column => $value) {
+	           echo '<td data-column_name="'.$column.'">'.$value.'</td>';
 	        }
         //buttons
         echo '<td><button class="button edit-button" data-person_id="'.$tuple['Person_ID'].'">Edit</button>';
