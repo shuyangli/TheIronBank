@@ -35,33 +35,43 @@
 
 <body>
 
-	<h1>Persons</h1>
+    <div id="wrapper">
 
-	<?php
+    	<h1>Persons</h1>
 
-	$test_sql = "SELECT * FROM FM_Person;";
+        <!-- Sidebar -->
+        <?php include('partials/sidebar.php') ?>
+        <!-- /#sidebar-wrapper -->
 
-	$result = $link->query($test_sql) or die($link->error.__LINE__);
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+            	<?php
 
-	echo '<table class="table table-striped">';
-	echo '<thead><tr><th>Person_ID</th><th>Name</th><th>Award Score</th></tr></thead>';
+            	$test_sql = "SELECT * FROM FM_Person;";
 
-	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
-	        echo '<tr>';
-	        foreach($tuple as $column => $value) {
-	           echo '<td data-column_name="'.$column.'">'.$value.'</td>';
-	        }
-        //buttons
-        echo '<td><button class="button edit-button" data-person_id="'.$tuple['Person_ID'].'">Edit</button>';
-        echo '<button style="display: none" class="button save-button" data-person_id="'.$tuple['Person_ID'].'">Save</button>';
-        echo '<button style="display: none" class="button cancel-button" data-person_id="'.$tuple['Person_ID'].'">Cancel</button>';
-        echo '<button style="display: none" class="button delete-button" data-person_id="'.$tuple['Person_ID'].'">Delete</button></td>';
-        echo '</tr>';
-	}
+            	$result = $link->query($test_sql) or die($link->error.__LINE__);
 
-	echo '</table>';
+            	echo '<table class="table table-striped">';
+            	echo '<thead><tr><th>Person_ID</th><th>Name</th><th>Award Score</th></tr></thead>';
 
-	?>
+            	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+            	        echo '<tr>';
+            	        foreach($tuple as $column => $value) {
+            	           echo '<td data-column_name="'.$column.'">'.$value.'</td>';
+            	        }
+                    //buttons
+                    echo '<td><button class="button edit-button" data-person_id="'.$tuple['Person_ID'].'">Edit</button>';
+                    echo '<button style="display: none" class="button save-button" data-person_id="'.$tuple['Person_ID'].'">Save</button>';
+                    echo '<button style="display: none" class="button cancel-button" data-person_id="'.$tuple['Person_ID'].'">Cancel</button>';
+                    echo '<button style="display: none" class="button delete-button" data-person_id="'.$tuple['Person_ID'].'">Delete</button></td>';
+                    echo '</tr>';
+            	}
+            	echo '</table>';
+            	?>
+            </div>
+        </div>
+    </div>
 
 </body>
 
