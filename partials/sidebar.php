@@ -23,7 +23,13 @@
                     <a href="films.php">View Films</a>
                 </li>
                 <li>
+                    <a href="insert_film_form.php">Add A Film</a>
+                </li>
+                <li>
                     <a href="persons.php">View Persons</a>
+                </li>
+                <li>
+                    <a href="insert_person_form.php">Add A Person</a>
                 </li>
             </ul>
         </div>
