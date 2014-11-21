@@ -31,6 +31,12 @@
                 <li>
                     <a href="insert_person_form.php">Add A Person</a>
                 </li>
+                <li>
+                    <a href="genres.php">View Genres</a>
+                </li>
+                <li>
+                    <a href="insert_genres_form.php">Add A Genre</a>
+                </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
