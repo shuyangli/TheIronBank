@@ -2,10 +2,10 @@ $(document).ready(function() {
 
 	$(".delete-button").click(function(event) {
 		$.ajax({
-			url: 'delete_film.php',
+			url: 'delete_person.php',
 
 			data: {
-				IMDB_ID: $(this).attr("data-imdb_id")
+				Person_ID: $(this).attr("data-person_id")
 			},
 
 			type: "POST",
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		$(this).parent().siblings("td").each(function() {
 		// $("td[data-imdb_id='" + $(this).attr("data-imdb_id") + "']").each(function () {
 			//ignore primary key
-			if ($(this).attr("data-column_name") != "IMDB_ID") {
+			if ($(this).attr("data-column_name") != "Person_ID") {
 				var html = $(this).html();
 		        var input = $('<input type="text" name="' + $(this).attr("data-column_name") + '"/>');
 		        input.val(html);
@@ -64,11 +64,11 @@ $(document).ready(function() {
 			updateData[$(this).parent().attr("data-column_name")] = $(this).val();
 	    });
 		//add IMDB_ID
-		updateData["IMDB_ID"] = $(this).parent().siblings("td").html();
+		updateData["Person_ID"] = $(this).parent().siblings("td").html();
 
 	    console.log(updateData);
 	    $.ajax({
-			url: 'update_film.php',
+			url: 'update_person.php',
 
 			data: updateData,
 

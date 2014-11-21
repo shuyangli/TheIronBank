@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Films</title>
+    <title>Genres</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -27,8 +27,8 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
-    <!-- Films JS-->
-    <script src="js/films.js"></script>
+    <!-- Genres JS-->
+    <script src="js/genres.js"></script>
 
 
 </head>
@@ -45,27 +45,24 @@
 	    <div id="page-content-wrapper">
 	        <div class="container-fluid"> 
 
-				<h1>Films</h1>
+				<h1>Genres</h1>
 
 				<?php
 
 				// TODO: Pagination
-				$test_sql = "SELECT * FROM FM_Film LIMIT 100;";
+				$test_sql = "SELECT * FROM FM_Genre LIMIT 100;";
 
 				$result = $link->query($test_sql) or die($link->error.__LINE__);
 				       	
 				echo '<table class="table table-striped">';
-				echo '<thead><tr><th>IMDB_ID</th><th>Poster Link</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
+				echo '<thead><tr><th>Genre Name</th><th>IMDB ID</th></tr></thead>';
 
 				while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 				        echo '<tr>';
 				        foreach($tuple as $column => $value) {
-				        		if ($column == "Poster_URL") {
-				        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
-
-				        		} else {
+				        		
 				        			echo '<td data-column_name="'.$column.'">'.$value.'</td>';
-				        		}
+				        	
 
 				        }
 				        //buttons

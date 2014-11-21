@@ -47,6 +47,8 @@
                     <div class="col-lg-12">
                         <h1>The First Movie Database of Braavos</h1>
                         <p>Welcome yada yada yada</p>
+                        <a href="films.php" class="btn btn-default">View Films</a>
+                        <a href="insert_film_form.php" class="btn btn-default">Insert Film</a>
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                     </div>
                 </div>
