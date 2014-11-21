@@ -37,15 +37,15 @@
 
     <div id="wrapper">
 
-    	<h1>Persons</h1>
-
         <!-- Sidebar -->
         <?php include('partials/sidebar.php') ?>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid">       
+                <h1>Persons</h1>
+
             	<?php
 
             	$test_sql = "SELECT * FROM FM_Person;";

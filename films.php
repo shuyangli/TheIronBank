@@ -35,40 +35,54 @@
 
 <body>
 
-	<h1>Films</h1>
+	<div id="wrapper">
 
-	<?php
+		<!-- Sidebar -->
+	    <?php include('partials/sidebar.php') ?>
+	    <!-- /#sidebar-wrapper -->
 
-	// TODO: Pagination
-	$test_sql = "SELECT * FROM FM_Film LIMIT 100;";
+	    <!-- Page Content -->
+	    <div id="page-content-wrapper">
+	        <div class="container-fluid"> 
 
-	$result = $link->query($test_sql) or die($link->error.__LINE__);
-	       	
-	echo '<table class="table table-striped">';
-	echo '<thead><tr><th>IMDB_ID</th><th>Poster Link</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
+				<h1>Films</h1>
 
-	while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
-	        echo '<tr>';
-	        foreach($tuple as $column => $value) {
-	        		if ($column == "Poster_URL") {
-	        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
+				<?php
 
-	        		} else {
-	        			echo '<td data-column_name="'.$column.'">'.$value.'</td>';
-	        		}
+				// TODO: Pagination
+				$test_sql = "SELECT * FROM FM_Film LIMIT 100;";
 
-	        }
-	        //buttons
-	       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
-	       	echo '<button style="display: none" class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
-	       	echo '<button style="display: none" class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
-	        echo '<button style="display: none" class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
-	        echo '</tr>';
+				$result = $link->query($test_sql) or die($link->error.__LINE__);
+				       	
+				echo '<table class="table table-striped">';
+				echo '<thead><tr><th>IMDB_ID</th><th>Poster Link</th><th>Description</th><th>Runtime (in min)</th><th>MPAA Rating</th><th>Gross Revenue (in $)</th><th>Release Year</th><th>Award Score</th><th>Title</th><th>Distributor</th></tr></thead>';
 
-	}
-	echo '</table>';
+				while($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+				        echo '<tr>';
+				        foreach($tuple as $column => $value) {
+				        		if ($column == "Poster_URL") {
+				        			echo '<td><a href="'.$value.'">Poster Link</a></td>';
 
-	?>
+				        		} else {
+				        			echo '<td data-column_name="'.$column.'">'.$value.'</td>';
+				        		}
+
+				        }
+				        //buttons
+				       	echo '<td><button class="button edit-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Edit</button>';
+				       	echo '<button style="display: none" class="button save-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Save</button>';
+				       	echo '<button style="display: none" class="button cancel-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Cancel</button>';
+				        echo '<button style="display: none" class="button delete-button" data-imdb_id="'.$tuple['IMDB_ID'].'">Delete</button></td>';
+				        echo '</tr>';
+
+				}
+				echo '</table>';
+
+				?>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 
