@@ -19,6 +19,12 @@
                 <li>
                     <a href="#">Predictor</a>
                 </li>
+                <li>
+                    <a href="films.php">View Films</a>
+                </li>
+                <li>
+                    <a href="persons.php">View Persons</a>
+                </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
