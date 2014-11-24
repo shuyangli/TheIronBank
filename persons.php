@@ -27,6 +27,7 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <!-- Persons JS  -->
     <script src="js/persons.js"></script>
 
 
