@@ -5,13 +5,17 @@ include("../partials/connect.php");
 // Read genre data
 $actor_data_file = file("actor_data", FILE_SKIP_EMPTY_LINES);
 
+
+$person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
+$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)");
+$insert_relationship_stmt = $link->prepare("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values (?, ?)");
+
 foreach ($actor_data_file as $idx => $val_str) {
 	$pair = explode('|', $val_str);
 	$actor_name = trim($pair[1]);
 	$imdb_id = trim($pair[0]);
 
 	// Check if the actor exists
-	$person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
 	$person_fetch_stmt->bind_param("s", $actor_name);
 	$person_fetch_stmt->execute();
 
@@ -21,7 +25,6 @@ foreach ($actor_data_file as $idx => $val_str) {
 
 	// The actor doesn't exist, we need to insert him/her first
 	if ($person_id == 0) {
-		$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)");
 		$insert_actor_stmt->bind_param("s", $actor_name);
 		$insert_actor_stmt->execute();
 
@@ -30,7 +33,6 @@ foreach ($actor_data_file as $idx => $val_str) {
 	}
 
 	// Then insert the relationship into FM_Acted_In
-	$insert_relationship_stmt = $link->prepare("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values (?, ?)");
 	if ($insert_relationship_stmt) {
 		$insert_relationship_stmt->bind_param("ss", $person_id, $imdb_id);
 		$insert_relationship_stmt->execute();
