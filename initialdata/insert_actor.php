@@ -35,16 +35,11 @@ foreach ($actor_data_file as $idx => $val_str) {
 	}
 
 	// Then insert the relationship into FM_Acted_In
-	if ($insert_relationship_stmt = $link->prepare("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values (?, ?)")) {
-		$insert_relationship_stmt->bind_param("ss", $person_id, $imdb_id);
-		$insert_relationship_stmt->execute();
-	} else {
-		echo $link->error;
-	}
+	$link->query("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values ($person_id, $imdb_id)");
+	echo $link->error;
 
 	$person_fetch_stmt->close();
 	$insert_actor_stmt->close();
-	$insert_relationship_stmt->close();
 }
 
 ?>
