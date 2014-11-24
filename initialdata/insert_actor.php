@@ -37,9 +37,6 @@ foreach ($actor_data_file as $idx => $val_str) {
 	// Then insert the relationship into FM_Acted_In
 	$link->query("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values ($person_id, $imdb_id)");
 	echo $link->error;
-
-	$person_fetch_stmt->close();
-	$insert_actor_stmt->close();
 }
 
 ?>
