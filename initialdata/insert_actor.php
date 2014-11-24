@@ -3,7 +3,7 @@
 include("../partials/connect.php");
 
 // Read genre data
-$actor_data_file = file("actor_data_sample", FILE_SKIP_EMPTY_LINES);
+$actor_data_file = file("actor_data", FILE_SKIP_EMPTY_LINES);
 
 foreach ($actor_data_file as $idx => $val_str) {
 	$pair = explode('|', $val_str);
@@ -11,15 +11,16 @@ foreach ($actor_data_file as $idx => $val_str) {
 	$imdb_id = trim($pair[0]);
 
 	// Check if the actor exists
-	$person_id = 0;
-	$person_fetch_result = $link->query("SELECT Person_ID FROM FM_Person WHERE Person_Name = $actor_name");
+	$person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
+	$person_fetch_stmt->bind_param("s", $actor_name);
+	$person_fetch_stmt->execute();
 
-	if ($person_fetch_result) {
-		// If the actor exists, we use the stored person id
-		$arr = $person_fetch_result->fetch_assoc();
-		$person_id = $arr["Person_ID"];
-	} else {
-		// The actor doesn't exist, we need to insert him/her first
+	$person_id = 0;
+	$person_fetch_stmt->bind_result($person_id);
+	$person_fetch_stmt->fetch();
+
+	// The actor doesn't exist, we need to insert him/her first
+	if ($person_id == 0) {
 		$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)");
 		$insert_actor_stmt->bind_param("s", $actor_name);
 		$insert_actor_stmt->execute();
