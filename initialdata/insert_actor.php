@@ -6,7 +6,7 @@ include("../partials/connect.php");
 $actor_data_file = file("actor_data_sample", FILE_SKIP_EMPTY_LINES);
 
 $person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
-$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)")
+$insert_actor_stmt = $link->prepare("INSERT INTO FM_Person (Person_Name, Num_Awards) VALUES (?, 0)");
 
 foreach ($actor_data_file as $idx => $val_str) {
 	$pair = explode('|', $val_str);
