@@ -3,7 +3,7 @@
 include("../partials/connect.php");
 
 // Read genre data
-$actor_data_file = file("actor_data_sample", FILE_SKIP_EMPTY_LINES);
+$actor_data_file = file("actor_data", FILE_SKIP_EMPTY_LINES);
 
 foreach ($actor_data_file as $idx => $val_str) {
 	$pair = explode('|', $val_str);
