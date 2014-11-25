@@ -12,13 +12,18 @@ foreach ($actor_data_file as $idx => $val_str) {
 
 	// Check if the actor exists
 	echo "Checking $actor_name\n";
-	$person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
-	$person_fetch_stmt->bind_param("s", $actor_name);
-	$person_fetch_stmt->execute();
+	if ($person_fetch_stmt = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ?")) {
 
-	$person_id = 0;
-	$person_fetch_stmt->bind_result($person_id);
-	$person_fetch_stmt->fetch();
+		$person_fetch_stmt->bind_param("s", $actor_name);
+		$person_fetch_stmt->execute();
+
+		$person_id = 0;
+		$person_fetch_stmt->bind_result($person_id);
+		$person_fetch_stmt->fetch();
+	} else {
+		echo $link->error;
+		exit();
+	}
 
 	// The actor doesn't exist, we need to insert him/her first
 	if ($person_id == 0) {
@@ -29,19 +34,20 @@ foreach ($actor_data_file as $idx => $val_str) {
 			$insert_actor_stmt->bind_param("s", $actor_name);
 			$insert_actor_stmt->execute();
 			$insert_actor_stmt->close();
+		} else {
+			echo $link->error;
+			exit();
 		}
 
 		// Then after insert, get the insert id to be used
 		$person_id = $link->insert_id;
 	}
 
-	// Then insert the relationship into FM_Acted_In
-	$insert_result = $link->query("INSERT INTO FM_Acted_In (Person_ID, IMDB_ID) values ($person_id, $imdb_id)");
-	echo $link->error;
-	$insert_result->free();		// Properly free the result to avoid "Commands out of sync"
-
 	// Clean up
 	$person_fetch_stmt->close();
+
+	// Then insert the relationship into FM_Acted_In
+	$insert_result = $link->query("INSERT INTO FM_Acted_In (`Person_ID`, `IMDB_ID`) values ('$person_id', '$imdb_id')");
 }
 
 ?>
