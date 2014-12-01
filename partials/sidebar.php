@@ -35,7 +35,7 @@
                     <a href="genres.php">View Genres</a>
                 </li>
                 <li>
-                    <a href="insert_genres_form.php">Add A Genre</a>
+                    <a href="insert_genre_form.php">Add A Genre</a>
                 </li>
             </ul>
         </div>
