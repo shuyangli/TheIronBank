@@ -28,7 +28,7 @@ print "Release Year is " . $db_releaseYear . "<br>";
 $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
-$stmt = $link->prepare("select * from FM_Film where Distributor='" . $distributor . "' and Gross!='null' limit 10;");
+$stmt = "select * from FM_Film where Distributor='" . $db_distributor . "' and Gross!='null' limit 10;";
 $result = $link->query($stmt) or die($link->error.__Line__);
 
 while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
