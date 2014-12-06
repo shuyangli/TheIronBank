@@ -18,7 +18,6 @@ director_file = File.open("director_data", "w")
 writer_file = File.open("writer_data", "w")
 
 # Casually parallelize networking
-
 NUM_OF_THREADS.times.map {
 
 	Thread.new(file_content) { |file_content|
@@ -26,7 +25,8 @@ NUM_OF_THREADS.times.map {
 		while imdb_id = mutex.synchronize { file_content.pop }
 
 			# Form the URI
-			uri = URI.parse(URI.escape "http://www.imdbapi.com/?t=#{imdb_id}")
+			imdb_id.strip!
+			uri = URI.parse(URI.escape "http://www.imdbapi.com/?i=#{imdb_id}&plot=short&r=json")
 
 			# Request
 			response = Net::HTTP.get_response(uri)
@@ -44,8 +44,8 @@ NUM_OF_THREADS.times.map {
 			if (response_json["Response"] == "True") then
 
 				new_film = {}
-				new_film[:director] = if response_json["Director"] then response_json["Director"] end
-				new_film[:writer] = if response_json["Writer"] then response_json["Writer"].split(',').map( |name| name.strip ) end
+				new_film[:director] = if response_json["Director"] then response_json["Director"].split(',').map{ |name| name.strip } end
+				new_film[:writer] = if response_json["Writer"] then response_json["Writer"].split(',').map{ |name| name.strip } end
 				new_film[:writer].each do |name|
 					name.gsub!(/\(.*\)/, "")
 				end
@@ -53,13 +53,11 @@ NUM_OF_THREADS.times.map {
 				# Print out stuff
 				mutex.synchronize {
 					new_film[:director].each do |director|
-						puts "#{imdb_id}|#{director}"
-						# director_file.write("#{imdb_id}|#{director}")
+						director_file.puts("#{imdb_id}|#{director}")
 					end
 
 					new_film[:writer].each do |writer|
-						puts "#{imdb_id}|#{writer}"
-						# writer_file.write("#{imdb_id}|#{writer}")
+						writer_file.puts("#{imdb_id}|#{writer}")
 					end
 				}
 
