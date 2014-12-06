@@ -5,13 +5,14 @@ include('partials/connect.php');
 
 function getActedFilms($person_ID) {
 
-    $adjacentQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
-    $adjacentQuery->bind_param("i", $person_ID);
-    $adjacentQuery->execute();
-    $adjacentQuery->bind_result($actedFilms);
-    $adjacentQuery->fetch();
+    $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
+    $filmsQuery->bind_param("i", $person_ID);
+    $filmsQuery->execute();
+    $filmsQuery->bind_result($actedFilms);
+    $filmsQuery->fetch();
 
     var_dump($actedFilms);
+    $filmsQuery->close();
 }
 
 function dijkstra($graph_array, $source, $target) {
@@ -91,6 +92,7 @@ $firstNameQuery->fetch();
 
 //first ID
 $firstNameID = $queryResult;
+$firstNameQuery->close();
 
 $secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
@@ -100,6 +102,7 @@ $secondNameQuery->fetch();
 
 //second ID
 $secondNameID = $queryResult;
+$secondNameQuery->close()
 
 getActedFilms($firstNameID);
     
