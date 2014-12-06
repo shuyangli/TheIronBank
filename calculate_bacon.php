@@ -3,21 +3,16 @@ include('partials/connect.php');
 
 //get films acted by person
 
-$query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ) ") or die(var_dump(mysqli_error($link)));
+function getActedFilms($person_ID) {
 
-// $query = $link->prepare('SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ');
+    $adjacentQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
+    $adjacentQuery->bind_param("i", $person_ID);
+    $adjacentQuery->execute();
+    $adjacentQuery->bind_result($actedFilms);
+    $adjacentQuery->fetch();
 
-$query->bind_param("s", $_GET['firstPersonName']);
-
-$query->execute();
-$query->bind_result($queryResult);
-$query->fetch();
-
-var_dump($queryResult);
-    
-//get persons acted in films
-
-//Code inspired from http://rosettacode.org/wiki/Dijkstra's_algorithm#PHP
+    var_dump($actedFilms);
+}
 
 function dijkstra($graph_array, $source, $target) {
 
@@ -85,6 +80,34 @@ function dijkstra($graph_array, $source, $target) {
     array_unshift($path, $u);
     return $path;
 }
+
+//convert names to IDs
+
+$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
+$firstNameQuery->bind_param("s", $_GET['firstPersonName']);
+$firstNameQuery->execute();
+$firstNameQuery->bind_result($queryResult);
+$firstNameQuery->fetch();
+
+//first ID
+$firstNameID = $queryResult;
+
+$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
+$secondNameQuery->bind_param("s", $_GET['secondPersonName']);
+$secondNameQuery->execute();
+$secondNameQuery->bind_result($queryResult);
+$secondNameQuery->fetch();
+
+//second ID
+$secondNameID = $queryResult;
+
+getActedFilms($firstNameID);
+    
+//get persons acted in films
+
+//Code inspired from http://rosettacode.org/wiki/Dijkstra's_algorithm#PHP
+
+
 
  
 // $graph_array = array(
