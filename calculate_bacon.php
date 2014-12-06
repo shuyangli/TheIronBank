@@ -102,7 +102,7 @@ $secondNameQuery->fetch();
 
 //second ID
 $secondNameID = $queryResult;
-$secondNameQuery->close()
+$secondNameQuery->close();
 
 getActedFilms($firstNameID);
     
