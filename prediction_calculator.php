@@ -29,7 +29,7 @@ print "Release Year is " . $db_releaseYear . "<br>";
 $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
-$stmt = "select * from FM_Film where Distributor='" . $db_distributor . "' and Gross!='null' and Release_Year>='".$db_relevantDecade."' and limit 25;";
+$stmt = "select * from FM_Film where Distributor='" . $db_distributor . "' and Gross!='null' and Release_Year>='".$db_relevantDecade."' order by Release_Year desc limit 25;";
 $result = $link->query($stmt) or die($link->error.__Line__);
 
 $sum = 0;
