@@ -49,7 +49,7 @@
                         Comma Separated Actor List: <input type="textbox" name="actorList"/><br/>
                         Director: <input type="textbox" name="director"/><br/>
                         Writer: <input type="textbox" name="writer"/><br/>
-                        Distributor: <input type="textbox" name="director"/><br/>
+                        Distributor: <input type="textbox" name="distributor"/><br/>
                         Rating: <input type="textbox" name="rating"/><br/>
                         Genre: <input type="textbox" name="genre"/><br/>
                         Release Year: <input type="textbox" name="year"/><br/>
