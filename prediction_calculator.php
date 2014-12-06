@@ -3,7 +3,7 @@
 include('partials/connect.php');
 
 //parse input data
-$db_director = $_GET['director'];
+$db_directors = $_GET['director'];
 $db_writer = $_GET['writer'];
 $db_distributor = $_GET['distributor'];
 $db_rating = $_GET['rating'];
@@ -18,7 +18,7 @@ for ($i = 0; $i < count($db_actorsArray); ++$i){
     print $db_actorsArray[$i] . "<br>";
 }
 
-print "<br>Director is " . $db_director . "<br>";
+print "<br>Director is " . $db_directors . "<br>";
 print "Writer is " . $db_writer . "<br>";
 print "Distributor is " . $db_distributor . "<br>";
 print "Rating is " . $db_rating . "<br>";
@@ -29,7 +29,8 @@ print "Release Year is " . $db_releaseYear . "<br>";
 $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
-$stmt = "select * from FM_Film where Distributor='" . $db_distributor . "' and Gross!='null' and Release_Year>='".$db_relevantDecade."' order by Release_Year desc limit 25;";
+$stmt = $link->prepare("select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;");
+$stmt->bind_param($db_distributor, $db_relevantDecade);
 $result = $link->query($stmt) or die($link->error.__Line__);
 
 $sum = 0;
@@ -38,16 +39,18 @@ $count = 0;
 while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
     print "<br>";
     foreach ($tuple as $key => $value) {
-        if ($key=="Gross"){
+        if ($key=="Gross" && $value>0){
             $count = $count +1;
             $sum = $sum + $value;
         }
         print $key . "\t" . $value . "<br>";
     }
 }
-array_push($estimates, $sum/$count);
-print_r($estimates);
-//Directors
+if ($count>0){
+    array_push($estimates, $sum/$count);
+}
+
+
 
 //Writers
 
@@ -56,5 +59,7 @@ print_r($estimates);
 //Genre
 
 //Actors
+
+print_r($estimates);
 
 ?>
