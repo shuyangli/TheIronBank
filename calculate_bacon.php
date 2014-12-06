@@ -12,7 +12,7 @@ function getActedFilms($person_ID) {
     $filmsQuery->fetch();
 
     var_dump($actedFilms);
-    $filmsQuery->close();
+    // $filmsQuery->close();
 }
 
 function dijkstra($graph_array, $source, $target) {
@@ -87,22 +87,22 @@ function dijkstra($graph_array, $source, $target) {
 $firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
 $firstNameQuery->bind_param("s", $_GET['firstPersonName']);
 $firstNameQuery->execute();
-$firstNameQuery->bind_result($queryResult);
+$firstNameQuery->bind_result($firstNameQueryResult);
 $firstNameQuery->fetch();
 
 //first ID
-$firstNameID = $queryResult;
-$firstNameQuery->close();
+$firstNameID = $firstNameQueryResult;
+// $firstNameQuery->close();
 
 $secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
 $secondNameQuery->execute();
-$secondNameQuery->bind_result($queryResult);
+$secondNameQuery->bind_result($secondNameQueryResult);
 $secondNameQuery->fetch();
 
 //second ID
-$secondNameID = $queryResult;
-$secondNameQuery->close();
+$secondNameID = $secondNameQueryResult;
+// $secondNameQuery->close();
 
 getActedFilms($firstNameID);
     
