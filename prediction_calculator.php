@@ -12,7 +12,7 @@ $db_releaseYear = $_GET['year'];
 $db_actorsArray = explode(',',$_GET['actorList']);
 
 print "Actors: <br>";
-foreach($i = 0; $i < count($array); ++$i){
+foreach($i = 0; $i < count($db_actorsArray); ++$i){
     $db_actorsArray[$i] = trim($db_actorsArray[$i]);
     print $db_actorsArray[$i] . "<br>";
 }
