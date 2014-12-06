@@ -29,26 +29,32 @@ print "Release Year is " . $db_releaseYear . "<br>";
 $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
-$stmt = $link->prepare("select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;");
-$stmt->bind_param("si",$db_distributor, $db_relevantDecade);
-$stmt->execute();
-//$result = $stmt->fetch_assoc();
+$query = "select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
+$stmt = mysqli_stmt_init($link);
 
-$sum = 0;
-$count = 0;
+if (mysqli_stmt_prepare($stmt, $query)){
+    mysqli_stmt_bind_param($stmt, "si", $db_distributor, $db_relevantDecade);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $result);
+    mysqli_stmt_fetch($stmt);
 
-while ($tuple = $stmt->fetch_assoc()){//mysqli_fetch_array($result, MYSQL_ASSOC)){
-    print "<br>";
-    foreach ($tuple as $key => $value) {
-        if ($key=="Gross" && $value>0){
-            $count = $count +1;
-            $sum = $sum + $value;
+    $sum = 0;
+    $count = 0;
+
+    while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
+        print "<br>";
+        foreach ($tuple as $key => $value) {
+            if ($key=="Gross" && $value>0){
+                $count = $count +1;
+                $sum = $sum + $value;
+            }
+            print $key . "\t" . $value . "<br>";
         }
-        print $key . "\t" . $value . "<br>";
     }
-}
-if ($count>0){
-    array_push($estimates, $sum/$count);
+    if ($count>0){
+        array_push($estimates, $sum/$count);
+    }
+    mysqli_stmt_close($stmt);
 }
 
 
