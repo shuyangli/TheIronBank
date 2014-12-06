@@ -11,10 +11,10 @@ $query->bind_param("s", $_POST['firstPersonName']);
 $query->execute();
 $queryResult = array();
 $query->bind_result($queryResult);
-$films = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+$query->fetch();
 
-echo $films;
-
+var_dump($queryResult);
+    
 //get persons acted in films
 
 //Code inspired from http://rosettacode.org/wiki/Dijkstra's_algorithm#PHP
