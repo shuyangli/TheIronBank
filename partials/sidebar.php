@@ -11,7 +11,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">Search</a>
+                    <a href="search_form.php">Search</a>
                 </li>
                 <li>
                     <a href="bacon.php">Bacon Calculator</a>

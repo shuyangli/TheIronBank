@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Add A Genre</h1>
-                        <form action="calculate_bacon.php" method="get">
+                        <form action="insert_genre.php" method="get">
                         Genre Name: <input type="textbox" name="g_name"/><br/>
 						IMDB ID: <input type="textbox" name="imdb_id"/><br/>
                         <input type="submit"/>

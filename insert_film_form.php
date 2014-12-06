@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Add A Film</h1>
-                        <form action="calculate_bacon.php" method="get">
+                        <form action="insert_film.php" method="get">
                         IMDB_id: <input type="textbox" name="id"/><br/>
 						URL: <input type="textbox" name="url"/><br/>
 						Description: <input type="textbox" name="description"/><br/>
