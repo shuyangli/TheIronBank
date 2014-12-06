@@ -2,7 +2,7 @@
 
 include('partials/connect.php');
 
-//get films acted by person
+//parse input data
 $db_director = $_GET['director'];
 $db_writer = $_GET['writer'];
 $db_distributor = $_GET['distributor'];
@@ -17,11 +17,25 @@ for ($i = 0; $i < count($db_actorsArray); ++$i){
     print $db_actorsArray[$i] . "<br>";
 }
 
-print "Director is " . $db_director . "<br>";
+print "<br>Director is " . $db_director . "<br>";
 print "Writer is " . $db_writer . "<br>";
 print "Distributor is " . $db_distributor . "<br>";
 print "Rating is " . $db_rating . "<br>";
 print "Genre is " . $db_genre . "<br>";
 print "Release Year is " . $db_releaseYear . "<br>";
+
+//Perform Linear Regression to make predictions
+$estimates = array(); //Will hold estimates for gross based upon each input
+
+//Distributor
+$stmt = $link->prepare("select * from FM_Film where Distributor='" . $distributor . "' and Gross!='null' limit 10;");
+$result = $link->query($stmt) or die($link->error.__Line__);
+
+while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
+    print "<br>";
+    foreach ($tuple as $key => $value) {
+        print $key . "\t" . $value . "<br>";
+    }
+}
 
 ?>
