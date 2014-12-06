@@ -3,13 +3,8 @@ include('partials/connect.php');
 
 //get films acted by person
 
-var_dump($link);
-
-$query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ");
-
-var_dump($query);
-
-var_dump(mysqli_error($link));
+$query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ) as derived ") or die(var_dump(mysqli_error($link));
+);
 
 $query->bind_param("s", $_POST['firstPersonName']);
 
