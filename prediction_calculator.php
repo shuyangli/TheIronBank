@@ -31,7 +31,8 @@ $estimates = array(); //Will hold estimates for gross based upon each input
 //Distributor
 $stmt = $link->prepare("select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;");
 $stmt->bind_param("si",$db_distributor, $db_relevantDecade);
-$result = $stmt->execute();
+$stmt->execute();
+$result = $stmt->fetch();
 
 $sum = 0;
 $count = 0;
