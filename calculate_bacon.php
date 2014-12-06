@@ -3,7 +3,7 @@ include('partials/connect.php');
 
 //get films acted by person
 
-function getActedFilms($person_ID) {
+function getActedFilms($link, $person_ID) {
 
     $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
     $filmsQuery->bind_param("i", $person_ID);
@@ -105,7 +105,7 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 $secondNameQuery->close();
 
-getActedFilms($firstNameID);
+getActedFilms($link, $firstNameID);
     
 //get persons acted in films
 
