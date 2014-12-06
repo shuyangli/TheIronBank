@@ -92,8 +92,9 @@ $firstNameQuery->fetch();
 
 //first ID
 $firstNameID = $firstNameQueryResult;
-// $firstNameQuery->close();
+$firstNameQuery->close();
 
+include('partials/connect.php');
 $secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
 $secondNameQuery->execute();
@@ -102,7 +103,7 @@ $secondNameQuery->fetch();
 
 //second ID
 $secondNameID = $secondNameQueryResult;
-// $secondNameQuery->close();
+$secondNameQuery->close();
 
 // getActedFilms($firstNameID);
     
