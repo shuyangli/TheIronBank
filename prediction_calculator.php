@@ -46,7 +46,7 @@ while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
     }
 }
 array_push($estimates, $sum/$count);
-print_r($stack);
+print_r($estimates);
 //Directors
 
 //Writers
