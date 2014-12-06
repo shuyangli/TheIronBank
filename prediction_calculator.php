@@ -35,15 +35,14 @@ $stmt = $link->stmt_init();
 if ($stmt->prepare($query)){
     $stmt->bind_param("si", $db_distributor, $db_relevantDecade);
     $stmt->execute();
-    $stmt->bind_result($result);
-    $stmt->fetch();
-
-    print $result;
+    $stmt->store_result();
+    $rowCount = $stmt->num_rows;
+    $result = $stmt->get_result();
     
     $sum = 0;
     $count = 0;
 
-    while ($tuple = mysqli_fetch_array($result, MYSQL_ASSOC)){
+    while ($tuple = $result->fetch_assoc()){
         print "<br>";
         foreach ($tuple as $key => $value) {
             if ($key=="Gross" && $value>0){
@@ -56,7 +55,7 @@ if ($stmt->prepare($query)){
     if ($count>0){
         array_push($estimates, $sum/$count);
     }
-    mysqli_stmt_close($stmt);
+    $stmt->free_result();
 }
 
 
