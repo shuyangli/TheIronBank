@@ -7,10 +7,9 @@ include('partials/connect.php');
 
 $query = $link->prepare('SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ');
 
-$query->bind_param("s", $_POST['firstPersonName']);
+$query->bind_param("s", $_GET['firstPersonName']);
 
 $query->execute();
-$queryResult = 0;
 $query->bind_result($queryResult);
 $query->fetch();
 
