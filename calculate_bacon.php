@@ -12,7 +12,7 @@ function getActedFilms($person_ID) {
     $filmsQuery->fetch();
 
     var_dump($actedFilms);
-    // $filmsQuery->close();
+    $filmsQuery->close();
 }
 
 function dijkstra($graph_array, $source, $target) {
@@ -105,7 +105,7 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 $secondNameQuery->close();
 
-// getActedFilms($firstNameID);
+getActedFilms($firstNameID);
     
 //get persons acted in films
 
