@@ -9,6 +9,8 @@ $query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SEL
 
 var_dump($query);
 
+var_dump(mysqli_error($link));
+
 $query->bind_param("s", $_POST['firstPersonName']);
 
 $query->execute();
