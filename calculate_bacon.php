@@ -3,7 +3,9 @@ include('partials/connect.php');
 
 //get films acted by person
 
-$query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SELECT Person_ID FROM FM_Person WHERE Person_Name = ?");
+$query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ");
+
+var_dump($query);
 
 $query->bind_param("s", $_POST['firstPersonName']);
 
