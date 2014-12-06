@@ -104,7 +104,7 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 // $secondNameQuery->close();
 
-getActedFilms($firstNameID);
+// getActedFilms($firstNameID);
     
 //get persons acted in films
 
