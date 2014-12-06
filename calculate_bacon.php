@@ -9,6 +9,7 @@ $query = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ( SEL
 $query->bind_param("s", $_POST['firstPersonName']);
 
 $query->execute();
+$queryResult = array();
 $query->bind_result($queryResult);
 $films = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
 
