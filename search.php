@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Add A Person</title>
+    <title>Search</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,19 +40,8 @@
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Add A Person</h1>
-                        <form action="insert_person.php" method="get">
-                        Name: <input type="textbox" name="name"/><br/>
-						Number of Awards: <input type="textbox" name="numawards"/><br/>
-                        <input type="submit"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        
         <!-- /#page-content-wrapper -->
 
     </div>

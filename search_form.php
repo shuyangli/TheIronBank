@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Film Success Predictor</title>
+    <title>Search</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -44,15 +44,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Film Success Predictor</h1>
-                        <form action="prediction_calculator.php" method="get">
-                        Comma Separated Actor List: <input type="textbox" name="actorList"/><br/>
-                        Director: <input type="textbox" name="director"/><br/>
-                        Writer: <input type="textbox" name="writer"/><br/>
-                        Distributor: <input type="textbox" name="distributor"/><br/>
-                        Rating: <input type="textbox" name="rating"/><br/>
-                        Genre: <input type="textbox" name="genre"/><br/>
-                        Release Year: <input type="textbox" name="year"/><br/>
+                        <h1>Search</h1>
+                        <form action="search.php" method="get">
+                        Name: <input type="textbox" name="name"/><br/>
                         <input type="submit"/>
                     </div>
                 </div>
