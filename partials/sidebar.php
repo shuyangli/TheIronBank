@@ -17,7 +17,7 @@
                     <a href="bacon.php">Bacon Calculator</a>
                 </li>
                 <li>
-                    <a href="#">Predictor</a>
+                    <a href="predictor.php">Predictor</a>
                 </li>
                 <li>
                     <a href="films.php">View Films</a>
