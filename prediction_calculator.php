@@ -30,14 +30,16 @@ $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
 $query = "select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
-$stmt = mysqli_stmt_init($link);
+$stmt = $link->stmt_init();
 
-if (mysqli_stmt_prepare($stmt, $query)){
-    mysqli_stmt_bind_param($stmt, "si", $db_distributor, $db_relevantDecade);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $result);
-    mysqli_stmt_fetch($stmt);
+if ($stmt->prepare($query)){
+    $stmt->bind_param("si", $db_distributor, $db_relevantDecade);
+    $stmt->execute();
+    $stmt->bind_result($result);
+    $stmt->fetch();
 
+    print $result;
+    
     $sum = 0;
     $count = 0;
 
