@@ -2,7 +2,6 @@
 include('partials/connect.php');
 
 //get films acted by person
-
 function getActedFilms($link, $person_ID) {
 
     $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
@@ -13,6 +12,35 @@ function getActedFilms($link, $person_ID) {
 
     var_dump($actedFilms);
     $filmsQuery->close();
+    return $actedFilms;
+}
+
+//get actors in a film
+function getActorsInFilm($link, $film_ID) {
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID = ? ") or die(var_dump(mysqli_error($link)));
+    $actorsQuery->bind_param("s", $film_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actors);
+    $actorsQuery->fetch();
+
+    var_dump($actors);
+    $actorsQuery->close();
+    return $actors;
+
+}
+
+//returns an array of all actors one degree away from the input
+function getAdjacentActors($link, $person_ID) {
+    $films = getActedFilms($link, $person_ID);
+
+    $actors = array();
+    foreach ($films as $film) {
+        array_push($actors, getActorsInFilm($film));
+    }
+
+    var_dump($actors);
+
+    return $actors;
 }
 
 function dijkstra($graph_array, $source, $target) {
