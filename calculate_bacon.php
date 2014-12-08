@@ -1,10 +1,17 @@
 <?php
 include('partials/connect.php');
 
+//Debugging function
+function printDebug($value) {
+    echo '<pre>';
+    printDebug($value);
+    echo '</pre>';
+}
+
 //returns an array of all actors one degree away from the input
 function getAdjacentActors($link, $person_ID) {
 
-    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? )") or die(var_dump(mysqli_error($link)));
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? )") or die(printDebug(mysqli_error($link)));
     $actorsQuery->bind_param("i", $person_ID);
     $actorsQuery->execute();
     $actorsQuery->bind_result($actor);
@@ -22,7 +29,7 @@ function getAdjacentActors($link, $person_ID) {
     }
 
     // echo "Adjacent Actors";
-    // var_dump($uniqueActors);
+    // printDebug($uniqueActors);
 
     return $actors;
 }
@@ -33,7 +40,7 @@ function getAdjacentActors($link, $person_ID) {
 function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previous, $firstActor, $actors) {
 
     echo "First Actor in addToGraph:\n";
-    var_dump($firstActor);
+    printDebug($firstActor);
     echo "\n";
     //add first actor
     if(!in_array($firstActor, $vertices, true)) {
@@ -59,7 +66,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
         }
     }
     // echo "Distances: \n";
-    // var_dump($distances);
+    // printDebug($distances);
     // echo "\n";
 }
 
@@ -83,7 +90,7 @@ function dijkstra($link, $source, $target) {
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
     echo "Unvisited: \n";
-    var_dump($unvisited);
+    printDebug($unvisited);
     echo "\n";
 
     //first node has distance 0
@@ -116,7 +123,7 @@ function dijkstra($link, $source, $target) {
         $min = INF;
         foreach ($unvisited as $vertex){
             if ($distances[$vertex] < $min) {
-                echo "New min is ".$distances[$vertex]." from ".$vertex."\n";
+                echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
                 $min = $distances[$vertex];
                 $u = $vertex; //save closest node to u
             }
@@ -126,7 +133,7 @@ function dijkstra($link, $source, $target) {
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
         echo "Unvisited after removing element: \n";
-        var_dump($unvisited);
+        printDebug($unvisited);
         echo "\n";
         if ($distances[$u] == INF or $u == $target) {
             echo "Reached the end, or no nodes had noninfinite distance. \n";
@@ -164,7 +171,7 @@ function dijkstra($link, $source, $target) {
 
 //convert names to IDs
 
-$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
+$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
 $firstNameQuery->bind_param("s", $_GET['firstPersonName']);
 $firstNameQuery->execute();
 $firstNameQuery->bind_result($firstNameQueryResult);
@@ -175,7 +182,7 @@ $firstNameID = $firstNameQueryResult;
 $firstNameQuery->close();
 
 // include('partials/connect.php');
-$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(var_dump(mysqli_error($link)));
+$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
 $secondNameQuery->execute();
 $secondNameQuery->bind_result($secondNameQueryResult);
