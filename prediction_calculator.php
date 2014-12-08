@@ -89,7 +89,7 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
 
                         print $movie_id . "<br>";
 
-                        if ($movie_id>0){
+                        if ($movie_id!=null){
                             //Get gross from FM_film using movie_id
                             $query3 = "select Gross from FM_Film where IMBD_ID=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
                             if ($stmt3 = $link->prepare($query3)){
