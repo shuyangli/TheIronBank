@@ -31,6 +31,10 @@ function getAdjacentActors($link, $person_ID) {
 //unvisited is just unvisited
 //first actor is the one all the others are adjacent to
 function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distance, &$previous, $firstActor, $actors) {
+
+    echo "First Actor in addToGraph:\n"
+    var_dump($firstActor);
+    echo "\n";
     //add first actor
     if(!in_array($firstActor, $vertices, true)) {
         array_push($vertices, $firstActor);
