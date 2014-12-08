@@ -58,9 +58,9 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 
         }
     }
-    echo "Distances: \n";
-    var_dump($distances);
-    echo "\n";
+    // echo "Distances: \n";
+    // var_dump($distances);
+    // echo "\n";
 }
 
 //the plan:
@@ -82,7 +82,7 @@ function dijkstra($link, $source, $target) {
 
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
-    echo "Unvisited:\n";
+    echo "Unvisited: \n";
     var_dump($unvisited);
     echo "\n";
 
@@ -129,7 +129,7 @@ function dijkstra($link, $source, $target) {
         var_dump($unvisited);
         echo "\n";
         if ($distances[$u] == INF or $u == $target) {
-            echo "Reached the end, or no nodes had noninfinite distance\n";
+            echo "Reached the end, or no nodes had noninfinite distance. \n";
             break;
         }
  
