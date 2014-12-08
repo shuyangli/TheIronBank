@@ -16,6 +16,7 @@ function getAdjacentActors($link, $person_ID) {
     $actorsQuery->execute();
     $actorsQuery->bind_result($actor);
 
+    //save to array
     $actors = array();
     while ($actorsQuery->fetch()) {
         array_push($actors, $actor);
@@ -39,9 +40,9 @@ function getAdjacentActors($link, $person_ID) {
 //first actor is the one all the others are adjacent to
 function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previous, $firstActor, $actors) {
 
-    echo "First Actor in addToGraph:\n";
-    printDebug($firstActor);
-    echo "\n";
+    // echo "First Actor in addToGraph:\n";
+    // printDebug($firstActor);
+    // echo "\n";
     //add first actor
     if(!in_array($firstActor, $vertices, true)) {
         array_push($vertices, $firstActor);
@@ -51,6 +52,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 
     }
 
+    //add new vertices to relevant arrays
     foreach ($actors as $actor) {
         if(!in_array($actor, $vertices, true)) {
             array_push($vertices, $actor);
