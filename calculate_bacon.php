@@ -14,8 +14,8 @@ function getActedFilms($link, $person_ID) {
         array_push($resultsArray, $actedFilm);
     }
 
-    echo "Acted Films:";
-    var_dump($resultsArray);
+    // echo "Acted Films:";
+    // var_dump($resultsArray);
     $filmsQuery->close();
     return $resultsArray;
 }
@@ -28,8 +28,8 @@ function getActorsInFilm($link, $film_ID) {
     $actorsQuery->bind_result($actors);
     $actorsQuery->fetch();
 
-    echo "Actors in film: ";
-    var_dump($actors);
+    // echo "Actors in film: ";
+    // var_dump($actors);
     $actorsQuery->close();
     return $actors;
 
@@ -44,8 +44,17 @@ function getAdjacentActors($link, $person_ID) {
         array_push($actors, getActorsInFilm($link, $film));
     }
 
+    //have to delete the original actor from the adjacent list
+    $uniqueActors = array_unique($actors)
+    $keys = array_keys($uniqueActors, $Person_ID);
+    foreach($keys as $k) {
+        unset($uniqueActors[$k]);
+    }
+
     echo "Adjacent Actors";
-    var_dump($actors);
+    var_dump($uniqueActors);
+
+
 
     return $actors;
 }
