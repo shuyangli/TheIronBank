@@ -45,7 +45,7 @@ function getAdjacentActors($link, $person_ID) {
     }
 
     //have to delete the original actor from the adjacent list
-    $uniqueActors = array_unique($actors)
+    $uniqueActors = array_unique($actors);
     $keys = array_keys($uniqueActors, $Person_ID);
     foreach($keys as $k) {
         unset($uniqueActors[$k]);
