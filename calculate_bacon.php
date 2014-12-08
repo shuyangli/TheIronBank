@@ -90,7 +90,7 @@ function dijkstra($link, $source, $target) {
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
     echo "Unvisited: \n";
-    printDebug(count($unvisited);
+    printDebug(count($unvisited));
     echo "\n";
 
     //first node has distance 0
