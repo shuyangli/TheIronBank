@@ -11,7 +11,7 @@ function getActedFilms($link, $person_ID) {
 
     $resultsArray = array();
     while ($filmsQuery->fetch()) {
-        array_push($resul, $actedFilm)
+        array_push($resul, $actedFilm);
     }
 
     echo "Acted Films:";
