@@ -64,6 +64,9 @@ $count = 0;
 
 for ($i = 0; $i < count($db_writersArray); ++$i){
     $writer = $db_writersArray[$i];
+
+    print $writer . "<br>";
+
     $query = "select Person_ID from FM_Person where Person_Name=?;";
     if ($stmt = $link->prepare($query)){
         $stmt->bind_param("s", $writer);
@@ -71,6 +74,9 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
         $stmt->store_result();
         $stmt->bind_result($writer_id);
         while($stmt->fetch()){ 
+
+            print $writer_id . "<br>";
+
             if ($writer_id>0){
                 //Get movie Id from writer table
                 $query2 = "select IMDB_ID from FM_Wrote where Person_ID=?;";
@@ -80,6 +86,9 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
                     $stmt2->store_result();
                     $stmt2->bind_result($movie_id);
                     while($stmt2->fetch()){ 
+
+                        print $movie_id . "<br>";
+
                         if ($movie_id>0){
                             //Get gross from FM_film using movie_id
                             $query3 = "select Gross from FM_Film where IMBD_ID=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
@@ -90,6 +99,9 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
                                 $stmt->bind_result($gross);
 
                                 while($stmt3->fetch()){ 
+
+                                    print $gross . "<br>";
+
                                     if ($gross>0){
                                         $count = $count +1;
                                         $sum = $sum + $gross;
