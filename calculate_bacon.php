@@ -133,7 +133,7 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 $secondNameQuery->close();
 
-getActedFilms($link, $firstNameID);
+getAdjacentActors($link, $firstNameID);
     
 //get persons acted in films
 
