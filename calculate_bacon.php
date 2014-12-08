@@ -92,7 +92,7 @@ function dijkstra($link, $source, $target) {
 
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
-    echo "Unvisited: \n";
+    echo "Unvisited length: \n";
     printDebug(count($unvisited));
     echo "\n";
 
@@ -126,18 +126,22 @@ function dijkstra($link, $source, $target) {
         $min = INF;
         foreach ($unvisited as $vertex){
             if ($distances[$vertex] < $min) {
-                echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
+                // echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
                 $min = $distances[$vertex];
                 $u = $vertex; //save closest node to u
             }
         }
 
+        echo "Next traversed node is ".$u."\n";
+        echo "Previous path is: ";
+        printDebug($previous);
+
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
-        echo "Unvisited after removing element: \n";
+        echo "Unvisited length after removing element: \n";
         printDebug(count($unvisited));
-        echo "Vertices: \n";
+        echo "Vertices length: \n";
         printDebug(count($vertices));
         echo "\n";
         if ($distances[$u] == INF or $u == $target) {
