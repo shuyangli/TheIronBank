@@ -1,48 +1,8 @@
 <?php
 include('partials/connect.php');
 
-// //get films acted by person
-// function getActedFilms($link, $person_ID) {
-
-//     $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
-//     $filmsQuery->bind_param("i", $person_ID);
-//     $filmsQuery->execute();
-//     $filmsQuery->bind_result($actedFilm);
-
-//     $resultsArray = array();
-//     while ($filmsQuery->fetch()) {
-//         array_push($resultsArray, $actedFilm);
-//     }
-
-//     // echo "Acted Films:";
-//     // var_dump($resultsArray);
-//     $filmsQuery->close();
-//     return $resultsArray;
-// }
-
-// //get actors in a film
-// function getActorsInFilm($link, $film_ID) {
-//     $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID = ? ") or die(var_dump(mysqli_error($link)));
-//     $actorsQuery->bind_param("s", $film_ID);
-//     $actorsQuery->execute();
-//     $actorsQuery->bind_result($actors);
-//     $actorsQuery->fetch();
-
-//     // echo "Actors in film: ";
-//     // var_dump($actors);
-//     $actorsQuery->close();
-//     return $actors;
-
-// }
-
 //returns an array of all actors one degree away from the input
 function getAdjacentActors($link, $person_ID) {
-    // $films = getActedFilms($link, $person_ID);
-
-    // $actors = array();
-    // foreach ($films as $film) {
-    //     array_push($actors, getActorsInFilm($link, $film));
-    // }
 
     $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? )") or die(var_dump(mysqli_error($link)));
     $actorsQuery->bind_param("i", $person_ID);
@@ -64,36 +24,84 @@ function getAdjacentActors($link, $person_ID) {
     echo "Adjacent Actors";
     var_dump($uniqueActors);
 
-
-
     return $actors;
 }
 
-function dijkstra($graph_array, $source, $target) {
+//vertices is an array of all nodes that are either visited or unvisited
+//unvisited is just unvisited
+//first actor is the one all the others are adjacent to
+function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distance, &$previous, $firstActor, $actors) {
+    //add first actor
+    if(!in_array($firstActor, $vertices, true)) {
+        array_push($vertices, $firstActor);
+        array_push($unvisited, $firstActor);
+        $dist[$firstActor] = INF;
+        $previous[$firstActor] = NULL;
+
+    }
+
+    foreach ($actors as $actor) {
+        if(!in_array($actor, $vertices, true)) {
+            array_push($vertices, $actor);
+            array_push($unvisited, $actor);
+
+            //add neighbors with edge cost 1
+            $neighbors[$firstActor][] = array("end" => $actor, "cost" => 1);
+            $neighbors[$actor][] = array("end" => $firstActor, "cost" => 1);
+
+            $dist[$actor] = INF;
+            $previous[$actor] = NULL;
+
+        }
+    }
+}
+
+//the plan:
+//get adjacent actors of the first actor
+//add them to the vertices, neighbors, and unvisited arrays
+//compute closest (random if tie)
+//get next closest's actors
+//update distances
+//etc i hope
+
+function dijkstra($link, $source, $target) {
 
     //initialize vertices and neighbors
     $vertices = array();
-    $neighbours = array();
-    foreach ($graph_array as $edge) {
-        // add each vertex to array
-        array_push($vertices, $edge[0], $edge[1]);
-        //update neighbors
-        $neighbours[$edge[0]][] = array("end" => $edge[1], "cost" => $edge[2]);
-        $neighbours[$edge[1]][] = array("end" => $edge[0], "cost" => $edge[2]);
-    }
-    //remove duplicates
-    $vertices = array_unique($vertices);
- 
-    //initialize distance and previous
-    foreach ($vertices as $vertex) {
-        $dist[$vertex] = INF;
-        $previous[$vertex] = NULL;
-    }
- 
+    $unvisited = array();
+    $neighbors = array();
+    $dist = array();
+    $previous = array();
+
+    addToGraph($vertices, $unvisited, $neighbors, $source, $dist, $previous, getAdjacentActors($link, $source));
+
+    echo "Unvisited:\n";
+    var_dump($unvisited);
+    echo "\n";
+
     //first node has distance 0
     $dist[$source] = 0;
+
+    // foreach ($graph_array as $edge) {
+    //     // add each vertex to array
+    //     array_push($vertices, $edge[0], $edge[1]);
+    //     //update neighbors
+    //     $neighbors[$edge[0]][] = array("end" => $edge[1], "cost" => $edge[2]);
+    //     $neighbors[$edge[1]][] = array("end" => $edge[0], "cost" => $edge[2]);
+    // }
+    // //remove duplicates
+    // $vertices = array_unique($vertices);
+ 
+    //initialize distance and previous
+    // foreach ($vertices as $vertex) {
+    //     $dist[$vertex] = INF;
+    //     $previous[$vertex] = NULL;
+    // }
+ 
     //mutable set of vertices
-    $unvisited = $vertices; 
+    // $unvisited = $vertices; 
+
+
     while (count($unvisited) > 0) {
  
         // TODO - Find faster way to get minimum
@@ -106,7 +114,7 @@ function dijkstra($graph_array, $source, $target) {
                 $u = $vertex; //save closest node to u
             }
         }
- 
+
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
@@ -115,8 +123,8 @@ function dijkstra($graph_array, $source, $target) {
         }
  
         //recompute distances from the new latest node
-        if (isset($neighbours[$u])) {
-            foreach ($neighbours[$u] as $arr) {
+        if (isset($neighbors[$u])) {
+            foreach ($neighbors[$u] as $arr) {
                 $alt = $dist[$u] + $arr["cost"];
                 if ($alt < $dist[$arr["end"]]) {
                     $dist[$arr["end"]] = $alt;
@@ -124,6 +132,14 @@ function dijkstra($graph_array, $source, $target) {
                 }
             }
         }
+
+        //check if we've reached our destination
+        if($u == $target) {
+            break;
+        }
+
+        //add more to the arrays
+        addToGraph($vertices, $unvisited, $neighbors, $u, $dist, $previous, getAdjacentActors($link, $source));
     }
     //pull path out of previouses
     $path = array();
@@ -159,7 +175,7 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 $secondNameQuery->close();
 
-getAdjacentActors($link, $firstNameID);
+dijkstra($link, $firstNameID, $secondNameID);
     
 //get persons acted in films
 
