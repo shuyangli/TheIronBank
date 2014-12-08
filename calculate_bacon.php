@@ -1,47 +1,57 @@
 <?php
 include('partials/connect.php');
 
-//get films acted by person
-function getActedFilms($link, $person_ID) {
+// //get films acted by person
+// function getActedFilms($link, $person_ID) {
 
-    $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
-    $filmsQuery->bind_param("i", $person_ID);
-    $filmsQuery->execute();
-    $filmsQuery->bind_result($actedFilm);
+//     $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
+//     $filmsQuery->bind_param("i", $person_ID);
+//     $filmsQuery->execute();
+//     $filmsQuery->bind_result($actedFilm);
 
-    $resultsArray = array();
-    while ($filmsQuery->fetch()) {
-        array_push($resultsArray, $actedFilm);
-    }
+//     $resultsArray = array();
+//     while ($filmsQuery->fetch()) {
+//         array_push($resultsArray, $actedFilm);
+//     }
 
-    // echo "Acted Films:";
-    // var_dump($resultsArray);
-    $filmsQuery->close();
-    return $resultsArray;
-}
+//     // echo "Acted Films:";
+//     // var_dump($resultsArray);
+//     $filmsQuery->close();
+//     return $resultsArray;
+// }
 
-//get actors in a film
-function getActorsInFilm($link, $film_ID) {
-    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN ? ") or die(var_dump(mysqli_error($link)));
-    $actorsQuery->bind_param("s", $film_ID);
-    $actorsQuery->execute();
-    $actorsQuery->bind_result($actors);
-    $actorsQuery->fetch();
+// //get actors in a film
+// function getActorsInFilm($link, $film_ID) {
+//     $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID = ? ") or die(var_dump(mysqli_error($link)));
+//     $actorsQuery->bind_param("s", $film_ID);
+//     $actorsQuery->execute();
+//     $actorsQuery->bind_result($actors);
+//     $actorsQuery->fetch();
 
-    // echo "Actors in film: ";
-    // var_dump($actors);
-    $actorsQuery->close();
-    return $actors;
+//     // echo "Actors in film: ";
+//     // var_dump($actors);
+//     $actorsQuery->close();
+//     return $actors;
 
-}
+// }
 
 //returns an array of all actors one degree away from the input
 function getAdjacentActors($link, $person_ID) {
-    $films = getActedFilms($link, $person_ID);
+    // $films = getActedFilms($link, $person_ID);
+
+    // $actors = array();
+    // foreach ($films as $film) {
+    //     array_push($actors, getActorsInFilm($link, $film));
+    // }
+
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? )") or die(var_dump(mysqli_error($link)));
+    $actorsQuery->bind_param("i", $person_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actor);
 
     $actors = array();
-    foreach ($films as $film) {
-        array_push($actors, getActorsInFilm($link, $film));
+    while ($actorsQuery->fetch()) {
+        array_push($actors, $actor);
     }
 
     //have to delete the original actor from the adjacent list
