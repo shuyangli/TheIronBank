@@ -133,8 +133,7 @@ function dijkstra($link, $source, $target) {
         }
 
         echo "Next traversed node is ".$u."\n";
-        echo "Previous path is: ";
-        printDebug($previous);
+        echo " from node : ".$previous[$u];
 
         //returns difference of &Q - &u
         //pulls u out of Q
