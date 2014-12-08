@@ -157,7 +157,7 @@ function dijkstra($link, $source, $target) {
         }
 
         //add more to the arrays
-        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $source));
+        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
     }
     //pull path out of previouses
     $path = array();
