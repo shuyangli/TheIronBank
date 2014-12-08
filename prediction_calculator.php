@@ -63,8 +63,8 @@ $sum = 0;
 $count = 0;
 
 for ($i = 0; $i < count($db_writersArray); ++$i){
-    $writer = $db_writersArray[$i]
-    $query = "select Person_ID from FM_Persons where Person_Name=?;";
+    $writer = $db_writersArray[$i];
+    $query = "select Person_ID from FM_Person where Person_Name=?;";
     if ($stmt = $link->prepare($query)){
         $stmt->bind_param("s", $writer);
         $stmt->execute();
@@ -75,7 +75,7 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
                 //Get movie Id from writer table
                 $query2 = "select IMDB_ID from FM_Wrote where Person_ID=?;";
                 if ($stmt2 = $link->prepare($query2)){
-                    $stmt2->bind_param("s", $writer_id);
+                    $stmt2->bind_param("i", $writer_id);
                     $stmt2->execute();
                     $stmt2->store_result();
                     $stmt2->bind_result($movie_id);
