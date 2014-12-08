@@ -134,6 +134,8 @@ function dijkstra($link, $source, $target) {
         $unvisited = array_diff($unvisited, array($u));
         echo "Unvisited after removing element: \n";
         printDebug(count($unvisited));
+        echo "Vertices: \n";
+        printDebug(count($vertices));
         echo "\n";
         if ($distances[$u] == INF or $u == $target) {
             echo "Reached the end, or no nodes had noninfinite distance. \n";
