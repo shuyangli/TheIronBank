@@ -133,7 +133,7 @@ function dijkstra($link, $source, $target) {
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
         echo "Unvisited after removing element: \n";
-        printDebug($unvisited);
+        printDebug(count($unvisited));
         echo "\n";
         if ($distances[$u] == INF or $u == $target) {
             echo "Reached the end, or no nodes had noninfinite distance. \n";
