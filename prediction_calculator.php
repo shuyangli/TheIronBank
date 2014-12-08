@@ -38,11 +38,16 @@ if ($stmt = $link->prepare($query)){
     $stmt->store_result();
     $rowCount = $stmt->num_rows;
     $result = $stmt->bind_result($grosses);
+    //$stmt->fetch();
     
+    print $grosses;
+
     $sum = 0;
     $count = 0;
 
-    for ($i = 0; $i < count($grosses); ++$i){
+    //for ($i = 0; $i < count($grosses); ++$i){
+    while($stmt->fetch()){ 
+        print $gross . "<br>";
         if ($gross>0){
             $count = $count +1;
             $sum = $sum + $gross;
