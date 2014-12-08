@@ -125,7 +125,11 @@ function dijkstra($link, $source, $target) {
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
+        echo "Unvisited after removing element: \n";
+        var_dump($unvisited);
+        echo "\n";
         if ($distances[$u] == INF or $u == $target) {
+            echo "Reached the end, or no nodes had noninfinite distance\n";
             break;
         }
  
@@ -138,11 +142,6 @@ function dijkstra($link, $source, $target) {
                     $previous[$arr["end"]] = $u;
                 }
             }
-        }
-
-        //check if we've reached our destination
-        if($u == $target) {
-            break;
         }
 
         //add more to the arrays
@@ -158,6 +157,10 @@ function dijkstra($link, $source, $target) {
     array_unshift($path, $u);
     return $path;
 }
+
+
+
+//~~~~~~~~~~~~BEGIN~~~~~~~~~~~~~~
 
 //convert names to IDs
 
@@ -182,7 +185,9 @@ $secondNameQuery->fetch();
 $secondNameID = $secondNameQueryResult;
 $secondNameQuery->close();
 
-dijkstra($link, $firstNameID, $secondNameID);
+$path = dijkstra($link, $firstNameID, $secondNameID);
+
+echo "path is: ".implode(", ", $path)."\n";
     
 //get persons acted in films
 
