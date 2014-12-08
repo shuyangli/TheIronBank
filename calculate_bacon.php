@@ -4,7 +4,7 @@ include('partials/connect.php');
 //Debugging function
 function printDebug($value) {
     echo '<pre>';
-    printDebug($value);
+    var_dump($value);
     echo '</pre>';
 }
 
