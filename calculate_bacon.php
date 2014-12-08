@@ -58,6 +58,9 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 
         }
     }
+    echo "Distances: \n";
+    var_dump($distances);
+    echo "\n";
 }
 
 //the plan:
