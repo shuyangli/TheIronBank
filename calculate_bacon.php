@@ -94,9 +94,9 @@ function dijkstra($link, $source, $target) {
 
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
-    echo "Unvisited length: \n";
-    printDebug(count($unvisited));
-    echo "\n";
+    // echo "Unvisited length: \n";
+    // printDebug(count($unvisited));
+    // echo "\n";
 
     //first node has distance 0
     $distances[$source] = 0;
@@ -134,8 +134,10 @@ function dijkstra($link, $source, $target) {
             }
         }
 
+        echo "<p>";
         echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
         echo " from node : ".$previous[$u];
+        echo "</p>";
 
         //returns difference of &Q - &u
         //pulls u out of Q
