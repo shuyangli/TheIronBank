@@ -29,32 +29,42 @@ print "Release Year is " . $db_releaseYear . "<br>";
 $estimates = array(); //Will hold estimates for gross based upon each input
 
 //Distributor
-$query = "select * from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
+$query = "select Gross from FM_Film where Distributor=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
 
 if ($stmt = $link->prepare($query)){
+    $grosses = array();
     $stmt->bind_param("si", $db_distributor, $db_relevantDecade);
     $stmt->execute();
     $stmt->store_result();
     $rowCount = $stmt->num_rows;
-    $result = $stmt->get_result();
+    $result = $stmt->bind_result($grosses);
     
     $sum = 0;
     $count = 0;
 
-    while ($tuple = $result->fetch_assoc()){
-        print "<br>";
-        foreach ($tuple as $key => $value) {
-            if ($key=="Gross" && $value>0){
-                $count = $count +1;
-                $sum = $sum + $value;
-            }
-            print $key . "\t" . $value . "<br>";
+    for ($i = 0; $i < count($grosses); ++$i){
+        if ($gross>0){
+            $count = $count +1;
+            $sum = $sum + $gross;
         }
     }
+
+    //while ($tuple = $result->fetch_assoc()){
+    //    print "<br>";
+    //    foreach ($tuple as $key => $value) {
+    //        if ($key=="Gross" && $value>0){
+    //            $count = $count +1;
+    //            $sum = $sum + $value;
+    //        }
+    //        print $key . "\t" . $value . "<br>";
+    //    }
+    //}
     if ($count>0){
         array_push($estimates, $sum/$count);
     }
     $stmt->free_result();
+    $stmt->close();
+    $link->close();
 }
 
 
