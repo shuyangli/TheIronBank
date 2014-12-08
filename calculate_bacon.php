@@ -10,6 +10,7 @@ function getActedFilms($link, $person_ID) {
     $filmsQuery->bind_result($actedFilms);
     $filmsQuery->fetch();
 
+    echo "Acted Films:";
     var_dump($actedFilms);
     $filmsQuery->close();
     return $actedFilms;
@@ -23,6 +24,7 @@ function getActorsInFilm($link, $film_ID) {
     $actorsQuery->bind_result($actors);
     $actorsQuery->fetch();
 
+    echo "Actors in film: ";
     var_dump($actors);
     $actorsQuery->close();
     return $actors;
@@ -38,6 +40,7 @@ function getAdjacentActors($link, $person_ID) {
         array_push($actors, getActorsInFilm($film));
     }
 
+    echo "Adjacent Actors";
     var_dump($actors);
 
     return $actors;
