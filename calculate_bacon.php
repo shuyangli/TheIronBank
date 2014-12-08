@@ -41,7 +41,7 @@ function getAdjacentActors($link, $person_ID) {
 
     $actors = array();
     foreach ($films as $film) {
-        array_push($actors, getActorsInFilm($film));
+        array_push($actors, getActorsInFilm($link, $film));
     }
 
     echo "Adjacent Actors";
