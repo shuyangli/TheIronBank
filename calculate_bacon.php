@@ -21,8 +21,8 @@ function getAdjacentActors($link, $person_ID) {
         unset($uniqueActors[$k]);
     }
 
-    echo "Adjacent Actors";
-    var_dump($uniqueActors);
+    // echo "Adjacent Actors";
+    // var_dump($uniqueActors);
 
     return $actors;
 }
