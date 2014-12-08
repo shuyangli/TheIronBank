@@ -8,7 +8,7 @@ function getActedFilms($link, $person_ID) {
     $filmsQuery->bind_param("i", $person_ID);
     $filmsQuery->execute();
     $filmsQuery->bind_result($actedFilms);
-    $filmsQuery->fetch();
+    $filmsQuery->fetch_array();
 
     echo "Acted Films:";
     var_dump($actedFilms);
