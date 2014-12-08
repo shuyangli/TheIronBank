@@ -62,6 +62,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 
             $distances[$actor] = INF;
             $previous[$actor] = NULL;
+            echo $actor." was added to vertices\n";
 
         } else {
             echo $actor." was found in vertices\n";
