@@ -22,7 +22,7 @@ function getActedFilms($link, $person_ID) {
 
 //get actors in a film
 function getActorsInFilm($link, $film_ID) {
-    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID = ? ") or die(var_dump(mysqli_error($link)));
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN ? ") or die(var_dump(mysqli_error($link)));
     $actorsQuery->bind_param("s", $film_ID);
     $actorsQuery->execute();
     $actorsQuery->bind_result($actors);
