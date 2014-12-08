@@ -30,7 +30,7 @@ function getAdjacentActors($link, $person_ID) {
 //vertices is an array of all nodes that are either visited or unvisited
 //unvisited is just unvisited
 //first actor is the one all the others are adjacent to
-function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distance, &$previous, $firstActor, $actors) {
+function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previous, $firstActor, $actors) {
 
     echo "First Actor in addToGraph:\n";
     var_dump($firstActor);
@@ -39,7 +39,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distance, &$previous
     if(!in_array($firstActor, $vertices, true)) {
         array_push($vertices, $firstActor);
         array_push($unvisited, $firstActor);
-        $dist[$firstActor] = INF;
+        $distances[$firstActor] = INF;
         $previous[$firstActor] = NULL;
 
     }
@@ -53,7 +53,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distance, &$previous
             $neighbors[$firstActor][] = array("end" => $actor, "cost" => 1);
             $neighbors[$actor][] = array("end" => $firstActor, "cost" => 1);
 
-            $dist[$actor] = INF;
+            $distances[$actor] = INF;
             $previous[$actor] = NULL;
 
         }
@@ -74,17 +74,17 @@ function dijkstra($link, $source, $target) {
     $vertices = array();
     $unvisited = array();
     $neighbors = array();
-    $dist = array();
+    $distances = array();
     $previous = array();
 
-    addToGraph($vertices, $unvisited, $neighbors, $dist, $previous, $source, getAdjacentActors($link, $source));
+    addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
 
     echo "Unvisited:\n";
     var_dump($unvisited);
     echo "\n";
 
     //first node has distance 0
-    $dist[$source] = 0;
+    $distances[$source] = 0;
 
     // foreach ($graph_array as $edge) {
     //     // add each vertex to array
@@ -112,9 +112,9 @@ function dijkstra($link, $source, $target) {
         //the source is the first node to be set as visited, which updates the distances
         $min = INF;
         foreach ($unvisited as $vertex){
-            if ($dist[$vertex] < $min) {
-                echo "New min is ".$dist[$vertex]." from ".$vertex."\n";
-                $min = $dist[$vertex];
+            if ($distances[$vertex] < $min) {
+                echo "New min is ".$distances[$vertex]." from ".$vertex."\n";
+                $min = $distances[$vertex];
                 $u = $vertex; //save closest node to u
             }
         }
@@ -122,16 +122,16 @@ function dijkstra($link, $source, $target) {
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
-        if ($dist[$u] == INF or $u == $target) {
+        if ($distances[$u] == INF or $u == $target) {
             break;
         }
  
         //recompute distances from the new latest node
         if (isset($neighbors[$u])) {
             foreach ($neighbors[$u] as $arr) {
-                $alt = $dist[$u] + $arr["cost"];
-                if ($alt < $dist[$arr["end"]]) {
-                    $dist[$arr["end"]] = $alt;
+                $alt = $distances[$u] + $arr["cost"];
+                if ($alt < $distances[$arr["end"]]) {
+                    $distances[$arr["end"]] = $alt;
                     $previous[$arr["end"]] = $u;
                 }
             }
@@ -143,7 +143,7 @@ function dijkstra($link, $source, $target) {
         }
 
         //add more to the arrays
-        addToGraph($vertices, $unvisited, $neighbors, $u, $dist, $previous, getAdjacentActors($link, $source));
+        addToGraph($vertices, $unvisited, $neighbors, $u, $distances, $previous, getAdjacentActors($link, $source));
     }
     //pull path out of previouses
     $path = array();
