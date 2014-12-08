@@ -63,6 +63,8 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
             $distances[$actor] = INF;
             $previous[$actor] = NULL;
 
+        } else {
+            echo $actor." was found in vertices\n";
         }
     }
     // echo "Distances: \n";
