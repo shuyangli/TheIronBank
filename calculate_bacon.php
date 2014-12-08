@@ -7,13 +7,17 @@ function getActedFilms($link, $person_ID) {
     $filmsQuery = $link->prepare("SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? ") or die(var_dump(mysqli_error($link)));
     $filmsQuery->bind_param("i", $person_ID);
     $filmsQuery->execute();
-    $filmsQuery->bind_result($actedFilms);
-    $actedFilms->fetch_array();
+    $filmsQuery->bind_result($actedFilm);
+
+    $resultsArray = array();
+    while ($filmsQuery->fetch()) {
+        array_push($resul, $actedFilm)
+    }
 
     echo "Acted Films:";
-    var_dump($actedFilms);
+    var_dump($resultsArray);
     $filmsQuery->close();
-    return $actedFilms;
+    return $resultsArray;
 }
 
 //get actors in a film
