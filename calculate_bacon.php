@@ -77,7 +77,7 @@ function dijkstra($link, $source, $target) {
     $dist = array();
     $previous = array();
 
-    addToGraph($vertices, $unvisited, $neighbors, $source, $dist, $previous, getAdjacentActors($link, $source));
+    addToGraph($vertices, $unvisited, $neighbors, $dist, $previous, $source, getAdjacentActors($link, $source));
 
     echo "Unvisited:\n";
     var_dump($unvisited);
