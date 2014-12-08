@@ -132,22 +132,25 @@ function dijkstra($link, $source, $target) {
             }
         }
 
-        echo "Next traversed node is ".$u."\n";
+        echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
         echo " from node : ".$previous[$u];
 
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
-        echo "Unvisited length after removing element: \n";
-        printDebug(count($unvisited));
-        echo "Vertices length: \n";
-        printDebug(count($vertices));
-        echo "\n";
+        // echo "Unvisited length after removing element: \n";
+        // printDebug(count($unvisited));
+        // echo "Vertices length: \n";
+        // printDebug(count($vertices));
+        // echo "\n";
         if ($distances[$u] == INF or $u == $target) {
             echo "Reached the end, or no nodes had noninfinite distance. \n";
             break;
         }
- 
+
+        //add more to the arrays
+        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
+
         //recompute distances from the new latest node
         if (isset($neighbors[$u])) {
             foreach ($neighbors[$u] as $arr) {
@@ -158,9 +161,6 @@ function dijkstra($link, $source, $target) {
                 }
             }
         }
-
-        //add more to the arrays
-        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
     }
     //pull path out of previouses
     $path = array();
