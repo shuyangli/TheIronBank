@@ -207,6 +207,10 @@ if ($stmt = $link->prepare($query)){
 $link->close();
 print_r($estimates);
 
+$sum = array_sum($estimates);
+$count = count($estimates);
+print "This movie is estimated to Gross around $" . round($sum/$count,-3) . " domestically.<br>";
+
 
 
 ?>
