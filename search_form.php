@@ -1,5 +1,3 @@
-<?php include('partials/connect.php') ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,19 +27,19 @@
     <script src="js/sidebar.js"></script>
 
     <!-- AJAX request to search for information -->
-    <script>
-        $("#search_submit").on('click', function (e) {
-            // Prevent default
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#search_form").on('submit', function (e) {
+
             e.preventDefault();
 
-            // AJAX call
+            // AJAX call to get actors
             $.ajax({
                 url: 'search_actor.php',
                 type: 'GET',
-                dataType: 'json',
-                data: { name: $("#name_input").text() },
+                data: $("#search_form").serialize(),
                 success: function(result) {
-
                     $("#result-container").empty();
 
                     // Populate result container
@@ -53,6 +51,7 @@
                 }
             });
         });
+    });
     </script>
 
 </head>
@@ -71,9 +70,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Search</h1>
-                        <form method="get">
-                        Name: <input type="textbox" name="name" id="name_input" /><br/>
-                        <input type="submit" id="search_submit"/>
+                        <form id="search_form" method="get">
+                            Name: <input type="textbox" name="name" id="name_input" /><br/>
+                            <input type="submit"/>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
