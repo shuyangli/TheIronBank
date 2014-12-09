@@ -224,7 +224,6 @@ if ($stmt = $link->prepare($query)){
 
     while($stmt->fetch()){ 
         print $title . " grossed $" . $gross . " domestically.<br>";
-        }
     }
     $stmt->free_result();
     $stmt->close();
