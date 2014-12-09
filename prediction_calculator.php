@@ -203,8 +203,6 @@ if ($stmt = $link->prepare($query)){
 }
 
 //Genre (TODO)
-
-$link->close();
 print_r($estimates);
 
 $sum = array_sum($estimates);
@@ -229,6 +227,6 @@ if ($stmt = $link->prepare($query)){
     $stmt->close();
 }
 
-
+$link->close();
 
 ?>
