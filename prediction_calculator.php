@@ -202,14 +202,33 @@ if ($stmt = $link->prepare($query)){
     $stmt->close();
 }
 
-//Genre
+//Genre (TODO)
 
 $link->close();
 print_r($estimates);
 
 $sum = array_sum($estimates);
 $count = count($estimates);
-print "This movie is estimated to Gross around $" . round($sum/$count,-3) . " domestically.<br>";
+$estimatedGross = round($sum/$count,-3);
+print "<br>This movie is estimated to Gross around $" . $estimatedGross . " domestically.<br>";
+
+//Find similar movies
+print "<br>The following recent movies performed simliarly to your estimated gross:<br>";
+$query = "select Title,Gross from FM_Film where Gross>(?*.97) and Gross<(?*1.03) order by Release_Year desc limit 5;";
+
+if ($stmt = $link->prepare($query)){
+    $stmt->bind_param("ii", $estimatedGross, $estimatedGross);
+    $stmt->execute();
+    $stmt->store_result();
+    $result = $stmt->bind_result($title,$gross);
+
+    while($stmt->fetch()){ 
+        print $title . " grossed $" . $gross . " domestically.<br>";
+        }
+    }
+    $stmt->free_result();
+    $stmt->close();
+}
 
 
 
