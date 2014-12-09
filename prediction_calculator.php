@@ -96,7 +96,7 @@ for ($i = 0; $i < count($db_writersArray); ++$i){
                                 $stmt3->bind_param("si", $movie_id, $db_relevantDecade);
                                 $stmt3->execute();
                                 $stmt3->store_result();
-                                $stmt->bind_result($gross);
+                                $stmt3->bind_result($gross);
 
                                 while($stmt3->fetch()){ 
 
