@@ -176,12 +176,37 @@ if ($count>0){
     array_push($estimates, $sum/$count);
 }
 
+//MPAA_Rating
+$query = "select Gross from FM_Film where MPAA_Rating=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
+
+if ($stmt = $link->prepare($query)){
+    $stmt->bind_param("si", $db_rating, $db_relevantDecade);
+    $stmt->execute();
+    $stmt->store_result();
+    $result = $stmt->bind_result($gross);
+
+    $sum = 0;
+    $count = 0;
+
+    while($stmt->fetch()){ 
+        if ($gross>0){
+            $count = $count +1;
+            $sum = $sum + $gross;
+        }
+    }
+
+    if ($count>0){
+        array_push($estimates, $sum/$count);
+    }
+    $stmt->free_result();
+    $stmt->close();
+}
 
 //Genre
 
-//Rating
-
 $link->close();
 print_r($estimates);
+
+
 
 ?>
