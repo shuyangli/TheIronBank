@@ -40,13 +40,14 @@ function getEvenMoreAdjacentActors($link, $personArray) {
 
 
     $sql = "SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID IN (".implode(", ", $personArray).") )";
-    printDebug($sql);
 
     if(!$result = $link->query($sql)){
         die('There was an error running the query [' . $db->error . ']');
-    } else {
-        printDebug($result);
     }
+
+
+    //save to array
+    $actors = $result->fetch_all();
 
     //have to delete the original actor from the adjacent list
     $uniqueActors = array_unique($actors);
@@ -160,7 +161,8 @@ function dijkstra($link, $source, $target) {
         }
 
         //add more to the arrays
-        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
+        // addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
+        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getEvenMoreAdjacentActors($link, $vertices));
 
         //recompute distances from the new latest node
         if (isset($neighbors[$u])) {
