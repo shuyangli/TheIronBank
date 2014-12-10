@@ -31,6 +31,7 @@ function getAdjacentActors($link, $person_ID) {
 
     // echo "Adjacent Actors";
     // printDebug($uniqueActors);
+    getEvenMoreAdjacentActors($link, $actors);
 
     return $actors;
 }
