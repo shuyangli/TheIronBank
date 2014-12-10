@@ -28,6 +28,31 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <!-- AJAX request to search for information -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        // Search actors
+        $("#prediction_form").on('submit', function (e) {
+
+            // Prevent form from actually submitting
+            e.preventDefault();
+
+            // AJAX call to get films
+            $.ajax({
+                url: 'prediction_calculator.php',
+                type: 'GET',
+                data: $("#prediction_form").serialize(),
+                success: function(result) {
+
+                    // Populate result container
+                    resArray = JSON.parse(result);
+                    $("#res-container").text(JSON.stringify(resArray));
+                }
+            });
+        });
+    });
+    </script>
 
 </head>
 
@@ -45,7 +70,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Film Success Predictor</h1>
-                        <form action="prediction_calculator.php" method="get">
+                        <form action="prediction_calculator.php" id="prediction_form" method="get">
                         Comma Separated Actor List: <input type="textbox" name="actorList"/><br/>
                         Director: <input type="textbox" name="director"/><br/>
                         Writer: <input type="textbox" name="writer"/><br/>
@@ -54,6 +79,10 @@
                         Genre: <input type="textbox" name="genre"/><br/>
                         Release Year: <input type="textbox" name="year"/><br/>
                         <input type="submit"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" id="res-container">
                     </div>
                 </div>
             </div>
