@@ -14,7 +14,7 @@ $db_insertformat = "si";
 
 
 
-if( !(is_int($db_numawards) ) or $db_numawards < 0 )
+if( $db_numawards < 0 )
 	{		die("Invalid value for number of awards.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif(strlen($db_name) > 80)
 	{		die("Name cannot be longer than 80 characters.");	}

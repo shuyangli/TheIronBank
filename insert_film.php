@@ -39,15 +39,15 @@ if ($stmt = $link->prepare($query)){
 
 if( strlen($db_id) > 80)
 	{		die("IMDB ID cannot be longer than 80 characters.");		}	
-//elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
-//	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
+elseif( $db_runtime  < 0 )	
+	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
 	{		die("Invalid entry for Rating:\n Rating must be G, PG, PG-13, R, or X" );	}
-elseif( !(is_int($db_gross) ) or $db_gross < 0 )
+elseif( $db_gross < 0 )
 	{		die("Invalid value for Gross.\n Value must be an integer greater than 0.\n Could not complete request.");	}
-elseif( !(is_int($db_year) ) or $db_year < 0 )
+elseif( $db_year < 0 )
 	{		die("Invalid value for IMDB ID.\n Value must be a valid year.");	}
-elseif( !(is_int($db_numawards) ) or $db_numawards < 0 )
+elseif( $db_numawards < 0 )
 	{		die("Invalid value for Number of Awards.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif(strlen($db_title) > 80)
 	{		die("Title cannot be longer than 80 characters.");	}
