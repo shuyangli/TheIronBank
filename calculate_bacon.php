@@ -141,10 +141,10 @@ function dijkstra($link, $source, $target) {
             }
         }
 
-        echo "<p>";
-        echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
-        echo " from node : ".$previous[$u];
-        echo "</p>";
+        // echo "<p>";
+        // echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
+        // echo " from node : ".$previous[$u];
+        // echo "</p>";
 
         //returns difference of &Q - &u
         //pulls u out of Q
@@ -184,6 +184,15 @@ function dijkstra($link, $source, $target) {
     return $path;
 }
 
+function getNameForID($link, $person_ID) {
+    $actorsQuery = $link->prepare("SELECT Person_Name FROM FM_Person WHERE Person_ID = ? ") or die(printDebug(mysqli_error($link)));
+    $actorsQuery->bind_param("i", $person_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actor);
+
+    return $actor;
+}
+
 
 
 //~~~~~~~~~~~~BEGIN~~~~~~~~~~~~~~
@@ -219,6 +228,18 @@ $secondNameQuery->close();
 
 $path = dijkstra($link, $firstNameID, $secondNameID);
 
-echo "path is: ".implode(", ", $path)."\n";
+//Beautify results
+
+echo "<h2> The Bacon Number for ".ucwords($_GET['firstPersonName'])." and ".ucwords($_GET['secondPersonName'])." is ".(count($path)-1)."</h2>";
+
+$actorNames = array();
+
+foreach ($path as $person) {
+    $actorNames[] = getNameForID($person);
+}
+
+//get names for each actor
+
+echo "<h3> The path between these two actors is : ".implode("->", $actorNames)."</h3>";
 
 ?>
