@@ -17,7 +17,7 @@ $db_numawards = $_GET['numawards'];
 $db_title = $_GET['title'];
 $db_distributor = $_GET['distributor'];
 
-$db_insertformat = "issisiiiss";
+$db_insertformat = "sssisiiiss";
 
 $stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 
