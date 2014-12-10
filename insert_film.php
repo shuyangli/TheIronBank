@@ -19,7 +19,6 @@ $db_distributor = $_GET['distributor'];
 
 $db_insertformat = "sssisiiiss";
 
-$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 
 $query = "select IMDB_ID from FM_Film where IMDB_ID=?;";
 
@@ -29,11 +28,11 @@ if ($stmt = $link->prepare($query)){
     $stmt->store_result();
     $result = $stmt->bind_result($gross);
 
-    $stmt->$gross
-    if($gross>0){
+    while($stmt->$fetch() ){
+    if($gross > 0){
 			die("IMDB ID is already assigned, needs new id.");	
         }
-    
+    }
     $stmt->free_result();
     $stmt->close();
 }
@@ -54,34 +53,8 @@ elseif(strlen($db_title) > 80)
 	{		die("Title cannot be longer than 80 characters.");	}
 elseif( strlen($db_distributor) > 80)
 	{			die("Distributor cannot be longer than 80 characters.");	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-else{	
+else{
+	$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
