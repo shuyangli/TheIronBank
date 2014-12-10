@@ -47,11 +47,11 @@
 
                     // Populate result container
                     resArray = JSON.parse(result);
-                    $("#res-container").append("<tr><td>Your Movie Estimate</td><td>" + resArray[0] + "</td></tr>");
+                    /*$("#res-container").append("<tr><td>Your Movie Estimate</td><td>" + resArray[0] + "</td></tr>");
                     for (int i = 1; i < resArray.length; i++){
                         $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "</td></tr>");
-                    }
-                    //$("#res-container").text(JSON.stringify(resArray));
+                    }*/
+                    $("#res-container").text(JSON.stringify(resArray));
                 }
             });
         });
@@ -85,13 +85,17 @@
                         <input type="submit"/>
                     </div>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-lg-12">
                         <table class="table table-striped">
                             <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
                             <tbody id="res-container">
                             </tbody>
                         </table>
+                    </div>
+                </div>-->
+                <div class="row">
+                    <div class="col-lg-12" id="res-container">
                     </div>
                 </div>
             </div>
