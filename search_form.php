@@ -58,7 +58,7 @@
                         $("#actor-row").show();
 
                         for (var i = 0; i < resArray.length; i += 1) {
-                            $("#actor-result-container").append("ID: " + resArray[i][0] + ", Name: " + resArray[i][1] + "<br />");
+                            $("#actor-result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "</td></tr>");
                         }
                     }
                 }
@@ -80,7 +80,7 @@
                         $("#film-row").show();
 
                         for (var i = 0; i < resArray.length; i += 1) {
-                            $("#film-result-container").append("IMDB ID: " + resArray[i][0] + ", Title: " + resArray[i][1] + " (" + resArray[i][2] + ")<br />");
+                            $("#film-result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "</td><td>" + resArray[i][2] + "</td></tr>");
                         }
                     }
                 }
@@ -113,14 +113,22 @@
                 </div>
                 <div class="row" id="actor-row">
                     <div class="col-lg-12">
-                        <h2>Actors</h2>
-                        <div id="actor-result-container"></div>
+                        <h2>Persons</h2>
+                        <table class="table table-striped">
+                            <thead><tr><th>ID</th><th>Name</th></tr></thead>
+                            <tbody id="actor-result-container">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="row" id="film-row">
                     <div class="col-lg-12">
                         <h2>Films</h2>
-                        <div id="film-result-container"></div>
+                        <table class="table table-striped">
+                            <thead><tr><th>IMDB ID</th><th>Title</th><th>Release Year</th></tr></thead>
+                            <tbody id="film-result-container">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
