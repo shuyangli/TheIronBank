@@ -28,7 +28,7 @@ if( !(is_int($db_id) ) or $db_id < 0 )
 elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
 	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
-	{		die("Invalid entry for Rating:\nRating must be G, PG, PG-13, R, or X" );	}
+	{		die("Invalid entry for Rating:\n Rating must be G, PG, PG-13, R, or X" );	}
 elseif( !(is_int($db_gross) ) or $db_gross < 0 )
 	{		die("Invalid value for Gross.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif( !(is_int($db_year) ) or $db_year < 0 )
