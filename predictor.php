@@ -51,7 +51,7 @@
                     $("#return-row").show();
                     // Populate result container
                     resArray = JSON.parse(result);
-                    $("#res-container-title").text("Domestic Gross Estimate is $" + resArray[0]);
+                    $("title-container").append("Domestic Gross Estimate is $" + resArray[0]);
                     for (var i = 1; i < resArray.length; i += 1){
                         $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
                     }
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12" id="res-container-title">
+                    <div class="col-lg-12" id="title-container">
                     </div>
                 </div>
                 <div class="row" id="return-row">
