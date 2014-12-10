@@ -28,7 +28,7 @@ if ($stmt = $link->prepare($query)){
     $stmt->store_result();
     $result = $stmt->bind_result($gross);
 
-    while($stmt->$fetch() ){
+    while($stmt->fetch() ){
     if($gross > 0){
 			die("IMDB ID is already assigned, needs new id.");	
         }
