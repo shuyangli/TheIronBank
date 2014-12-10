@@ -51,7 +51,7 @@
                     $("#return-row").show();
                     // Populate result container
                     resArray = JSON.parse(result);
-                    $("#res-container-title").append("<Domestic Gross Estimate is $" + resArray[0]);
+                    $("#res-container-title").text("Domestic Gross Estimate is $" + resArray[0]);
                     for (var i = 1; i < resArray.length; i += 1){
                         $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
                     }
@@ -78,9 +78,9 @@
                     <div class="col-lg-12">
                         <h1>Film Success Predictor</h1>
                         <form action="prediction_calculator.php" id="prediction_form" method="get">
-                        Comma Separated Actor List: <input type="textbox" name="actorList"/><br/>
-                        Director: <input type="textbox" name="director"/><br/>
-                        Writer: <input type="textbox" name="writer"/><br/>
+                        Comma Separated Actors <input type="textbox" name="actorList"/><br/>
+                        Comma Separated Directors: <input type="textbox" name="director"/><br/>
+                        Comma Separated Writers: <input type="textbox" name="writer"/><br/>
                         Distributor: <input type="textbox" name="distributor"/><br/>
                         Rating: <input type="textbox" name="rating"/><br/>
                         Genre: <input type="textbox" name="genre"/><br/>

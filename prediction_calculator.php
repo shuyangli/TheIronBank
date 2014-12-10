@@ -63,7 +63,7 @@ $sum = 0;
 $count = 0;
 
 for ($i = 0; $i < count($db_writersArray); ++$i){
-    $writer = $db_writersArray[$i];
+    $writer = $db_writersArray[$i].trim();
     #print $writer . "<br>";
     $query = "select Person_ID from FM_Person where Person_Name=?;";
     if ($stmt = $link->prepare($query)){
@@ -122,7 +122,7 @@ $sum = 0;
 $count = 0;
 
 for ($i = 0; $i < count($db_actorsArray); ++$i){
-    $actor = $db_actorsArray[$i];
+    $actor = $db_actorsArray[$i].trim();
     #print $actor . "<br>";
     $query = "select Person_ID from FM_Person where Person_Name=?;";
     if ($stmt = $link->prepare($query)){
