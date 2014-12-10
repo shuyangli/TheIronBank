@@ -22,9 +22,8 @@ $db_insertformat = "issisiiiss";
 $stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 
 
-if( !(is_int($db_id) ) or $db_id < 0 )
-	{		die("Invalid value for IMDB ID.\n Value must be an integer greater than 0.\n Could not complete request.");	}	
-			//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
+if( strlen($db_id) > 80)
+	{		die("IMDB ID cannot be longer than 80 characters.");		}	
 elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
 	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
