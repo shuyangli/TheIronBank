@@ -35,6 +35,33 @@ function getAdjacentActors($link, $person_ID) {
     return $actors;
 }
 
+function getEvenMoreAdjacentActors($link, $personArray) {
+
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID IN (?) )") or die(printDebug(mysqli_error($link)));
+    $actorsQuery->bind_param("i", $person_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actor);
+
+    //save to array
+    $actors = array();
+    while ($actorsQuery->fetch()) {
+        array_push($actors, $actor);
+    }
+
+    //have to delete the original actor from the adjacent list
+    $uniqueActors = array_unique($actors);
+    $keys = array_keys($uniqueActors, $person_ID);
+    foreach($keys as $k) {
+        unset($uniqueActors[$k]);
+    }
+
+    // echo "Adjacent Actors";
+    // printDebug($uniqueActors);
+
+    return $actors;
+
+}
+
 //vertices is an array of all nodes that are either visited or unvisited
 //unvisited is just unvisited
 //first actor is the one all the others are adjacent to
@@ -101,26 +128,6 @@ function dijkstra($link, $source, $target) {
     //first node has distance 0
     $distances[$source] = 0;
 
-    // foreach ($graph_array as $edge) {
-    //     // add each vertex to array
-    //     array_push($vertices, $edge[0], $edge[1]);
-    //     //update neighbors
-    //     $neighbors[$edge[0]][] = array("end" => $edge[1], "cost" => $edge[2]);
-    //     $neighbors[$edge[1]][] = array("end" => $edge[0], "cost" => $edge[2]);
-    // }
-    // //remove duplicates
-    // $vertices = array_unique($vertices);
- 
-    //initialize distance and previous
-    // foreach ($vertices as $vertex) {
-    //     $dist[$vertex] = INF;
-    //     $previous[$vertex] = NULL;
-    // }
- 
-    //mutable set of vertices
-    // $unvisited = $vertices; 
-
-
     while (count($unvisited) > 0) {
  
         // TODO - Find faster way to get minimum
@@ -183,7 +190,7 @@ function dijkstra($link, $source, $target) {
 
 //convert names to IDs
 
-$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
+$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE UPPER(Person_Name) = UPPER(?) ") or die(printDebug(mysqli_error($link)));
 $firstNameQuery->bind_param("s", $_GET['firstPersonName']);
 $firstNameQuery->execute();
 $firstNameQuery->bind_result($firstNameQueryResult);
@@ -191,10 +198,13 @@ $firstNameQuery->fetch();
 
 //first ID
 $firstNameID = $firstNameQueryResult;
+if(!$firstNameID) {
+    die("No First Actor Found");
+}
 $firstNameQuery->close();
 
 // include('partials/connect.php');
-$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
+$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE UPPER(Person_Name) = UPPER(?) ") or die(printDebug(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
 $secondNameQuery->execute();
 $secondNameQuery->bind_result($secondNameQueryResult);
@@ -202,33 +212,13 @@ $secondNameQuery->fetch();
 
 //second ID
 $secondNameID = $secondNameQueryResult;
+if(!$secondNameID) {
+    die("No Second Actor Found");
+}
 $secondNameQuery->close();
 
 $path = dijkstra($link, $firstNameID, $secondNameID);
 
 echo "path is: ".implode(", ", $path)."\n";
-    
-//get persons acted in films
-
-//Code inspired from http://rosettacode.org/wiki/Dijkstra's_algorithm#PHP
-
-
-
- 
-// $graph_array = array(
-//                     array("a", "b", 7),
-//                     array("a", "c", 9),
-//                     array("a", "f", 14),
-//                     array("b", "c", 10),
-//                     array("b", "d", 15),
-//                     array("c", "d", 11),
-//                     array("c", "f", 2),
-//                     array("d", "e", 6),
-//                     array("e", "f", 9)
-//                );
- 
-// $path = dijkstra($graph_array, "a", "e");
- 
-// echo "path is: ".implode(", ", $path)."\n";
 
 ?>
