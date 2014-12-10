@@ -48,6 +48,7 @@ function getEvenMoreAdjacentActors($link, $personArray) {
 
     //save to array
     $actors = $result->fetch_all();
+    printDebug($actors);
 
     //have to delete the original actor from the adjacent list
     $uniqueActors = array_unique($actors);
@@ -150,11 +151,11 @@ function dijkstra($link, $source, $target) {
         //returns difference of &Q - &u
         //pulls u out of Q
         $unvisited = array_diff($unvisited, array($u));
-        // echo "Unvisited length after removing element: \n";
-        // printDebug(count($unvisited));
-        // echo "Vertices length: \n";
-        // printDebug(count($vertices));
-        // echo "\n";
+        echo "Unvisited length after removing element: \n";
+        printDebug(count($unvisited));
+        echo "Vertices length: \n";
+        printDebug(count($vertices));
+        echo "\n";
         if ($distances[$u] == INF or $u == $target) {
             // echo "Reached the end, or no nodes had noninfinite distance. \n";
             break;
