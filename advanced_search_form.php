@@ -73,12 +73,12 @@
             // Prevent form from actually submitting
             e.preventDefault();
 
-            if ( !($("#movie_name_input").val()) && !($("#actor_name_input").val()) ) {
+            if ( !($("#movie_name_input").val()) /* && !($("#actor_name_input").val()) */ ) {
                 // If input is empty
                 return false;
             } else if (!$("#movie_name_input").val()) {
                 // If there's no movie name, we're querying by actors
-                search_by_actor();
+                /* search_by_actor(); */
             } else {
                 // Otherwise we're querying by movies
                 // This way whenever there's a movie name, we use it
@@ -106,7 +106,7 @@
                         <h1>Advanced Search</h1>
                         <form id="search_form" method="get">
                             All actors in a film: <input type="textbox" name="movie_name" id="movie_name_input" placeholder="Movie Name" /><br/>
-                            All films an actor has acted in: <input type="textbox" name="actor_name" id="actor_name_input" placeholder="Actor Name" /><br/>
+                            <!-- All films an actor has acted in: <input type="textbox" name="actor_name" id="actor_name_input" placeholder="Actor Name" /><br/> -->
                             <input type="submit"/>
                         </form>
                     </div>
