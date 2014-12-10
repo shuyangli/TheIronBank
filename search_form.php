@@ -42,6 +42,11 @@
             // Prevent form from actually submitting
             e.preventDefault();
 
+            if (!$("#name_input").val()) {
+                // If input is empty
+                return false;
+            }
+
             // AJAX call to get actors
             $.ajax({
                 url: 'search_actor.php',
