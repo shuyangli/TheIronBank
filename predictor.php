@@ -28,6 +28,38 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <!-- AJAX request to search for information -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        //Hide return row
+        $("#return-row").hide();
+
+        // Search actors
+        $("#prediction_form").on('submit', function (e) {
+
+            // Prevent form from actually submitting
+            e.preventDefault();
+
+            // AJAX call to get films
+            $.ajax({
+                url: 'prediction_calculator.php',
+                type: 'GET',
+                data: $("#prediction_form").serialize(),
+                success: function(result) {
+                    $("#res-container").empty();
+                    $("#return-row").show();
+                    // Populate result container
+                    resArray = JSON.parse(result);
+                    $("#title-container").text("Domestic Gross Estimate is $" + resArray[0]+"<br>Look Below for Recent Movies had Similar Domestic Gross:");
+                    for (var i = 1; i < resArray.length; i += 1){
+                        $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
+                    }
+                }
+            });
+        });
+    });
+    </script>
 
 </head>
 
@@ -45,10 +77,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Film Success Predictor</h1>
-                        <form action="prediction_calculator.php" method="get">
-                        Comma Separated Actor List: <input type="textbox" name="actorList"/><br/>
-                        Director: <input type="textbox" name="director"/><br/>
-                        Writer: <input type="textbox" name="writer"/><br/>
+                        <form action="prediction_calculator.php" id="prediction_form" method="get">
+                        Comma Separated Actors <input type="textbox" name="actorList"/><br/>
+                        Comma Separated Directors: <input type="textbox" name="director"/><br/>
+                        Comma Separated Writers: <input type="textbox" name="writer"/><br/>
                         Distributor: <input type="textbox" name="distributor"/><br/>
                         Rating: <input type="textbox" name="rating"/><br/>
                         Genre: <input type="textbox" name="genre"/><br/>
@@ -56,6 +88,23 @@
                         <input type="submit"/>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12" id="title-container" style="font-size:24px;">
+                    </div>
+                </div>
+                <div class="row" id="return-row">
+                    <div class="col-lg-12">
+                        <table class="table table-striped">
+                            <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
+                            <tbody id="res-container">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-lg-12" id="res-container">
+                    </div>
+                </div>-->
             </div>
         </div>
         <!-- /#page-content-wrapper -->
