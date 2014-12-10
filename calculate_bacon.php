@@ -46,7 +46,7 @@ function getEvenMoreAdjacentActors($link, $personArray) {
         $actors[] = intval($actorArray[0]);
     }
 
-    printDebug($actors);
+    // printDebug($actors);
 
     // echo "Adjacent Actors";
     // printDebug($uniqueActors);
