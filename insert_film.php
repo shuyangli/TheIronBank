@@ -21,6 +21,25 @@ $db_insertformat = "issisiiiss";
 
 $stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 
-$stmt->execute();
+
+if( !(is_int($db_id) ) or $db_id < 0 )
+	{			}	//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
+elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
+	{			}
+elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
+	{			}
+elseif( !(is_int($db_gross) ) or $db_gross < 0 )
+	{			}
+elseif( !(is_int($db_year) ) or $db_year < 0 )
+	{			}
+elseif( !(is_int($db_numawards) ) or $db_numawards < 0 )
+	{			}
+elseif(strlen($db_title) > 80)
+	{			}
+elseif( strlen($db_distributor) > 80)
+	{			}
+else{	
+	$stmt->execute();	
+	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
 ?>

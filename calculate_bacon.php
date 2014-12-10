@@ -35,6 +35,33 @@ function getAdjacentActors($link, $person_ID) {
     return $actors;
 }
 
+function getEvenMoreAdjacentActors($link, $personArray) {
+
+    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID IN (?) )") or die(printDebug(mysqli_error($link)));
+    $actorsQuery->bind_param("i", $person_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actor);
+
+    //save to array
+    $actors = array();
+    while ($actorsQuery->fetch()) {
+        array_push($actors, $actor);
+    }
+
+    //have to delete the original actor from the adjacent list
+    $uniqueActors = array_unique($actors);
+    $keys = array_keys($uniqueActors, $person_ID);
+    foreach($keys as $k) {
+        unset($uniqueActors[$k]);
+    }
+
+    // echo "Adjacent Actors";
+    // printDebug($uniqueActors);
+
+    return $actors;
+
+}
+
 //vertices is an array of all nodes that are either visited or unvisited
 //unvisited is just unvisited
 //first actor is the one all the others are adjacent to
@@ -101,26 +128,6 @@ function dijkstra($link, $source, $target) {
     //first node has distance 0
     $distances[$source] = 0;
 
-    // foreach ($graph_array as $edge) {
-    //     // add each vertex to array
-    //     array_push($vertices, $edge[0], $edge[1]);
-    //     //update neighbors
-    //     $neighbors[$edge[0]][] = array("end" => $edge[1], "cost" => $edge[2]);
-    //     $neighbors[$edge[1]][] = array("end" => $edge[0], "cost" => $edge[2]);
-    // }
-    // //remove duplicates
-    // $vertices = array_unique($vertices);
- 
-    //initialize distance and previous
-    // foreach ($vertices as $vertex) {
-    //     $dist[$vertex] = INF;
-    //     $previous[$vertex] = NULL;
-    // }
- 
-    //mutable set of vertices
-    // $unvisited = $vertices; 
-
-
     while (count($unvisited) > 0) {
  
         // TODO - Find faster way to get minimum
@@ -134,10 +141,10 @@ function dijkstra($link, $source, $target) {
             }
         }
 
-        echo "<p>";
-        echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
-        echo " from node : ".$previous[$u];
-        echo "</p>";
+        // echo "<p>";
+        // echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
+        // echo " from node : ".$previous[$u];
+        // echo "</p>";
 
         //returns difference of &Q - &u
         //pulls u out of Q
@@ -148,7 +155,7 @@ function dijkstra($link, $source, $target) {
         // printDebug(count($vertices));
         // echo "\n";
         if ($distances[$u] == INF or $u == $target) {
-            echo "Reached the end, or no nodes had noninfinite distance. \n";
+            // echo "Reached the end, or no nodes had noninfinite distance. \n";
             break;
         }
 
@@ -177,13 +184,23 @@ function dijkstra($link, $source, $target) {
     return $path;
 }
 
+function getNameForID($link, $person_ID) {
+    $actorsQuery = $link->prepare("SELECT Person_Name FROM FM_Person WHERE Person_ID = ? ") or die(printDebug(mysqli_error($link)));
+    $actorsQuery->bind_param("i", $person_ID);
+    $actorsQuery->execute();
+    $actorsQuery->bind_result($actor);
+    $actorsQuery->fetch();
+
+    return $actor;
+}
+
 
 
 //~~~~~~~~~~~~BEGIN~~~~~~~~~~~~~~
 
 //convert names to IDs
 
-$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
+$firstNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE UPPER(Person_Name) = UPPER(?) ") or die(printDebug(mysqli_error($link)));
 $firstNameQuery->bind_param("s", $_GET['firstPersonName']);
 $firstNameQuery->execute();
 $firstNameQuery->bind_result($firstNameQueryResult);
@@ -191,10 +208,13 @@ $firstNameQuery->fetch();
 
 //first ID
 $firstNameID = $firstNameQueryResult;
+if(!$firstNameID) {
+    die("No First Actor Found");
+}
 $firstNameQuery->close();
 
 // include('partials/connect.php');
-$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE Person_Name = ? ") or die(printDebug(mysqli_error($link)));
+$secondNameQuery = $link->prepare("SELECT Person_ID FROM FM_Person WHERE UPPER(Person_Name) = UPPER(?) ") or die(printDebug(mysqli_error($link)));
 $secondNameQuery->bind_param("s", $_GET['secondPersonName']);
 $secondNameQuery->execute();
 $secondNameQuery->bind_result($secondNameQueryResult);
@@ -202,33 +222,77 @@ $secondNameQuery->fetch();
 
 //second ID
 $secondNameID = $secondNameQueryResult;
+if(!$secondNameID) {
+    die("No Second Actor Found");
+}
 $secondNameQuery->close();
 
 $path = dijkstra($link, $firstNameID, $secondNameID);
 
-echo "path is: ".implode(", ", $path)."\n";
-    
-//get persons acted in films
-
-//Code inspired from http://rosettacode.org/wiki/Dijkstra's_algorithm#PHP
-
-
-
- 
-// $graph_array = array(
-//                     array("a", "b", 7),
-//                     array("a", "c", 9),
-//                     array("a", "f", 14),
-//                     array("b", "c", 10),
-//                     array("b", "d", 15),
-//                     array("c", "d", 11),
-//                     array("c", "f", 2),
-//                     array("d", "e", 6),
-//                     array("e", "f", 9)
-//                );
- 
-// $path = dijkstra($graph_array, "a", "e");
- 
-// echo "path is: ".implode(", ", $path)."\n";
-
+//Beautify results
 ?>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bacon Number</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- Sidebar JS-->
+    <script src="js/sidebar.js"></script>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <?php include('partials/sidebar.php') ?>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid"> 
+
+                <?php 
+
+                    echo "<h2> The Bacon Number for ".ucwords($_GET['firstPersonName'])." and ".ucwords($_GET['secondPersonName'])." is ".(count($path)-1)."</h2>";
+
+                    $actorNames = array();
+
+                    //get names for each actor
+                    foreach ($path as $person) {
+                        $actorNames[] = getNameForID($link, $person);
+                    }
+
+
+                    echo "<h3> The path between these two actors is : ".implode("->", $actorNames)."</h3>";
+
+
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
