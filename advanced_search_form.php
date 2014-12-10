@@ -41,7 +41,7 @@
                 // Populate result container
                 resArray = JSON.parse(result);
                 for (var i = 0; i < resArray.length; i += 1) {
-                    $("#film-result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "<tr><td>" + resArray[i][2] + "</td></tr>");
+                    $("#film-result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "</td><td>" + resArray[i][2] + "</td></tr>");
                 }
             }
         });
