@@ -10,6 +10,7 @@ $db_name = $_GET['name'];
 $db_numawards = $_GET['numawards'];
 
 $db_insertformat = "si";
+$stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 
 
 
@@ -19,7 +20,6 @@ if( $db_numawards < 0 )
 elseif(strlen($db_name) > 80)
 	{		die("Name cannot be longer than 80 characters.");	}
 else{	
-	$stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 

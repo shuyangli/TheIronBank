@@ -11,24 +11,8 @@ $db_id = $_GET['imdb_id'];
 
 
 $db_insertformat = "ss";
+$stmt->bind_param($db_insertformat, $name, $db_id);
 
-
-$query = "select IMDB_ID from FM_Film where IMDB_ID=?;";
-
-if ($stmt = $link->prepare($query)){
-    $stmt->bind_param("s", $db_id);
-    $stmt->execute();
-    $stmt->store_result();
-    $result = $stmt->bind_result($gross);
-
-    while($stmt->fetch() ){
-    if($gross > 0){
-			die("IMDB ID is already assigned, needs new id.");	
-        }
-    }
-    $stmt->free_result();
-    $stmt->close();
-}
 
 
 if( strlen($db_id) > 80)
@@ -36,7 +20,6 @@ if( strlen($db_id) > 80)
 elseif(strlen($name) > 80)
 	{			die("Name cannot be longer than 80 characters.");}
 else{	
-	$stmt->bind_param($db_insertformat, $name, $db_id);
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
