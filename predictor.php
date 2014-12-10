@@ -51,7 +51,7 @@
                     $("#return-row").show();
                     // Populate result container
                     resArray = JSON.parse(result);
-                    $("title-container").append("Domestic Gross Estimate is $" + resArray[0]);
+                    $("title-container").text("Domestic Gross Estimate is $" + resArray[0]);
                     for (var i = 1; i < resArray.length; i += 1){
                         $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
                     }
@@ -88,14 +88,12 @@
                         <input type="submit"/>
                     </div>
                 </div>
-                <!--<div class="row">
+                <div class="row">
                     <div class="col-lg-12" id="title-container">
                     </div>
-                </div>-->
+                </div>
                 <div class="row" id="return-row">
                     <div class="col-lg-12">
-                        <div id="title-container">
-                        </div>
                         <h2>Recent Movies with Similar Domestic Gross</h2>
                         <table class="table table-striped">
                             <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
