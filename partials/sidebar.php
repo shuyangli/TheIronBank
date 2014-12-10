@@ -14,6 +14,9 @@
                     <a href="search_form.php">Search</a>
                 </li>
                 <li>
+                    <a href="advanced_search_form.php">Advanced Search</a>
+                </li>
+                <li>
                     <a href="bacon.php">Bacon Calculator</a>
                 </li>
                 <li>
