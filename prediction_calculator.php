@@ -12,7 +12,7 @@ $db_releaseYear = $_GET['year'];
 $db_relevantDecade = $db_releaseYear-10;
 $db_actorsArray = explode(',',$_GET['actorList']);
 
-print "Actors: <br>";
+/*print "Actors: <br>";
 for ($i = 0; $i < count($db_actorsArray); ++$i){
     $db_actorsArray[$i] = trim($db_actorsArray[$i]);
     print $db_actorsArray[$i] . "<br>";
@@ -27,7 +27,7 @@ print "<br>Director is " . $db_directors . "<br>";
 print "Distributor is " . $db_distributor . "<br>";
 print "Rating is " . $db_rating . "<br>";
 print "Genre is " . $db_genre . "<br>";
-print "Release Year is " . $db_releaseYear . "<br>";
+print "Release Year is " . $db_releaseYear . "<br>";*/
 
 //Perform Linear Regression to make predictions
 $estimates = array(); //Will hold estimates for gross based upon each input
@@ -203,15 +203,17 @@ if ($stmt = $link->prepare($query)){
 }
 
 //Genre (TODO)
-print_r($estimates);
+#print_r($estimates);
 
 $sum = array_sum($estimates);
 $count = count($estimates);
 $estimatedGross = round($sum/$count,-3);
-print "<br>This movie is estimated to Gross around $" . $estimatedGross . " domestically.<br>";
+#print "<br>This movie is estimated to Gross around $" . $estimatedGross . " domestically.<br>";
+$json_array = []
+array_push($json_array, $estimatedGross);
 
 //Find similar movies
-print "<br>The following recent movies performed simliarly to your estimated gross:<br>";
+#print "<br>The following recent movies performed simliarly to your estimated gross:<br>";
 $query = "select Title,Gross from FM_Film where Gross>(?*.97) and Gross<(?*1.03) order by Release_Year desc limit 5;";
 
 if ($stmt = $link->prepare($query)){
@@ -221,12 +223,13 @@ if ($stmt = $link->prepare($query)){
     $result = $stmt->bind_result($title,$gross);
 
     while($stmt->fetch()){ 
-        print $title . " grossed $" . $gross . " domestically.<br>";
+        #print $title . " grossed $" . $gross . " domestically.<br>";
+        array_push($json_array, [$title, $gross]);
     }
     $stmt->free_result();
     $stmt->close();
 }
 
 $link->close();
-
+echo json_encode($json_array);
 ?>
