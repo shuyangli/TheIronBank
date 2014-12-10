@@ -17,7 +17,7 @@ $stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 
 if( !(is_int($db_numawards) ) or $db_numawards < 0 )
 	{			}
-elseif(strlen($db_name) > NEEEDS A NUMBER)
+elseif(strlen($db_name) > 80)
 	{			}
 else{	
 	$stmt->execute();	
