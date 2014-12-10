@@ -23,7 +23,7 @@ $stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtim
 
 
 if( !(is_int($db_id) ) or $db_id < 0 )
-	{			}	//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
+	{		die("Invalid ID value, must be integer greater than 0.")	}	//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
 elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
 	{			}
 elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )

@@ -16,7 +16,7 @@ $stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 
 
 if( !(is_int($db_numawards) ) or $db_numawards < 0 )
-	{			}
+	{		die("Invalid value for number of awards, must be integer greater than 0.")	}
 elseif(strlen($db_name) > 80)
 	{			}
 else{	
