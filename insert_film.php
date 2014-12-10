@@ -29,7 +29,7 @@ if ($stmt = $link->prepare($query)){
     $result = $stmt->bind_result($gross);
 
     $stmt->$gross
-    if($gross>0){
+    if($gross > 0){
 			die("IMDB ID is already assigned, needs new id.");	
         }
     
