@@ -189,6 +189,7 @@ function getNameForID($link, $person_ID) {
     $actorsQuery->bind_param("i", $person_ID);
     $actorsQuery->execute();
     $actorsQuery->bind_result($actor);
+    $actorsQuery->fetch();
 
     return $actor;
 }
