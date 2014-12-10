@@ -155,7 +155,7 @@ function dijkstra($link, $source, $target) {
         // printDebug(count($vertices));
         // echo "\n";
         if ($distances[$u] == INF or $u == $target) {
-            echo "Reached the end, or no nodes had noninfinite distance. \n";
+            // echo "Reached the end, or no nodes had noninfinite distance. \n";
             break;
         }
 
@@ -229,17 +229,69 @@ $secondNameQuery->close();
 $path = dijkstra($link, $firstNameID, $secondNameID);
 
 //Beautify results
-
-echo "<h2> The Bacon Number for ".ucwords($_GET['firstPersonName'])." and ".ucwords($_GET['secondPersonName'])." is ".(count($path)-1)."</h2>";
-
-$actorNames = array();
-
-foreach ($path as $person) {
-    $actorNames[] = getNameForID($person);
-}
-
-//get names for each actor
-
-echo "<h3> The path between these two actors is : ".implode("->", $actorNames)."</h3>";
-
 ?>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bacon Number</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- Sidebar JS-->
+    <script src="js/sidebar.js"></script>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <?php include('partials/sidebar.php') ?>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid"> 
+
+                <?php 
+
+                    echo "<h2> The Bacon Number for ".ucwords($_GET['firstPersonName'])." and ".ucwords($_GET['secondPersonName'])." is ".(count($path)-1)."</h2>";
+
+                    $actorNames = array();
+
+                    //get names for each actor
+                    foreach ($path as $person) {
+                        $actorNames[] = getNameForID($link, $person);
+                    }
+
+
+                    echo "<h3> The path between these two actors is : ".implode("->", $actorNames)."</h3>";
+
+
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
