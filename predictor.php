@@ -92,11 +92,11 @@
                     </div>
                 </div>
                 <div class="row" id="title-row">
-                    <div class="col-lg-12" id="title-container" style="font-size:1.75ems;">
+                    <div class="col-lg-12" id="title-container" style="font-size:2em;">
                     </div>
                 </div>
                 <div class="row" id="return-row">
-                    <div class="col-lg-12" style="font-size:1.75ems;">
+                    <div class="col-lg-12" style="font-size:1.75em;">
                         Look Below for Recent Movies had Similar Domestic Gross
                     </div>
                     <div class="col-lg-12">
