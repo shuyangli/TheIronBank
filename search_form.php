@@ -30,8 +30,10 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
+        // Search actors
         $("#search_form").on('submit', function (e) {
 
+            // Prevent form from actually submitting
             e.preventDefault();
 
             // AJAX call to get actors
@@ -40,13 +42,30 @@
                 type: 'GET',
                 data: $("#search_form").serialize(),
                 success: function(result) {
-                    $("#result-container").empty();
+                    $("#actor-result-container").empty();
 
                     // Populate result container
                     resArray = JSON.parse(result);
 
                     for (var i = 0; i < resArray.length; i += 1) {
-                        $("#result-container").append("ID: " + resArray[i][0] + ", Name: " + resArray[i][1] + "<br />");
+                        $("#actor-result-container").append("ID: " + resArray[i][0] + ", Name: " + resArray[i][1] + "<br />");
+                    }
+                }
+            });
+
+            // AJAX call to get films
+            $.ajax({
+                url: 'search_film.php',
+                type: 'GET',
+                data: $("#search_form").serialize(),
+                success: function(result) {
+                    $("#film-result-container").empty();
+
+                    // Populate result container
+                    resArray = JSON.parse(result);
+
+                    for (var i = 0; i < resArray.length; i += 1) {
+                        $("#film-result-container").append("IMDB ID: " + resArray[i][0] + ", Title: " + resArray[i][1] + " (" + resArray[i][2] + ")<br />");
                     }
                 }
             });
@@ -71,13 +90,14 @@
                     <div class="col-lg-12">
                         <h1>Search</h1>
                         <form id="search_form" method="get">
-                            Name: <input type="textbox" name="name" id="name_input" /><br/>
+                            Keyword: <input type="textbox" name="name" id="name_input" /><br/>
                             <input type="submit"/>
                         </form>
                     </div>
                 </div>
                 <div class="row">
-                    <div id="result-container" class="col-lg-12"></div>
+                    <div id="actor-result-container" class="col-md-6"></div>
+                    <div id="film-result-container" class="col-md-6"></div>
                 </div>
             </div>
         </div>
