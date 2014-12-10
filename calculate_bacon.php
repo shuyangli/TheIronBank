@@ -37,15 +37,14 @@ function getAdjacentActors($link, $person_ID) {
 
 function getEvenMoreAdjacentActors($link, $personArray) {
 
-    $actorsQuery = $link->prepare("SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID IN (?) )") or die(printDebug(mysqli_error($link)));
-    $actorsQuery->bind_param("i", $person_ID);
-    $actorsQuery->execute();
-    $actorsQuery->bind_result($actor);
 
-    //save to array
-    $actors = array();
-    while ($actorsQuery->fetch()) {
-        array_push($actors, $actor);
+    $sql = "SELECT Person_ID FROM FM_Acted_In WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID IN (".implode(", ", $personArray).") )";
+    printDebug($sql);
+
+    if(!$result = $link->query($sql)){
+        die('There was an error running the query [' . $db->error . ']');
+    } else {
+        printDebug($result);
     }
 
     //have to delete the original actor from the adjacent list
