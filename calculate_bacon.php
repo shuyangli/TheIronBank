@@ -47,7 +47,12 @@ function getEvenMoreAdjacentActors($link, $personArray) {
 
 
     //save to array
-    $actors = $result->fetch_all();
+    $actorsArrayOfArrays = $result->fetch_all();
+    $actors = array();
+    foreach ($actorsArrayOfArrays as $actorArray) {
+        $actors[] = intval($actorArray[0]);
+    }
+
     printDebug($actors);
 
     //have to delete the original actor from the adjacent list
