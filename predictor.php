@@ -86,6 +86,7 @@
                         Genre: <input type="textbox" name="genre"/><br/>
                         Release Year: <input type="textbox" name="year"/><br/>
                         <input type="submit"/>
+                        </form>
                     </div>
                 </div>
                 <div class="row" id="title-row">

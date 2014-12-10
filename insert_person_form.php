@@ -18,13 +18,13 @@
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    
+
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
@@ -49,6 +49,7 @@
                         Name: <input type="textbox" name="name"/><br/>
 						Number of Awards: <input type="textbox" name="numawards"/><br/>
                         <input type="submit"/>
+                        </form>
                     </div>
                 </div>
             </div>
