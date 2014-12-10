@@ -47,14 +47,14 @@
                 type: 'GET',
                 data: $("#prediction_form").serialize(),
                 success: function(result) {
+                    $("#res-container").empty();
                     $("#return-row").show();
                     // Populate result container
                     resArray = JSON.parse(result);
-                    $("#res-container").append("<tr><td>Your Movie Estimate</td><td>" + resArray[0] + "</td></tr>");
+                    $("#res-container-title").append("<Domestic Gross Estimate is $" + resArray[0]);
                     for (var i = 1; i < resArray.length; i += 1){
-                        $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "</td></tr>");
+                        $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
                     }
-                    //$("#res-container").text(JSON.stringify(resArray));
                 }
             });
         });
@@ -88,8 +88,13 @@
                         <input type="submit"/>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12" id="res-container-title">
+                    </div>
+                </div>
                 <div class="row" id="return-row">
                     <div class="col-lg-12">
+                        <h2>Recent Movies with Similar Domestic Gross</h2>
                         <table class="table table-striped">
                             <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
                             <tbody id="res-container">
