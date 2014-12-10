@@ -13,6 +13,14 @@ $db_insertformat = "si";
 
 $stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 
-$stmt->execute();
+
+
+elseif( !(is_int($db_numawards) ) or $db_numawards < 0 )
+	{			}
+elseif(strlen($db_name) > NEEEDS A NUMBER)
+	{			}
+else{	
+	$stmt->execute();	
+	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
 ?>
