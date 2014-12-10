@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="row" id="title-row">
-                    <div class="col-lg-12" id="title-container" style="font-size:2em;">
+                    <div class="col-lg-12" id="title-container" style="font-size:1.75em;">
                     </div>
                 </div>
                 <div class="row" id="return-row">
