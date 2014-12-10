@@ -17,25 +17,10 @@ $db_numawards = $_GET['numawards'];
 $db_title = $_GET['title'];
 $db_distributor = $_GET['distributor'];
 
-$db_insertformat = "sssisiiiss";
+$db_insertformat = "issisiiiss";
 
+$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 
-$query = "select IMDB_ID from FM_Film where IMDB_ID=?;";
-
-if ($stmt = $link->prepare($query)){
-    $stmt->bind_param("s", $db_id);
-    $stmt->execute();
-    $stmt->store_result();
-    $result = $stmt->bind_result($gross);
-
-    while($stmt->fetch() ){
-    if($gross > 0){
-			die("IMDB ID is already assigned, needs new id.");	
-        }
-    }
-    $stmt->free_result();
-    $stmt->close();
-}
 
 if( strlen($db_id) > 80)
 	{		die("IMDB ID cannot be longer than 80 characters.");		}	
@@ -47,14 +32,13 @@ elseif( $db_gross < 0 )
 	{		die("Invalid value for Gross.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif( $db_year < 0 )
 	{		die("Invalid value for IMDB ID.\n Value must be a valid year.");	}
-elseif( $db_numawards < 0 )
+elseif(  $db_numawards < 0 )
 	{		die("Invalid value for Number of Awards.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif(strlen($db_title) > 80)
 	{		die("Title cannot be longer than 80 characters.");	}
 elseif( strlen($db_distributor) > 80)
 	{			die("Distributor cannot be longer than 80 characters.");	}
-else{
-	$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
+else{	
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
