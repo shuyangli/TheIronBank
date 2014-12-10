@@ -34,6 +34,7 @@
 
         //Hide return row
         $("#return-row").hide();
+        $("#title-row").hide();
 
         // Search actors
         $("#prediction_form").on('submit', function (e) {
@@ -48,7 +49,9 @@
                 data: $("#prediction_form").serialize(),
                 success: function(result) {
                     $("#res-container").empty();
+                    $("#title-row").show();
                     $("#return-row").show();
+
                     // Populate result container
                     resArray = JSON.parse(result);
                     $("#title-container").text("Domestic Gross Estimate is $" + resArray[0]);
@@ -88,7 +91,7 @@
                         <input type="submit"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="title-row">
                     <div class="col-lg-12" id="title-container" style="font-size:22px;">
                     </div>
                     <div class="col-lg-12" style="font-size:20px;">
