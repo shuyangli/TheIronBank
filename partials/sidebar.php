@@ -6,9 +6,7 @@
             <!-- Custom CSS -->
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        FMDB
-                    </a>
+                    <a href="index.php">FMDB</a>
                 </li>
                 <li>
                     <a href="search_form.php">Search</a>
