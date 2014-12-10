@@ -16,10 +16,9 @@ $stmt->bind_param($db_insertformat, $db_name, $db_numawards);
 
 
 if( !(is_int($db_numawards) ) or $db_numawards < 0 )
-	{		die("Invalid value for number of awards.\n Value must be integer greater than 0.\n could not complete request.");	
-	}
+	{		die("Invalid value for number of awards.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif(strlen($db_name) > 80)
-	{			}
+	{		die("Name cannot be longer than 80 characters.");	}
 else{	
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
