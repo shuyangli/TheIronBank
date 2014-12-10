@@ -26,7 +26,7 @@ if( strlen($db_id) > 80)
 	{		die("IMDB ID cannot be longer than 80 characters.");		}	
 elseif( $db_runtime  < 0 )	
 	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
-elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
+elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and $db_rating != "X" and $db_rating != "R" )
 	{		die("Invalid entry for Rating:\n Rating must be G, PG, PG-13, R, or X" );	}
 elseif( $db_gross < 0 )
 	{		die("Invalid value for Gross.\n Value must be an integer greater than 0.\n Could not complete request.");	}
