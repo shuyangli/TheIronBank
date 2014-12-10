@@ -22,16 +22,9 @@ function getAdjacentActors($link, $person_ID) {
         array_push($actors, $actor);
     }
 
-    //have to delete the original actor from the adjacent list
-    $uniqueActors = array_unique($actors);
-    $keys = array_keys($uniqueActors, $person_ID);
-    foreach($keys as $k) {
-        unset($uniqueActors[$k]);
-    }
-
     // echo "Adjacent Actors";
     // printDebug($uniqueActors);
-    getEvenMoreAdjacentActors($link, $actors);
+    
 
     return $actors;
 }
@@ -53,14 +46,7 @@ function getEvenMoreAdjacentActors($link, $personArray) {
         $actors[] = intval($actorArray[0]);
     }
 
-    printDebug($actors);
-
-    //have to delete the original actor from the adjacent list
-    $uniqueActors = array_unique($actors);
-    $keys = array_keys($uniqueActors, $person_ID);
-    foreach($keys as $k) {
-        unset($uniqueActors[$k]);
-    }
+    // printDebug($actors);
 
     // echo "Adjacent Actors";
     // printDebug($uniqueActors);
