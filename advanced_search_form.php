@@ -28,6 +28,43 @@
 
     <!-- AJAX request to search for information -->
     <script type="text/javascript">
+
+    function search_by_movie() {
+        // AJAX call to get actors from movie
+        $.ajax({
+            url: 'advanced_search_film.php',
+            type: 'GET',
+            data: $("#search_form").serialize(),
+            success: function(result) {
+                $("#film-result-container").empty();
+
+                // Populate result container
+                resArray = JSON.parse(result);
+                for (var i = 0; i < resArray.length; i += 1) {
+                    $("#film-result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "<tr><td>" + resArray[i][2] + "</td></tr>");
+                }
+            }
+        });
+    }
+
+    function search_by_actor() {
+        // AJAX call to get movies from actor
+        $.ajax({
+            url: 'advanced_search_actor.php',
+            type: 'GET',
+            data: $("#search_form").serialize(),
+            success: function(result) {
+                $("#result-container").empty();
+
+                // Populate result container
+                resArray = JSON.parse(result);
+                for (var i = 0; i < resArray.length; i += 1) {
+                    $("#result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "<tr><td>" + resArray[i][2] + "</td></tr>");
+                }
+            }
+        });
+    }
+
     $(document).ready(function() {
 
         // Search actors
@@ -36,34 +73,17 @@
             // Prevent form from actually submitting
             e.preventDefault();
 
-            var ajax_request_url;
-            if (!$("#movie_name").val() && !$("#actor_name").val()) {
+            if ( !($("#movie_name_input").val()) && !($("#actor_name_input").val()) ) {
                 // If input is empty
                 return false;
-            } else if (!$("#movie_name").val()) {
+            } else if (!$("#movie_name_input").val()) {
                 // If there's no movie name, we're querying by actors
-                ajax_request_url = "advanced_search_actor.php";
+                search_by_actor();
             } else {
                 // Otherwise we're querying by movies
                 // This way whenever there's a movie name, we use it
-                ajax_request_url = "advanced_search_film.php";
+                search_by_movie();
             }
-
-            // AJAX call to get actors
-            $.ajax({
-                url: ajax_request_url,
-                type: 'GET',
-                data: $("#search_form").serialize(),
-                success: function(result) {
-                    $("#result-container").empty();
-
-                    // Populate result container
-                    resArray = JSON.parse(result);
-                    for (var i = 0; i < resArray.length; i += 1) {
-                        $("#result-container").append("<tr><td>" + resArray[i][0] + "</td><td>" + resArray[i][1] + "<tr><td>" + resArray[i][2] + "</td></tr>");
-                    }
-                }
-            });
         });
     });
     </script>
@@ -91,12 +111,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="row" id="actor-row">
-                    <div class="col-lg-12" id="actor-results">
+                <div class="row" id="film-row">
+                    <div class="col-lg-12" id="film-results">
                         <h2>Actors in a film</h2>
                         <table class="table table-striped">
                             <thead><tr><th>Person ID</th><th>Name</th><th>Film</th></tr></thead>
-                            <tbody id="actor-result-container">
+                            <tbody id="film-result-container">
                             </tbody>
                         </table>
                     </div>
