@@ -229,70 +229,18 @@ $secondNameQuery->close();
 
 $path = dijkstra($link, $firstNameID, $secondNameID);
 
-//Beautify results
+//get names for each actor
+$actorNames = array();
+foreach ($path as $person) {
+    $actorNames[] = getNameForID($link, $person);
+}
+
+//GOGO AJAX!
+$ajaxArray = array('firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'path' => $actorNames);
+
+$jsonString = json_encode($ajaxArray);
+
+echo $jsonString;
+
 ?>
-<html>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Bacon Number</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-    
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    
-    <!-- Sidebar JS-->
-    <script src="js/sidebar.js"></script>
-
-</head>
-
-<body>
-
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <?php include('partials/sidebar.php') ?>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid"> 
-
-                <?php 
-
-                    echo "<h2> The Bacon Number for ".ucwords($_GET['firstPersonName'])." and ".ucwords($_GET['secondPersonName'])." is ".(count($path)-1)."</h2>";
-
-                    $actorNames = array();
-
-                    //get names for each actor
-                    foreach ($path as $person) {
-                        $actorNames[] = getNameForID($link, $person);
-                    }
-
-
-                    echo "<h3> The path between these two actors is : ".implode("->", $actorNames)."</h3>";
-
-
-                ?>
-            </div>
-        </div>
-    </div>
-
-
-</body>
-
-</html>

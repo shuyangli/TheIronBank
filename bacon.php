@@ -29,6 +29,9 @@
     <!-- Sidebar JS-->
     <script src="js/sidebar.js"></script>
 
+    <!-- Bacon JS -->
+    <script src="js/bacon.js"></script>
+
 
 </head>
 
@@ -46,10 +49,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Bacon Number Calculator</h1>
-                        <form action="calculate_bacon.php" method="get">
-                        First Person: <input type="textbox" name="firstPersonName"/><br/>
-                        Second Person: <input type="textbox" name="secondPersonName"/><br/>
-                        <input type="submit"/>
+                        <form id="baconForm">
+                            First Person: <input type="textbox" name="firstPersonName"/><br/>
+                            Second Person: <input type="textbox" name="secondPersonName"/><br/>
+                            <input type="submit"/>
+                        </form>
+
                     </div>
                 </div>
             </div>
