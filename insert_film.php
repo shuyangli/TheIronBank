@@ -17,18 +17,32 @@ $db_numawards = $_GET['numawards'];
 $db_title = $_GET['title'];
 $db_distributor = $_GET['distributor'];
 
-$db_insertformat = "issisiiiss";
-
-$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
+$db_insertformat = "sssisiiiss";
 
 
-if( !(is_int($db_id) ) or $db_id < 0 )
-	{		die("Invalid value for IMDB ID.\n Value must be an integer greater than 0.\n Could not complete request.");	}	
-			//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
+$query = "select IMDB_ID from FM_Film where IMDB_ID=?;";
+
+if ($stmt = $link->prepare($query)){
+    $stmt->bind_param("s", $db_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $result = $stmt->bind_result($gross);
+
+    while($stmt->fetch() ){
+    if($gross > 0){
+			die("IMDB ID is already assigned, needs new id.");	
+        }
+    }
+    $stmt->free_result();
+    $stmt->close();
+}
+
+if( strlen($db_id) > 80)
+	{		die("IMDB ID cannot be longer than 80 characters.");		}	
 elseif(!(is_int($db_runtime ) ) or $db_runtime  < 0 )	
 	{		die("Invalid value for Runtime.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif($db_rating != "G" and $db_rating != "PG-13" and $db_rating != "PG" and$db_rating != "X" )
-	{		die("Invalid entry for Rating:\nRating must be G, PG, PG-13, R, or X" );	}
+	{		die("Invalid entry for Rating:\n Rating must be G, PG, PG-13, R, or X" );	}
 elseif( !(is_int($db_gross) ) or $db_gross < 0 )
 	{		die("Invalid value for Gross.\n Value must be an integer greater than 0.\n Could not complete request.");	}
 elseif( !(is_int($db_year) ) or $db_year < 0 )
@@ -39,7 +53,8 @@ elseif(strlen($db_title) > 80)
 	{		die("Title cannot be longer than 80 characters.");	}
 elseif( strlen($db_distributor) > 80)
 	{			die("Distributor cannot be longer than 80 characters.");	}
-else{	
+else{
+	$stmt->bind_param($db_insertformat, $db_id, $db_url, $db_description, $db_runtime, $db_rating, $db_gross, $db_year, $db_numawards, $db_title, $db_distributor);
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 

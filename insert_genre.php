@@ -12,15 +12,31 @@ $db_id = $_GET['imdb_id'];
 
 $db_insertformat = "ss";
 
-$stmt->bind_param($db_insertformat, $name, $db_id);
+
+$query = "select IMDB_ID from FM_Film where IMDB_ID=?;";
+
+if ($stmt = $link->prepare($query)){
+    $stmt->bind_param("s", $db_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $result = $stmt->bind_result($gross);
+
+    $stmt->$gross
+    if($gross>0){
+			die("IMDB ID is already assigned, needs new id.");	
+        }
+    
+    $stmt->free_result();
+    $stmt->close();
+}
 
 
-if( !(is_int($db_id) ) or $db_id < 0 )
-	{		die("Invalid value for IMDB ID.\n Value must be an integer greater than 0.\n Could not complete request.");		}	
-			//if ID is an INT >=0, then we are ok, else do nothing, but should just load an error page
+if( strlen($db_id) > 80)
+	{		die("IMDB ID cannot be longer than 80 characters.");		}	
 elseif(strlen($name) > 80)
 	{			die("Name cannot be longer than 80 characters.");}
 else{	
+	$stmt->bind_param($db_insertformat, $name, $db_id);
 	$stmt->execute();	
 	}		//execute if it does not fail these tests, return to a success window (needs implementation)
 
