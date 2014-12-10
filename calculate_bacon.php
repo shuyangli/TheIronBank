@@ -153,8 +153,8 @@ function dijkstra($link, $source, $target) {
         }
 
         //add more to the arrays
-        // addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
-        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getEvenMoreAdjacentActors($link, $vertices));
+        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
+        // addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getEvenMoreAdjacentActors($link, $vertices));
 
         //recompute distances from the new latest node
         if (isset($neighbors[$u])) {
