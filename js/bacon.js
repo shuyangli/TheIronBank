@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("resultsRows").hide();
+    $("#resultsRows").hide();
 
     $("#baconForm").on('submit', function (e) {
 
@@ -15,8 +15,8 @@ $(document).ready(function() {
                 // Populate result container
                 resArray = JSON.parse(result);
 
-                $("namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["path"].length - 1));
-                $("pathHeader").html("The path is " + resArray["path"].join(" -> "));
+                $("#namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["path"].length - 1));
+                $("#pathHeader").html("The path is " + resArray["path"].join(" -> "));
                 $("#resultsRows").show();
             }
         });
