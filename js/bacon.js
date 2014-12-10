@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $("#search_form").on('submit', function (e) {
+    $("#baconForm").on('submit', function (e) {
 
         // Prevent form from actually submitting
         e.preventDefault();
