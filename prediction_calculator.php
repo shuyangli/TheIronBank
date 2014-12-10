@@ -209,7 +209,7 @@ $sum = array_sum($estimates);
 $count = count($estimates);
 $estimatedGross = round($sum/$count,-3);
 #print "<br>This movie is estimated to Gross around $" . $estimatedGross . " domestically.<br>";
-$json_array = []
+$json_array = [];
 array_push($json_array, $estimatedGross);
 
 //Find similar movies
