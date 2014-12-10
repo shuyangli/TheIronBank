@@ -50,10 +50,10 @@
                     <div class="col-lg-12">
                         <h1>Bacon Number Calculator</h1>
                         <form id="baconForm">
-                        First Person: <input type="textbox" name="firstPersonName"/><br/>
-                        Second Person: <input type="textbox" name="secondPersonName"/><br/>
-                        <input type="submit"/>
-
+                            First Person: <input type="textbox" name="firstPersonName"/><br/>
+                            Second Person: <input type="textbox" name="secondPersonName"/><br/>
+                            <input type="submit"/>
+                        </form>
 
                     </div>
                 </div>
