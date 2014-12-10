@@ -88,12 +88,14 @@
                         <input type="submit"/>
                     </div>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-lg-12" id="title-container">
                     </div>
-                </div>
+                </div>-->
                 <div class="row" id="return-row">
                     <div class="col-lg-12">
+                        <div id="title-container">
+                        </div>
                         <h2>Recent Movies with Similar Domestic Gross</h2>
                         <table class="table table-striped">
                             <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
