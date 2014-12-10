@@ -94,11 +94,11 @@
                 <div class="row" id="title-row">
                     <div class="col-lg-12" id="title-container" style="font-size:22px;">
                     </div>
-                    <div class="col-lg-12" style="font-size:20px;">
-                        Look Below for Recent Movies had Similar Domestic Gross
-                    </div>
                 </div>
                 <div class="row" id="return-row">
+                    <div class="col-lg-12" style="font-size:22px;">
+                        Look Below for Recent Movies had Similar Domestic Gross
+                    </div>
                     <div class="col-lg-12">
                         <table class="table table-striped">
                             <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
