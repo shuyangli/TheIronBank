@@ -30,6 +30,12 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
+        // Hide everything initially
+        {
+            $("#actor-row").hide();
+            $("#film-row").hide();
+        }
+
         // Search actors
         $("#search_form").on('submit', function (e) {
 
@@ -46,9 +52,14 @@
 
                     // Populate result container
                     resArray = JSON.parse(result);
+                    if (resArray.length === 0) {
+                        $("#actor-row").hide();
+                    } else {
+                        $("#actor-row").show();
 
-                    for (var i = 0; i < resArray.length; i += 1) {
-                        $("#actor-result-container").append("ID: " + resArray[i][0] + ", Name: " + resArray[i][1] + "<br />");
+                        for (var i = 0; i < resArray.length; i += 1) {
+                            $("#actor-result-container").append("ID: " + resArray[i][0] + ", Name: " + resArray[i][1] + "<br />");
+                        }
                     }
                 }
             });
@@ -63,9 +74,14 @@
 
                     // Populate result container
                     resArray = JSON.parse(result);
+                    if (resArray.length === 0) {
+                        $("#film-row").hide();
+                    } else {
+                        $("#film-row").show();
 
-                    for (var i = 0; i < resArray.length; i += 1) {
-                        $("#film-result-container").append("IMDB ID: " + resArray[i][0] + ", Title: " + resArray[i][1] + " (" + resArray[i][2] + ")<br />");
+                        for (var i = 0; i < resArray.length; i += 1) {
+                            $("#film-result-container").append("IMDB ID: " + resArray[i][0] + ", Title: " + resArray[i][1] + " (" + resArray[i][2] + ")<br />");
+                        }
                     }
                 }
             });
@@ -95,9 +111,17 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div id="actor-result-container" class="col-md-6"></div>
-                    <div id="film-result-container" class="col-md-6"></div>
+                <div class="row" id="actor-row">
+                    <div class="col-lg-12">
+                        <h2>Actors</h2>
+                        <div id="actor-result-container"></div>
+                    </div>
+                </div>
+                <div class="row" id="film-row">
+                    <div class="col-lg-12">
+                        <h2>Films</h2>
+                        <div id="film-result-container"></div>
+                    </div>
                 </div>
             </div>
         </div>
