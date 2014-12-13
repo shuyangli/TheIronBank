@@ -142,6 +142,8 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     if (isset($neighbors[$u])) {
         foreach ($neighbors[$u] as $arr) {
             $alt = $distances[$u] + $arr["cost"];
+            printDebug("alt is ".$alt);
+            printDebug("distance is ".$distances[$arr["end"]]);
             if ($alt < $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
@@ -238,6 +240,8 @@ function dijkstra($link, $source, $target) {
     if (isset($neighborsSource[$source])) {
         foreach ($neighborsSource[$source] as $arr) {
             $alt = $distancesSource[$source] + $arr["cost"];
+            printDebug("alt is ".$alt);
+            printDebug("distance is ".$distancesSource[$arr["end"]]);
             if ($alt < $distancesSource[$arr["end"]]) {
                 $distancesSource[$arr["end"]] = $alt;
                 $previousSource[$arr["end"]] = $source;
@@ -248,6 +252,8 @@ function dijkstra($link, $source, $target) {
     if (isset($neighborsTarget[$target])) {
         foreach ($neighborsTarget[$target] as $arr) {
             $alt = $distancesTarget[$target] + $arr["cost"];
+            printDebug("alt is ".$alt);
+            printDebug("distance is ".$distancesTarget[$arr["end"]]);
             if ($alt < $distancesTarget[$arr["end"]]) {
                 $distancesTarget[$arr["end"]] = $alt;
                 $previousTarget[$arr["end"]] = $target;
