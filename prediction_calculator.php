@@ -200,7 +200,7 @@ if ($stmt = $link->prepare($query)){
     while($stmt->fetch()){
         $query2 = "select Gross from FM_Film where IMDB_ID=? and Gross!='null' and Release_Year>=? limit 1;";
 
-        if ($stmt2 = $link->prepare($query)){
+        if ($stmt2 = $link->prepare($query2)){
             $stmt2->bind_param("si", $movie_id, $db_relevantDecade);
             $stmt2->execute();
             $stmt2->store_result();
