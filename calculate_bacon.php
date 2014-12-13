@@ -142,7 +142,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     if (isset($neighbors[$u])) {
         foreach ($neighbors[$u] as $arr) {
             $alt = $distances[$u] + $arr["cost"];
-            if ($alt <= $distances[$arr["end"]]) {
+            if ($alt < $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
             }
@@ -174,6 +174,9 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
         var_dump("Path from Source:");
         printDebug($pathFirst);
 
+        // var_dump("previous vector:");
+        // printDebug($previousSource);
+
         $pathSecond = array();
         $u = $currentSecond;
         while (isset($previousTarget[$u])) {
@@ -184,6 +187,9 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
 
         var_dump("Path from Target:");
         printDebug($pathSecond);
+
+        // var_dump("previous vector:");
+        // printDebug($previousTarget);
 
         //final path
         reset($overlap);
@@ -229,21 +235,21 @@ function dijkstra($link, $source, $target) {
     $currentSecond = $target;
 
     //compute initial neighbors
-    if (isset($neighbors[$source])) {
-        foreach ($neighbors[$source] as $arr) {
-            $alt = $distances[$source] + $arr["cost"];
-            if ($alt <= $distances[$arr["end"]]) {
-                $distances[$arr["end"]] = $alt;
-                $previous[$arr["end"]] = $u;
+    if (isset($neighborsSource[$source])) {
+        foreach ($neighborsSource[$source] as $arr) {
+            $alt = $distancesSource[$source] + $arr["cost"];
+            if ($alt < $distancesSource[$arr["end"]]) {
+                $distancesSource[$arr["end"]] = $alt;
+                $previousSource[$arr["end"]] = $u;
             }
         }
     }
-    if (isset($neighbors[$target])) {
-        foreach ($neighbors[$target] as $arr) {
-            $alt = $distances[$target] + $arr["cost"];
-            if ($alt <= $distances[$arr["end"]]) {
-                $distances[$arr["end"]] = $alt;
-                $previous[$arr["end"]] = $u;
+    if (isset($neighborsTarget[$target])) {
+        foreach ($neighborsTarget[$target] as $arr) {
+            $alt = $distancesTarget[$target] + $arr["cost"];
+            if ($alt < $distancesTarget[$arr["end"]]) {
+                $distancesTarget[$arr["end"]] = $alt;
+                $previousTarget[$arr["end"]] = $u;
             }
         }
     }
