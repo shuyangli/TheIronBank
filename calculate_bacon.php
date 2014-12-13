@@ -189,6 +189,9 @@ function dijkstra($link, $source, $target) {
             printDebug($previousSource);
             var_dump("Previous for Target");
             printDebug($previousTarget);
+            var_dump("Overlap:")
+            printDebug($overlap);
+            break;
         }
         
     }
