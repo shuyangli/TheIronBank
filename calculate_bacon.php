@@ -103,7 +103,7 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 //update distances
 //etc i hope
 
-function progressToNextNode($link, $vertices, $unvisited, $neighbors, $distances, $previous) {
+function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$distances, &$previous) {
     //the source is the first node to be set as visited, which updates the distances
     $min = INF;
     foreach ($unvisited as $vertex){
@@ -129,10 +129,10 @@ function progressToNextNode($link, $vertices, $unvisited, $neighbors, $distances
     // echo "Vertices length: \n";
     // printDebug(count($vertices));
     // echo "\n";
-    if ($distances[$u] == INF or $u == $target) {
-        // echo "Reached the end, or no nodes had noninfinite distance. \n";
-        break;
-    }
+    // if ($distances[$u] == INF or $u == $target) {
+    //     // echo "Reached the end, or no nodes had noninfinite distance. \n";
+    //     break;
+    // }
 
     //add more to the arrays
     addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
