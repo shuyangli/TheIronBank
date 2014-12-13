@@ -277,22 +277,23 @@ if($firstNameID === $secondNameID) {
     $actorNames = array(ucwords($_GET['firstPersonName']));
     $mutualMovies = array("N/A");
 } else {
+    if(!$error) {
+        //compute path
+        $path = dijkstra($link, $firstNameID, $secondNameID);
+        //get names for each actor
+        $actorNames = array();
+        $mutualMovies = array();
 
-    //compute path
-    $path = dijkstra($link, $firstNameID, $secondNameID);
-    //get names for each actor
-    $actorNames = array();
-    $mutualMovies = array();
+        //generate name arrays
+        for($i = 0; $i < count($path); ++$i) {
 
-    //generate name arrays
-    for($i = 0; $i < count($path); ++$i) {
-
-        $firstActor = current($path);
-        $actorNames[] = getNameForID($link, $firstActor);
-        $secondActor = next($path);
-        //if next element, get mutual film
-        if (!$secondActor === FALSE) {
-            $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
+            $firstActor = current($path);
+            $actorNames[] = getNameForID($link, $firstActor);
+            $secondActor = next($path);
+            //if next element, get mutual film
+            if (!$secondActor === FALSE) {
+                $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
+            }
         }
     }
 }
