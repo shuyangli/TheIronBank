@@ -18,7 +18,7 @@ $(document).ready(function() {
                 if(resArray['success']) {
                     $("#namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["actors"].length - 1));
                     for (var i = resArray['actors'].length - 1; i > 0; i--) {
-                        $("#namesRow").after('<div class="row"><div class="col-lg-12">' + resArray['actors'][i-1] + " and " + resArray['actors'][i] + " starred in " + resArray['movies'][i-1] + '</div></div>');
+                        $("#namesRow").after('<div class="row"><div class="col-lg-12"><b>' + resArray['actors'][i-1] + "</b> and <b>" + resArray['actors'][i] + "</b> starred in <i>" + resArray['movies'][i-1] + '</i></div></div>');
                     }
                     $("#resultsRows").show();
                 } else {
