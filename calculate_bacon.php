@@ -152,7 +152,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     return $u; //return new next node
 }
 
-function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget) {
+function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, $firstIsMoreRecent) {
 
     $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
@@ -188,7 +188,25 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
 
         //final path
         reset($overlap);
-        $finalPath = array_merge($pathFirst, array(current($overlap)), array_reverse($pathSecond));
+
+        //find the subpath
+        if($firstIsMoreRecent) {
+            //need to recurse on the second half and the overlap
+            if(!$previousSource[$currentFirst] && !previousTarget[$currentSecond]) {
+                $subpath = dijkstra($link, current($overlap), $pathSecond[0]);
+                $finalPath = array_merge($pathFirst, $subpath);
+            } else {
+                $finalPath = array($currentFirst, $currentSecond);
+            }
+
+        } else {
+            if(!$previousSource[$currentFirst] && !previousTarget[$currentSecond]) {
+                $subpath = dijkstra($link, $pathFirst[0], current($overlap));
+                $finalPath = array_merge($subpath, array_reverse($pathSecond));
+            } else {
+                $finalPath = array($currentFirst, $currentSecond);
+            }
+        }
 
         var_dump("Final Path");
         printDebug($finalPath);
@@ -282,7 +300,7 @@ function dijkstra($link, $source, $target) {
         $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
         if ($potentialPath) {
             var_dump("previous source:");
-            printDebug($previousSource);
+            printDebug($previousSource);    
             var_dump("previous target:");
             printDebug($previousTarget);
             return $potentialPath;
