@@ -156,7 +156,7 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
     $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
     if(count($overlap)) {
-        var_dump("stoped with currentFirst at:");
+        var_dump("stopped with currentFirst at:");
         printDebug($currentFirst);
         var_dump("and currentSecond at:");
         printDebug($currentSecond);
@@ -229,6 +229,12 @@ function dijkstra($link, $source, $target) {
 
     $currentFirst = $source;
     $currentSecond = $target;
+
+    var_dump("currentFirst is:");
+    printDebug($currentFirst);
+    var_dump("and currentSecond is:");
+    printDebug($currentSecond);
+
     while (1) {
         $count++;
         printDebug("Count is ".$count);
@@ -242,12 +248,23 @@ function dijkstra($link, $source, $target) {
 
         $currentFirst = progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
 
+        var_dump("currentFirst is:");
+        printDebug($currentFirst);
+        var_dump("and currentSecond is:");
+        printDebug($currentSecond);
+
         $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
         if ($potentialPath) {
             return $potentialPath;
         }
 
         $currentSecond = progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
+
+        
+        var_dump("currentFirst is:");
+        printDebug($currentFirst);
+        var_dump("and currentSecond is:");
+        printDebug($currentSecond);
         
     }
     //pull path out of previouses
