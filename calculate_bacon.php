@@ -259,12 +259,6 @@ function dijkstra($link, $source, $target) {
         }
 
         $currentSecond = progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
-
-        
-        var_dump("currentFirst is:");
-        printDebug($currentFirst);
-        var_dump("and currentSecond is:");
-        printDebug($currentSecond);
         
     }
     //pull path out of previouses
