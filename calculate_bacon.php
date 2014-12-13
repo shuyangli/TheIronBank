@@ -219,6 +219,11 @@ function dijkstra($link, $source, $target) {
             var_dump("Path from Source:");
             printDebug($pathSecond);
 
+            //final path
+            $finalPath = array_merge($pathFirst, array($overlap[0]), array_reverse($pathSecond));
+
+            var_dump("Final Path");
+            printDebug($finalPath);
             break;
         }
 
@@ -245,6 +250,16 @@ function getNameForID($link, $person_ID) {
     $actorsQuery->fetch();
 
     return $actor;
+}
+
+function getMutualMovie($link, $firstPersonID, $secondPersonID) {
+    $filmQuery = $link->prepare("SELECT Title FROM FM_Film WHERE IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? AND IMDB_ID IN (SELECT IMDB_ID FROM FM_Acted_In WHERE Person_ID = ? )) LIMIT 1") or die(printDebug(mysqli_error($link)));
+    $filmQuery->bind_param("ii", $firstPersonID, $secondPersonID);
+    $filmQuery->execute();
+    $filmQuery->bind_result($film);
+    $filmQuery->fetch();
+
+    return $film;
 }
 
 
