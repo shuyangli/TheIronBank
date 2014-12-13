@@ -220,7 +220,8 @@ function dijkstra($link, $source, $target) {
             printDebug($pathSecond);
 
             //final path
-            $finalPath = array_merge($pathFirst, array($overlap[0]), array_reverse($pathSecond));
+            reset($overlap);
+            $finalPath = array_merge($pathFirst, array(current($overlap)), array_reverse($pathSecond));
 
             var_dump("Final Path");
             printDebug($finalPath);
