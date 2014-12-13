@@ -17,14 +17,13 @@ $(document).ready(function() {
 
                 if(resArray['success']) {
                     $("#namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["actors"].length - 1));
-                    $("#pathHeader").html("The path is " + resArray["actors"].join(" -> "));
+                    for (var i = resArray['actors'].length - 1; i > 0; i--) {
+                        $("#namesRow").after('<div class="row"><div class="col-lg-12">' + resArray['actors'][i-1] + " and " + resArray['actors'][i] + " starred in " + resArray['movies'][i-1] + '</div></div>');
+                    }
                     $("#resultsRows").show();
                 } else {
                     $("#namesHeader").html("Error: " + resArray['error']);
-                    for (var i = resArray['actors'].length - 1; i > 0; i--) {
-                        $("#namesRow").after('<div class="row"><div class="col-lg-12">' + resArray['actors'][i-1] + " and " + resArray['actors'][i] + " starred in " + resArray['movies'][i-1] + '</div></div>');
-                    };
-                    $("#pathHeader").html("");
+                    $("#namesRow").nextAll().remove();
                 }
 
             }
