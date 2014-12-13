@@ -30,7 +30,7 @@ if ($stmt = $link->prepare($query)){
     while($stmt->fetch()){ 
         if ($gross>0){
             $count = $count +1;
-            $sum = $sum + $gross;
+            $sum = $sum + $gross*1.15;  //Inflation
         }
     }
 
