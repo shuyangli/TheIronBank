@@ -230,8 +230,8 @@ function dijkstra($link, $source, $target) {
     // echo "\n";
 
     //first node has distance 0
-    $distances[$source] = 0;
-    $distances[$target] = 0;
+    $distancesSource[$source] = 0;
+    $distancesTarget[$target] = 0;
 
     $currentFirst = $source;
     $currentSecond = $target;
