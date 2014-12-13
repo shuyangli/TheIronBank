@@ -12,23 +12,6 @@ $db_releaseYear = $_GET['year'];
 $db_relevantDecade = $db_releaseYear-10;
 $db_actorsArray = explode(',',$_GET['actorList']);
 
-/*print "Actors: <br>";
-for ($i = 0; $i < count($db_actorsArray); ++$i){
-    $db_actorsArray[$i] = trim($db_actorsArray[$i]);
-    print $db_actorsArray[$i] . "<br>";
-}
-print "<br>Writers: <br>";
-for ($i = 0; $i < count($db_writersArray); ++$i){
-    $db_writersArray[$i] = trim($db_writersArray[$i]);
-    print $db_writersArray[$i] . "<br>";
-}
-
-print "<br>Director is " . $db_directors . "<br>";
-print "Distributor is " . $db_distributor . "<br>";
-print "Rating is " . $db_rating . "<br>";
-print "Genre is " . $db_genre . "<br>";
-print "Release Year is " . $db_releaseYear . "<br>";*/
-
 //Perform Linear Regression to make predictions
 $estimates = array(); //Will hold estimates for gross based upon each input
 
@@ -202,8 +185,48 @@ if ($stmt = $link->prepare($query)){
     $stmt->close();
 }
 
-//Genre (TODO)
-#print_r($estimates);
+//Genre
+$query = "select IMDB_ID from FM_Genre where Genre_Name=?;";
+
+if ($stmt = $link->prepare($query)){
+    $stmt->bind_param("s", $db_genre);
+    $stmt->execute();
+    $stmt->store_result();
+    $result = $stmt->bind_result($movie_id);
+
+    $sum = 0;
+    $count = 0;
+
+    while($stmt->fetch()){
+        $query2 = "select Gross from FM_Film where IMDB_ID=? and Gross!='null' and Release_Year>=? limit 1;";
+
+        if ($stmt2 = $link->prepare($query)){
+            $stmt2->bind_param("si", $movie_id, $db_relevantDecade);
+            $stmt2->execute();
+            $stmt2->store_result();
+            $result2 = $stmt2->bind_result($gross);
+
+            while($stmt2->fetch()){ 
+                if ($gross>0){
+                    $count = $count +1;
+                    $sum = $sum + $gross;
+                }
+            }
+
+            $stmt2->free_result();
+            $stmt2->close();
+        }
+    }
+
+    if ($count>0){
+        array_push($estimates, $sum/$count);
+    }
+    $stmt->free_result();
+    $stmt->close();
+}
+
+
+//Calculate Results
 
 $sum = array_sum($estimates);
 $count = count($estimates);

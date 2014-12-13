@@ -58,14 +58,9 @@
                     </div>
                 </div>
                 <div id="resultsRows">
-                    <div class="row">
+                    <div class="row" id="namesRow">
                         <div class="col-lg-12">
                             <h2 id="namesHeader"></h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3 id="pathHeader"></h3>
                         </div>
                     </div>
                 </div>
