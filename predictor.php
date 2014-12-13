@@ -27,18 +27,16 @@
     <script src="js/sidebar.js"></script>
 
     <!-- AJAX request to search for information -->
-    <script type="text/javascript">
-    $(document).ready(function() {
+    <script type="text/javascript">
+    $(document).ready(function() {
 
-        //Hide return row
+        // Hide return row
         $("#return-row").hide();
         $("#title-row").hide();
 
-        // Search actors
-        $("#prediction_form").on('submit', function (e) {
-
-            // Prevent form from actually submitting
-            e.preventDefault();
+        $("#prediction_form").on('submit', function (e) {
+            // Prevent form from actually submitting
+            e.preventDefault();
 
             // AJAX call to get films
             $.ajax({
@@ -58,10 +56,9 @@
                     }
                 },
             });
-        });
-    });
-    </script>
-
+        });
+    });
+    </script>
 </head>
 
 <body>
