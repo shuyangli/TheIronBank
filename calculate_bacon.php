@@ -190,21 +190,22 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
         reset($overlap);
 
         //find the subpath
-        if($firstIsMoreRecent) {
-            //need to recurse on the second half and the overlap
-            if(!is_null($previousSource[$currentFirst]) && !is_null($previousTarget[$currentSecond])) {
+
+        //first check if we need to recurse
+        if(!is_null($previousSource[$currentFirst]) && !is_null($previousTarget[$currentSecond])) {
+            if($firstIsMoreRecent) {
                 $subpath = dijkstra($link, current($overlap), $pathSecond[0]);
                 $finalPath = array_merge($pathFirst, $subpath);
             } else {
-                $finalPath = array($currentFirst, $currentSecond);
-            }
-
-        } else {
-            if(!is_null($previousSource[$currentFirst]) && !is_null($previousTarget[$currentSecond])) {
                 $subpath = dijkstra($link, $pathFirst[0], current($overlap));
                 $finalPath = array_merge($subpath, array_reverse($pathSecond));
-            } else {
+            }
+        } else {
+            //if both intersect each other
+            if(count(array_intersect($currentFirst, $unvisitedTarget)) && count(array_intersect($currentSecond, $unvisitedSource))){
                 $finalPath = array($currentFirst, $currentSecond);
+            } else {
+                $finalPath = array($currentFirst, current($overlap), $currentSecond);
             }
         }
 
