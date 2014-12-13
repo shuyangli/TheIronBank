@@ -152,7 +152,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     return $u; //return new next node
 }
 
-function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, $firstIsMoreRecent) {
+function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, $firstIsMoreRecent) {
 
     $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
@@ -279,7 +279,7 @@ function dijkstra($link, $source, $target) {
 
         //must check for path each time an unvisited array is expanded
 
-        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, FALSE);
+        $potentialPath = checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, FALSE);
         if($potentialPath) {
             var_dump("previous source:");
             printDebug($previousSource);
@@ -297,7 +297,7 @@ function dijkstra($link, $source, $target) {
 
 
 
-        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, TRUE);
+        $potentialPath = checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget, TRUE);
         if ($potentialPath) {
             var_dump("previous source:");
             printDebug($previousSource);    
