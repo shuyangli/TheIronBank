@@ -178,11 +178,10 @@ function dijkstra($link, $source, $target) {
     $distances[$source] = 0;
     $distances[$target] = 0;
 
-    while (count($unvisitedSource) > 0) {
-        progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
-        progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
+    while (1) {
 
-        $overlap = array_diff($verticesSource, $verticesTarget);
+
+        $overlap = array_diff($unvisitedSource, $unvisitedTarget);
 
         if(count($overlap)) {
             var_dump("Previous for Source:");
@@ -193,6 +192,9 @@ function dijkstra($link, $source, $target) {
             printDebug($overlap);
             break;
         }
+
+        progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
+        progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
         
     }
     //pull path out of previouses
