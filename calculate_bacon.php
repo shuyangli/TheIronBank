@@ -142,8 +142,6 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     if (isset($neighbors[$u])) {
         foreach ($neighbors[$u] as $arr) {
             $alt = $distances[$u] + $arr["cost"];
-            printDebug("alt is ".$alt);
-            printDebug("distance is ".$distances[$arr["end"]]);
             if ($alt < $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
@@ -155,6 +153,10 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
 }
 
 function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget) {
+    printDebug("current first according to overlap is".$currentFirst);
+    printDebug("current second according to overlap is".$currentSecond);
+
+
     $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
     if(count($overlap)) {
@@ -176,9 +178,6 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
         var_dump("Path from Source:");
         printDebug($pathFirst);
 
-        var_dump("previous vector:");
-        printDebug($previousSource);
-
         $pathSecond = array();
         $u = $currentSecond;
         while (isset($previousTarget[$u])) {
@@ -189,9 +188,6 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
 
         var_dump("Path from Target:");
         printDebug($pathSecond);
-
-        var_dump("previous vector:");
-        printDebug($previousTarget);
 
         //final path
         reset($overlap);
@@ -240,24 +236,18 @@ function dijkstra($link, $source, $target) {
     if (isset($neighborsSource[$source])) {
         foreach ($neighborsSource[$source] as $arr) {
             $alt = $distancesSource[$source] + $arr["cost"];
-            printDebug("alt is ".$alt);
-            printDebug("distance is ".$distancesSource[$arr["end"]]);
             if ($alt < $distancesSource[$arr["end"]]) {
                 $distancesSource[$arr["end"]] = $alt;
                 $previousSource[$arr["end"]] = $source;
-                printDebug("Updating Previous for ".$source);
             }
         }
     }
     if (isset($neighborsTarget[$target])) {
         foreach ($neighborsTarget[$target] as $arr) {
             $alt = $distancesTarget[$target] + $arr["cost"];
-            printDebug("alt is ".$alt);
-            printDebug("distance is ".$distancesTarget[$arr["end"]]);
             if ($alt < $distancesTarget[$arr["end"]]) {
                 $distancesTarget[$arr["end"]] = $alt;
                 $previousTarget[$arr["end"]] = $target;
-                printDebug("Updating Previous for ".$target);
             }
         }
     }
