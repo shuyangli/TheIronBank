@@ -142,7 +142,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     if (isset($neighbors[$u])) {
         foreach ($neighbors[$u] as $arr) {
             $alt = $distances[$u] + $arr["cost"];
-            if ($alt < $distances[$arr["end"]]) {
+            if ($alt <= $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
             }
