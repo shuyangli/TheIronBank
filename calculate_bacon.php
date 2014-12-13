@@ -185,11 +185,11 @@ function dijkstra($link, $source, $target) {
         $overlap = array_diff($verticesSource, $verticesTarget);
 
         if(count($overlap)) {
-            var_dump("Previous for Source");
+            var_dump("Previous for Source:");
             printDebug($previousSource);
-            var_dump("Previous for Target");
+            var_dump("Previous for Target:");
             printDebug($previousTarget);
-            var_dump("Overlap:")
+            var_dump("Overlap:");
             printDebug($overlap);
             break;
         }
