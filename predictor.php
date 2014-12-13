@@ -53,10 +53,10 @@
                     // Populate result container
                     resArray = JSON.parse(result);
                     $("#title-container").text("Domestic Gross Estimate is $" + resArray[0]);
-                    for (var i = 1; i < resArray.length; i += 1){
+                    for (var i = 1; i < resArray.length; i += 1) {
                         $("#res-container").append("<tr><td>" + resArray[i][0] + "</td><td>$" + resArray[i][1] + "</td></tr>");
                     }
-                }
+                },
             });
         });
     });
@@ -65,56 +65,52 @@
 </head>
 
 <body>
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <?php include('partials/sidebar.php') ?>
-        <!-- /#sidebar-wrapper -->
+    <!-- Sidebar -->
+    <?php include('partials/sidebar.php') ?>
+    <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Film Success Predictor</h1>
-                        <form action="prediction_calculator.php" id="prediction_form" method="get">
-                        Comma Separated Actors <input type="textbox" name="actorList"/><br/>
-                        Comma Separated Directors: <input type="textbox" name="director"/><br/>
-                        Comma Separated Writers: <input type="textbox" name="writer"/><br/>
-                        Distributor: <input type="textbox" name="distributor"/><br/>
-                        Rating: <input type="textbox" name="rating"/><br/>
-                        Genre: <input type="textbox" name="genre"/><br/>
-                        Release Year: <input type="textbox" name="year"/><br/>
-                        <input type="submit"/>
-                        </form>
-                    </div>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Film Success Predictor</h1>
+                    <form action="prediction_calculator.php" id="prediction_form" method="get">
+                    Comma Separated Actors <input type="textbox" name="actorList"/><br/>
+                    Comma Separated Directors: <input type="textbox" name="director"/><br/>
+                    Comma Separated Writers: <input type="textbox" name="writer"/><br/>
+                    Distributor: <input type="textbox" name="distributor"/><br/>
+                    Rating: <input type="textbox" name="rating"/><br/>
+                    Genre: <input type="textbox" name="genre"/><br/>
+                    Release Year: <input type="textbox" name="year"/><br/>
+                    <input type="submit"/>
+                    </form>
                 </div>
-                <div class="row" id="title-row">
-                    <div class="col-lg-12" id="title-container" style="font-size:1.75em;">
-                    </div>
+            </div>
+            <div class="row" id="title-row">
+                <div class="col-lg-12" id="title-container" style="font-size:1.75em;">
                 </div>
-                <div class="row" id="return-row">
-                    <div class="col-lg-12" style="font-size:1.75em;">
-                        Look Below for Recent Movies had Similar Domestic Gross
-                    </div>
-                    <div class="col-lg-12">
-                        <table class="table table-striped">
-                            <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
-                            <tbody id="res-container">
-                            </tbody>
-                        </table>
-                    </div>
+            </div>
+            <div class="row" id="return-row">
+                <div class="col-lg-12" style="font-size:1.75em;">
+                    Look Below for Recent Movies had Similar Domestic Gross
                 </div>
-                <!--<div class="row">
-                    <div class="col-lg-12" id="res-container">
-                    </div>
-                </div>-->
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        <thead><tr><th>Movie Title</th><th>Domestic Gross</th></tr></thead>
+                        <tbody id="res-container">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
 
 </body>
 
