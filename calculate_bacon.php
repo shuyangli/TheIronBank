@@ -240,7 +240,7 @@ function dijkstra($link, $source, $target) {
             $alt = $distancesSource[$source] + $arr["cost"];
             if ($alt < $distancesSource[$arr["end"]]) {
                 $distancesSource[$arr["end"]] = $alt;
-                $previousSource[$arr["end"]] = $u;
+                $previousSource[$arr["end"]] = $source;
             }
         }
     }
@@ -249,7 +249,7 @@ function dijkstra($link, $source, $target) {
             $alt = $distancesTarget[$target] + $arr["cost"];
             if ($alt < $distancesTarget[$arr["end"]]) {
                 $distancesTarget[$arr["end"]] = $alt;
-                $previousTarget[$arr["end"]] = $u;
+                $previousTarget[$arr["end"]] = $target;
             }
         }
     }
