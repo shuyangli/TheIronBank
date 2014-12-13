@@ -304,8 +304,7 @@ $path = dijkstra($link, $firstNameID, $secondNameID);
 $actorNames = array();
 $mutualMovies = array();
 
-$length = count($path);
-for($i = 0; $i < $length - 1; ++$i) {
+for($i = 0; $i < count($path); ++$i) {
 
     $firstActor = current($path);
     $actorNames[] = getNameForID($link, $firstActor);
