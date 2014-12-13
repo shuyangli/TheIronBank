@@ -186,7 +186,7 @@ if ($stmt = $link->prepare($query)){
 }
 
 //Genre
-$query = "select IMDB_ID from FM_Genre where Genre_Name=? limit 25;";
+$query = "select IMDB_ID from FM_Genre where Genre_Name=? limit 500;";
 
 if ($stmt = $link->prepare($query)){
     $stmt->bind_param("s", $db_genre);
