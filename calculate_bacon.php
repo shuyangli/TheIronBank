@@ -137,7 +137,8 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
                 $finalPath = array($currentFirst, current($overlap), $currentSecond);
             }
         }
-
+        var_dump("path is currently");
+        printDebug($finalPath);
         return $finalPath;
     } else {
         return FALSE;
