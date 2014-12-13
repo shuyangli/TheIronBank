@@ -100,6 +100,64 @@ if ($count>0){
     array_push($estimates, $sum/$count);
 }
 
+//--Directors--
+$sum = 0;
+$count = 0;
+
+for ($i = 0; $i < count($db_directors); ++$i){
+    $director = trim($db_directors[$i]);
+    #print $writer . "<br>";
+    $query = "select Person_ID from FM_Person where Person_Name=?;";
+    if ($stmt = $link->prepare($query)){
+        $stmt->bind_param("s", $director);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($director_id);
+        while($stmt->fetch()){ 
+            if ($director_id>0){
+                //Get movie Id from director table
+                $query2 = "select IMDB_ID from FM_Directed where Person_ID=?;";
+                if ($stmt2 = $link->prepare($query2)){
+                    $stmt2->bind_param("i", $director_id);
+                    $stmt2->execute();
+                    $stmt2->store_result();
+                    $stmt2->bind_result($movie_id);
+                    while($stmt2->fetch()){ 
+                        #print $movie_id . "<br>";
+                        if ($movie_id!=null){
+                            //Get gross from FM_film using movie_id
+                            $query3 = "select Gross from FM_Film where IMDB_ID=? and Gross!='null' and Release_Year>=? order by Release_Year desc limit 25;";
+                            if ($stmt3 = $link->prepare($query3)){
+                                $stmt3->bind_param("si", $movie_id, $db_relevantDecade);
+                                $stmt3->execute();
+                                $stmt3->store_result();
+                                $stmt3->bind_result($gross);
+
+                                while($stmt3->fetch()){ 
+                                    #print $gross . "<br>";
+                                    if ($gross>0){
+                                        $count = $count +1;
+                                        $sum = $sum + $gross;
+                                    }
+                                }
+                                $stmt3->free_result();
+                                $stmt3->close();
+                            }
+                        }
+                    }
+                    $stmt2->free_result();
+                    $stmt2->close();
+                }
+            }
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+}
+if ($count>0){
+    array_push($estimates, $sum/$count);
+}
+
 //Actors
 $sum = 0;
 $count = 0;
