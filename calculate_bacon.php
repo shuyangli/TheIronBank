@@ -174,8 +174,8 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
         var_dump("Path from Source:");
         printDebug($pathFirst);
 
-        // var_dump("previous vector:");
-        // printDebug($previousSource);
+        var_dump("previous vector:");
+        printDebug($previousSource);
 
         $pathSecond = array();
         $u = $currentSecond;
@@ -188,8 +188,8 @@ function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvis
         var_dump("Path from Target:");
         printDebug($pathSecond);
 
-        // var_dump("previous vector:");
-        // printDebug($previousTarget);
+        var_dump("previous vector:");
+        printDebug($previousTarget);
 
         //final path
         reset($overlap);
