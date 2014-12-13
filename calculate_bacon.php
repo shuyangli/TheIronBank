@@ -258,7 +258,7 @@ function dijkstra($link, $source, $target) {
 
         //must check for path each time an unvisited array is expanded
 
-        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
+        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $verticesSource, $verticesTarget, $previousSource, $previousTarget);
         if($potentialPath) {
             var_dump("previous source:");
             printDebug($previousSource);
@@ -274,7 +274,7 @@ function dijkstra($link, $source, $target) {
 
 
 
-        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
+        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $verticesSource, $verticesTarget, $previousSource, $previousTarget);
         if ($potentialPath) {
             var_dump("previous target:");
             printDebug($previousTarget);
