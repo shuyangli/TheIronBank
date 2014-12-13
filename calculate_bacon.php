@@ -277,7 +277,7 @@ if($firstNameID === $secondNameID) {
     $actorNames = array(ucwords($_GET['firstPersonName']));
     $mutualMovies = array("N/A");
 } else {
-    if(!$error) {
+    if($success) {
         //compute path
         $path = dijkstra($link, $firstNameID, $secondNameID);
         //get names for each actor
@@ -295,14 +295,17 @@ if($firstNameID === $secondNameID) {
                 $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
             }
         }
-    }
+    }   
 }
 
 
 
 //GOGO AJAX!
-$ajaxArray = array('success' => $success, 'error' => $error, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'actors' => $actorNames, 'movies' => $mutualMovies);
-
+if ($success) { 
+    $ajaxArray = array('success' => $success, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'actors' => $actorNames, 'movies' => $mutualMovies);
+} else {
+    $ajaxArray = array('success' => $success, 'error' => $error, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']));
+}
 $jsonString = json_encode($ajaxArray);
 
 echo $jsonString;
