@@ -187,7 +187,7 @@ function dijkstra($link, $source, $target) {
     while (1) {
         $count++;
         printDebug("Count is ".$count);
-        $overlap = array_diff($unvisitedSource, $unvisitedTarget);
+        $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
         if(count($overlap)) {
             var_dump("stoped with currentFirst at:");
