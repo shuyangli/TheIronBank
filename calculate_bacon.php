@@ -225,6 +225,8 @@ function dijkstra($link, $source, $target) {
 
             var_dump("Final Path");
             printDebug($finalPath);
+
+            return $finalPath;
             break;
         }
 
@@ -300,9 +302,24 @@ $path = dijkstra($link, $firstNameID, $secondNameID);
 
 //get names for each actor
 $actorNames = array();
-foreach ($path as $person) {
-    $actorNames[] = getNameForID($link, $person);
+$mutualMovies = array();
+
+$length = count($path);
+for($i = 0; $i < $length - 1; ++$i) {
+
+    $firstActor = current($path);
+    $secondActor = next($path);
+    $actorNames[] = getNameForID($link, $firstActor);
+    //if next element, get mutual film
+    if (!$secondActor === FALSE) {
+        $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
+    }
 }
+
+var_dump("Final Names:");
+printDebug($actorNames);
+var_dump("Mutual Films:");
+printDebug($mutualMovies);
 
 //GOGO AJAX!
 $ajaxArray = array('firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'path' => $actorNames);
