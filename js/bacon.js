@@ -15,9 +15,18 @@ $(document).ready(function() {
                 // Populate result container
                 resArray = JSON.parse(result);
 
-                $("#namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["path"].length - 1));
-                $("#pathHeader").html("The path is " + resArray["path"].join(" -> "));
-                $("#resultsRows").show();
+                if(resArray['success']) {
+                    $("#namesHeader").html("The Bacon Number for " + resArray["firstActorName"] + " and " + resArray["secondActorName"] + " is " + (resArray["path"].length - 1));
+                    $("#pathHeader").html("The path is " + resArray["path"].join(" -> "));
+                    $("#resultsRows").show();
+                } else {
+                    $("#namesHeader").html("Error: " + resArray['error']);
+                    for (var i = resArray['path'].length - 1; i > 0; i--) {
+                        $("#namesRow").after('<div class="row"><div class="col-lg-12">' + resArray['path'][i-1] + " and " + resArray['path'][i] " starred in " + resArray['mutualFilms'][i-1] + '</div></div>');
+                    };
+                    $("#pathHeader").html("");
+                }
+
             }
         });
     });
