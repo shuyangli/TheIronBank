@@ -148,6 +148,8 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
             }
         }
     }
+
+    return $u; //return new next node
 }
 
 function dijkstra($link, $source, $target) {
@@ -178,23 +180,50 @@ function dijkstra($link, $source, $target) {
     $distances[$source] = 0;
     $distances[$target] = 0;
 
+    $count = 0;
+
+    $currentFirst = $source;
+    $currentSecond = $target;
     while (1) {
-
-
+        $count++;
+        printDebug("Count is ".$count);
         $overlap = array_diff($unvisitedSource, $unvisitedTarget);
 
         if(count($overlap)) {
-            var_dump("Previous for Source:");
-            printDebug($previousSource);
-            var_dump("Previous for Target:");
-            printDebug($previousTarget);
+            var_dump("stoped with currentFirst at:");
+            printDebug($currentFirst);
+            var_dump("and currentSecond at:");
+            printDebug($currentSecond);
+
             var_dump("Overlap:");
             printDebug($overlap);
+            $pathFirst = array();
+            $u = $currentFirst;
+            while (isset($previousSource[$u])) {
+                array_unshift($pathFirst, $u);
+                $u = $previousSource[$u];
+            }
+            array_unshift($pathFirst, $u);
+
+            var_dump("Path from Source:");
+            printDebug($pathFirst);
+
+            $pathSecond = array();
+            $u = $currentSecond;
+            while (isset($previousTarget[$u])) {
+                array_unshift($pathSecond, $u);
+                $u = $previousTarget[$u];
+            }
+            array_unshift($pathSecond, $u);
+
+            var_dump("Path from Source:");
+            printDebug($pathSecond);
+
             break;
         }
 
-        progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
-        progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
+        $currentFirst = progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
+        $currentSecond = progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
         
     }
     //pull path out of previouses
