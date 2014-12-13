@@ -225,10 +225,28 @@ function dijkstra($link, $source, $target) {
     $distances[$source] = 0;
     $distances[$target] = 0;
 
-    $count = 0;
-
     $currentFirst = $source;
     $currentSecond = $target;
+
+    //compute initial neighbors
+    if (isset($neighbors[$source])) {
+        foreach ($neighbors[$source] as $arr) {
+            $alt = $distances[$source] + $arr["cost"];
+            if ($alt < $distances[$arr["end"]]) {
+                $distances[$arr["end"]] = $alt;
+                $previous[$arr["end"]] = $u;
+            }
+        }
+    }
+    if (isset($neighbors[$target])) {
+        foreach ($neighbors[$target] as $arr) {
+            $alt = $distances[$target] + $arr["cost"];
+            if ($alt < $distances[$arr["end"]]) {
+                $distances[$arr["end"]] = $alt;
+                $previous[$arr["end"]] = $u;
+            }
+        }
+    }
 
     var_dump("currentFirst is:");
     printDebug($currentFirst);
@@ -236,8 +254,6 @@ function dijkstra($link, $source, $target) {
     printDebug($currentSecond);
 
     while (1) {
-        $count++;
-        printDebug("Count is ".$count);
 
         //must check for path each time an unvisited array is expanded
 
