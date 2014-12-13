@@ -107,7 +107,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     //the source is the first node to be set as visited, which updates the distances
     $min = INF;
     foreach ($unvisited as $vertex){
-        if ($distances[$vertex] < $min) {
+        if ($distances[$vertex] <= $min) {
             // echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
             $min = $distances[$vertex];
             $u = $vertex; //save closest node to u
@@ -235,14 +235,14 @@ function dijkstra($link, $source, $target) {
         
     }
     //pull path out of previouses
-    $path = array();
-    $u = $target;
-    while (isset($previous[$u])) {
-        array_unshift($path, $u);
-        $u = $previous[$u];
-    }
-    array_unshift($path, $u);
-    return $path;
+    // $path = array();
+    // $u = $target;
+    // while (isset($previous[$u])) {
+    //     array_unshift($path, $u);
+    //     $u = $previous[$u];
+    // }
+    // array_unshift($path, $u);
+    // return $path;
 }
 
 function getNameForID($link, $person_ID) {
