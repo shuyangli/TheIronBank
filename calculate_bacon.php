@@ -118,7 +118,7 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
 
         //find the subpath
         //first check if we need to recurse
-        if(!is_null($previousSource[$currentFirst]) && !is_null($previousTarget[$currentSecond])) {
+        if(!is_null($previousSource[$currentFirst]) || !is_null($previousTarget[$currentSecond])) {
             if($firstIsMoreRecent) {
                 //need to compute the subpath between the overlap and the less recent node
                 $subpath = dijkstra($link, current($overlap), $pathSecond[0]);
