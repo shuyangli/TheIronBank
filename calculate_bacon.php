@@ -103,16 +103,72 @@ function addToGraph(&$vertices, &$unvisited, &$neighbors, &$distances, &$previou
 //update distances
 //etc i hope
 
+function progressToNextNode($link, $vertices, $unvisited, $neighbors, $distances, $previous) {
+    //the source is the first node to be set as visited, which updates the distances
+    $min = INF;
+    foreach ($unvisited as $vertex){
+        if ($distances[$vertex] < $min) {
+            // echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
+            $min = $distances[$vertex];
+            $u = $vertex; //save closest node to u
+        }
+    }
+
+    // echo "<p>";
+    // echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
+    // echo " from node : ".$previous[$u];
+    // echo "</p>";
+
+    //returns difference of &Q - &u
+    //pulls u out of Q
+    $unvisited = array_diff($unvisited, array($u));
+
+    
+    // echo "Unvisited length after removing element: \n";
+    // printDebug(count($unvisited));
+    // echo "Vertices length: \n";
+    // printDebug(count($vertices));
+    // echo "\n";
+    if ($distances[$u] == INF or $u == $target) {
+        // echo "Reached the end, or no nodes had noninfinite distance. \n";
+        break;
+    }
+
+    //add more to the arrays
+    addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
+    // addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getEvenMoreAdjacentActors($link, $vertices));
+
+    //recompute distances from the new latest node
+    if (isset($neighbors[$u])) {
+        foreach ($neighbors[$u] as $arr) {
+            $alt = $distances[$u] + $arr["cost"];
+            if ($alt < $distances[$arr["end"]]) {
+                $distances[$arr["end"]] = $alt;
+                $previous[$arr["end"]] = $u;
+            }
+        }
+    }
+}
+
 function dijkstra($link, $source, $target) {
 
     //initialize vertices and neighbors
-    $vertices = array();
-    $unvisited = array();
-    $neighbors = array();
-    $distances = array();
-    $previous = array();
+    $verticesSource = array();
+    $unvisitedSource = array();
+    $neighborsSource = array();
+    $distancesSource = array();
+    $previousSource = array();
 
-    addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getAdjacentActors($link, $source));
+    //initialize vertices and neighbors
+    $verticesTarget = array();
+    $unvisitedTarget= array();
+    $neighborsTarget = array();
+    $distancesTarget = array();
+    $previousTarget = array();
+
+    addToGraph($verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource, $source, getAdjacentActors($link, $source));
+    addToGraph($verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget, $target, getAdjacentActors($link, $target));
+
 
     // echo "Unvisited length: \n";
     // printDebug(count($unvisited));
@@ -120,54 +176,21 @@ function dijkstra($link, $source, $target) {
 
     //first node has distance 0
     $distances[$source] = 0;
+    $distances[$target] = 0;
 
-    while (count($unvisited) > 0) {
- 
-        // TODO - Find faster way to get minimum
-        //the source is the first node to be set as visited, which updates the distances
-        $min = INF;
-        foreach ($unvisited as $vertex){
-            if ($distances[$vertex] < $min) {
-                // echo "New min is ".$distances[$vertex]." on node ".$vertex."\n";
-                $min = $distances[$vertex];
-                $u = $vertex; //save closest node to u
-            }
+    while (count($unvisitedSource) > 0) {
+        progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
+        progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
+
+        $overlap = array_diff($verticesSource, $verticesTarget);
+
+        if(count($overlap)) {
+            var_dump("Previous for Source");
+            printDebug($previousSource);
+            var_dump("Previous for Target");
+            printDebug($previousTarget);
         }
-
-        // echo "<p>";
-        // echo "Next traversed node is ".$u." with distance ".$distances[$u]."\n";
-        // echo " from node : ".$previous[$u];
-        // echo "</p>";
-
-        //returns difference of &Q - &u
-        //pulls u out of Q
-        $unvisited = array_diff($unvisited, array($u));
-
         
-        // echo "Unvisited length after removing element: \n";
-        // printDebug(count($unvisited));
-        // echo "Vertices length: \n";
-        // printDebug(count($vertices));
-        // echo "\n";
-        if ($distances[$u] == INF or $u == $target) {
-            // echo "Reached the end, or no nodes had noninfinite distance. \n";
-            break;
-        }
-
-        //add more to the arrays
-        addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $u, getAdjacentActors($link, $u));
-        // addToGraph($vertices, $unvisited, $neighbors, $distances, $previous, $source, getEvenMoreAdjacentActors($link, $vertices));
-
-        //recompute distances from the new latest node
-        if (isset($neighbors[$u])) {
-            foreach ($neighbors[$u] as $arr) {
-                $alt = $distances[$u] + $arr["cost"];
-                if ($alt < $distances[$arr["end"]]) {
-                    $distances[$arr["end"]] = $alt;
-                    $previous[$arr["end"]] = $u;
-                }
-            }
-        }
     }
     //pull path out of previouses
     $path = array();
