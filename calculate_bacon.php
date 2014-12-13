@@ -308,8 +308,8 @@ $length = count($path);
 for($i = 0; $i < $length - 1; ++$i) {
 
     $firstActor = current($path);
-    $secondActor = next($path);
     $actorNames[] = getNameForID($link, $firstActor);
+    $secondActor = next($path);
     //if next element, get mutual film
     if (!$secondActor === FALSE) {
         $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
