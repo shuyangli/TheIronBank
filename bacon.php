@@ -49,6 +49,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Bacon Number Calculator</h1>
+                        <h6>Calculate the degrees of separation between two actors</h6>
                         <form id="baconForm">
                             First Person: <input type="textbox" name="firstPersonName"/><br/>
                             Second Person: <input type="textbox" name="secondPersonName"/><br/>
@@ -60,7 +61,7 @@
                 <div id="resultsRows">
                     <div class="row" id="namesRow">
                         <div class="col-lg-12">
-                            <h2 id="namesHeader"></h2>
+                            <h3 id="namesHeader"></h3>
                         </div>
                     </div>
                 </div>

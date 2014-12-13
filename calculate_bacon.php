@@ -118,7 +118,7 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
 
         //find the subpath
         //first check if we need to recurse
-        if(!is_null($previousSource[$currentFirst]) && !is_null($previousTarget[$currentSecond])) {
+        if(!is_null($previousSource[$currentFirst]) || !is_null($previousTarget[$currentSecond])) {
             if($firstIsMoreRecent) {
                 //need to compute the subpath between the overlap and the less recent node
                 $subpath = dijkstra($link, current($overlap), $pathSecond[0]);
@@ -137,7 +137,6 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
                 $finalPath = array($currentFirst, current($overlap), $currentSecond);
             }
         }
-
         return $finalPath;
     } else {
         return FALSE;
@@ -277,7 +276,7 @@ if($firstNameID === $secondNameID) {
     $actorNames = array(ucwords($_GET['firstPersonName']));
     $mutualMovies = array("N/A");
 } else {
-    if(!$error) {
+    if($success) {
         //compute path
         $path = dijkstra($link, $firstNameID, $secondNameID);
         //get names for each actor
@@ -295,14 +294,17 @@ if($firstNameID === $secondNameID) {
                 $mutualMovies[] = getMutualMovie($link, $firstActor, $secondActor);
             }
         }
-    }
+    }   
 }
 
 
 
 //GOGO AJAX!
-$ajaxArray = array('success' => $success, 'error' => $error, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'actors' => $actorNames, 'movies' => $mutualMovies);
-
+if ($success) { 
+    $ajaxArray = array('success' => $success, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']), 'actors' => $actorNames, 'movies' => $mutualMovies);
+} else {
+    $ajaxArray = array('success' => $success, 'error' => $error, 'firstActorName' => ucwords($_GET['firstPersonName']), 'secondActorName' => ucwords($_GET['secondPersonName']));
+}
 $jsonString = json_encode($ajaxArray);
 
 echo $jsonString;
