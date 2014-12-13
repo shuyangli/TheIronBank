@@ -152,6 +152,51 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
     return $u; //return new next node
 }
 
+function checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget) {
+    $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
+
+    if(count($overlap)) {
+        var_dump("stoped with currentFirst at:");
+        printDebug($currentFirst);
+        var_dump("and currentSecond at:");
+        printDebug($currentSecond);
+
+        var_dump("Overlap:");
+        printDebug($overlap);
+        $pathFirst = array();
+        $u = $currentFirst;
+        while (isset($previousSource[$u])) {
+            array_unshift($pathFirst, $u);
+            $u = $previousSource[$u];
+        }
+        array_unshift($pathFirst, $u);
+
+        var_dump("Path from Source:");
+        printDebug($pathFirst);
+
+        $pathSecond = array();
+        $u = $currentSecond;
+        while (isset($previousTarget[$u])) {
+            array_unshift($pathSecond, $u);
+            $u = $previousTarget[$u];
+        }
+        array_unshift($pathSecond, $u);
+
+        var_dump("Path from Target:");
+        printDebug($pathSecond);
+
+        //final path
+        reset($overlap);
+        $finalPath = array_merge($pathFirst, array(current($overlap)), array_reverse($pathSecond));
+
+        var_dump("Final Path");
+        printDebug($finalPath);
+
+        return $finalPath;
+    } else return FALSE;
+
+}
+
 function dijkstra($link, $source, $target) {
 
     //initialize vertices and neighbors
@@ -187,50 +232,21 @@ function dijkstra($link, $source, $target) {
     while (1) {
         $count++;
         printDebug("Count is ".$count);
-        $overlap = array_intersect($unvisitedSource, $unvisitedTarget);
 
-        if(count($overlap)) {
-            var_dump("stoped with currentFirst at:");
-            printDebug($currentFirst);
-            var_dump("and currentSecond at:");
-            printDebug($currentSecond);
+        //must check for path each time an unvisited array is expanded
 
-            var_dump("Overlap:");
-            printDebug($overlap);
-            $pathFirst = array();
-            $u = $currentFirst;
-            while (isset($previousSource[$u])) {
-                array_unshift($pathFirst, $u);
-                $u = $previousSource[$u];
-            }
-            array_unshift($pathFirst, $u);
-
-            var_dump("Path from Source:");
-            printDebug($pathFirst);
-
-            $pathSecond = array();
-            $u = $currentSecond;
-            while (isset($previousTarget[$u])) {
-                array_unshift($pathSecond, $u);
-                $u = $previousTarget[$u];
-            }
-            array_unshift($pathSecond, $u);
-
-            var_dump("Path from Source:");
-            printDebug($pathSecond);
-
-            //final path
-            reset($overlap);
-            $finalPath = array_merge($pathFirst, array(current($overlap)), array_reverse($pathSecond));
-
-            var_dump("Final Path");
-            printDebug($finalPath);
-
-            return $finalPath;
-            break;
+        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
+        if($potentialPath) {
+            return $potentialPath;
         }
 
         $currentFirst = progressToNextNode($link, $verticesSource, $unvisitedSource, $neighborsSource, $distancesSource, $previousSource);
+
+        $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
+        if ($potentialPath) {
+            return $potentialPath;
+        }
+
         $currentSecond = progressToNextNode($link, $verticesTarget, $unvisitedTarget, $neighborsTarget, $distancesTarget, $previousTarget);
         
     }
