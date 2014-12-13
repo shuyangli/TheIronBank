@@ -265,6 +265,8 @@ function dijkstra($link, $source, $target) {
         if($potentialPath) {
             var_dump("previous source:");
             printDebug($previousSource);
+            var_dump("previous target:");
+            printDebug($previousTarget);
             return $potentialPath;
         }
 
@@ -279,6 +281,8 @@ function dijkstra($link, $source, $target) {
 
         $potentialPath = checkForOverlap($currentFirst, $currentSecond, $unvisitedSource, $unvisitedTarget, $previousSource, $previousTarget);
         if ($potentialPath) {
+            var_dump("previous source:");
+            printDebug($previousSource);
             var_dump("previous target:");
             printDebug($previousTarget);
             return $potentialPath;
