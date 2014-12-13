@@ -140,6 +140,7 @@ function progressToNextNode($link, &$vertices, &$unvisited, &$neighbors, &$dista
 
     //recompute distances from the new latest node
     if (isset($neighbors[$u])) {
+        var_dump("misc has neighbors");
         foreach ($neighbors[$u] as $arr) {
             $alt = $distances[$u] + $arr["cost"];
             if ($alt < $distances[$arr["end"]]) {
@@ -236,6 +237,7 @@ function dijkstra($link, $source, $target) {
 
     //compute initial neighbors
     if (isset($neighborsSource[$source])) {
+        var_dump("source has neighbors");
         foreach ($neighborsSource[$source] as $arr) {
             $alt = $distancesSource[$source] + $arr["cost"];
             if ($alt < $distancesSource[$arr["end"]]) {
@@ -245,6 +247,7 @@ function dijkstra($link, $source, $target) {
         }
     }
     if (isset($neighborsTarget[$target])) {
+        var_dump("target has neighbors");
         foreach ($neighborsTarget[$target] as $arr) {
             $alt = $distancesTarget[$target] + $arr["cost"];
             if ($alt < $distancesTarget[$arr["end"]]) {
