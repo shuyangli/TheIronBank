@@ -232,7 +232,7 @@ function dijkstra($link, $source, $target) {
     if (isset($neighbors[$source])) {
         foreach ($neighbors[$source] as $arr) {
             $alt = $distances[$source] + $arr["cost"];
-            if ($alt < $distances[$arr["end"]]) {
+            if ($alt <= $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
             }
@@ -241,7 +241,7 @@ function dijkstra($link, $source, $target) {
     if (isset($neighbors[$target])) {
         foreach ($neighbors[$target] as $arr) {
             $alt = $distances[$target] + $arr["cost"];
-            if ($alt < $distances[$arr["end"]]) {
+            if ($alt <= $distances[$arr["end"]]) {
                 $distances[$arr["end"]] = $alt;
                 $previous[$arr["end"]] = $u;
             }
