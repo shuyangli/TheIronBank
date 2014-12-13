@@ -202,7 +202,7 @@ function checkForOverlap($link, $currentFirst, $currentSecond, $unvisitedSource,
             }
         } else {
             //if both intersect each other
-            if(count(array_intersect($currentFirst, $unvisitedTarget)) && count(array_intersect($currentSecond, $unvisitedSource))){
+            if(count(array_intersect(array($currentFirst), $unvisitedTarget)) && count(array_intersect(array($currentSecond), $unvisitedSource))){
                 $finalPath = array($currentFirst, $currentSecond);
             } else {
                 $finalPath = array($currentFirst, current($overlap), $currentSecond);
