@@ -192,7 +192,7 @@ if ($stmt = $link->prepare($query)){
     $stmt->bind_param("s", $db_genre);
     $stmt->execute();
     $stmt->store_result();
-    $result = $stmt->bind_result($id);
+    $result = $stmt->bind_result($movie_id);
 
     $sum = 0;
     $count = 0;
@@ -201,10 +201,10 @@ if ($stmt = $link->prepare($query)){
         $query2 = "select Gross from FM_Film where IMDB_ID=? and Gross!='null' and Release_Year>=? limit 1;";
 
         if ($stmt2 = $link->prepare($query)){
-            $stmt2->bind_param("si", $id, $db_relevantDecade);
+            $stmt2->bind_param("si", $movie_id, $db_relevantDecade);
             $stmt2->execute();
             $stmt2->store_result();
-            $result = $stmt2->bind_result($gross);
+            $result2 = $stmt2->bind_result($gross);
 
             while($stmt2->fetch()){ 
                 if ($gross>0){
