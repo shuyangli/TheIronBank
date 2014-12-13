@@ -36,7 +36,7 @@ end
 
 file_content = []
 
-NUM_OF_THREADS = 40
+NUM_OF_THREADS = 20
 mutex = Mutex.new
 
 # Read file
@@ -55,7 +55,7 @@ NUM_OF_THREADS.times.map {
 			# Form the URI
 			line_array = line.split "|"
 			line_array[2].strip!
-			uri = URI.parse(URI.escape "http://www.imdbapi.com/?t=#{line_array[0]}")
+			uri = URI.parse(URI.escape "http://www.omdbapi.com/?t=#{line_array[0]}&y=&plot=short&r=json")
 
 			# Request
 			response = Net::HTTP.get_response(uri)
