@@ -46,10 +46,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>The First Movie Database of Braavos</h1>
-                        <p>FMDB is the source of all your movie related needs.</p>
-                        <a href="films.php" class="btn btn-default">View Films</a>
-                        <a href="insert_film_form.php" class="btn btn-default">Insert Film</a>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                        <h4>FMDB is the source of all your movie related needs.</h4>
+                        <h6>Select a task on the left to get started.</h6>
                     </div>
                 </div>
             </div>
