@@ -46,8 +46,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>The First Movie Database of Braavos</h1>
-                        <h4>FMDB is the source of all your movie related needs.</h4>
-                        <h6>Select a task on the left to get started.</h6>
+                        <h4>FMDB is the solution for all your movie related needs.</h4>
+                        <h5>Select a task on the left to get started.</h5>
                     </div>
                 </div>
             </div>
